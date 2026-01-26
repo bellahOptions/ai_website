@@ -10,3 +10,8 @@ Route::get('/home', [PageController::class, 'home'])->name('home.page');
 Route::get('/about', [PageController::class, 'about'])->name('about.page');
 Route::get('/services', [PageController::class, 'services'])->name('services.page');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact.page');
+Route::post('/contact/submit', [PageController::class, 'submitContact'])->name('contact.submit');
+
+//Blog Routes
+Route::get('/blog', [PageController::class, 'blogList'])->name('blog.list');
+Route::get('/blog/{slug}', [PageController::class, 'blogDetail'])->name('blog.detail');

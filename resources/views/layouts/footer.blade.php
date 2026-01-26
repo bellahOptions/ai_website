@@ -118,12 +118,12 @@
         <ul class="space-y-4">
           <li class="flex items-start gap-3">
             <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-              <i class="fas fa-phone text-purple-300"></i>
+              <i class="bi bi-telephone"></i>
             </div>
             <div>
               <p class="text-sm text-purple-300 mb-1">Phone</p>
-              <a href="tel:+2348108671804" class="text-white hover:text-purple-200 transition-colors">
-                +234 803 352 9330
+              <a href="tel:+2347077776734" class="text-white hover:text-purple-200 transition-colors">
+                +234 707 777 6734
               </a>
             </div>
           </li>
@@ -132,7 +132,7 @@
 
             <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
 
-              <i class="fas fa-envelope text-purple-300"></i>
+              <i class="bi bi-envelope"></i>
 
             </div>
 
@@ -142,7 +142,7 @@
 
               <a href="mailto:info@aidigitalagency.com" class="text-white hover:text-purple-200 transition-colors break-all">
 
-                info@aidigitalagency.com
+                aidigitalagency08@gmail.com
 
               </a>
 
@@ -154,7 +154,7 @@
 
             <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
 
-              <i class="fas fa-map-marker-alt text-purple-300"></i>
+              <i class="bi bi-geo"></i>
 
             </div>
 
