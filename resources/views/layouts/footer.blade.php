@@ -1,271 +1,131 @@
 <!-- Footer -->
-
 <footer class="bg-gradient-to-br from-purple-950 via-purle-900 to-purple-900 dark:from-slate-950 dark:via-purple-950 dark:to-purple-950 text-white">
-
-  
-
   <!-- Main Footer Content -->
-
-  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-
+   <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16"> 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-
-      
-
       <!-- Company Info -->
-
-      <div class="space-y-6">
-
+       <div class="space-y-6">
         <div>
-
-          <img src="{{ asset('images/logo-08.svg') }}" alt="AI Digital Agency" class="h-10 w-auto mb-4">
-
+          <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" class="h-10 w-auto mb-4">
           <p class="text-purple-200 text-sm leading-relaxed">
-
             Creative design agency transforming ideas into meaningful visual experiences through branding, design, and development.
-
           </p>
-
         </div>
-
-        
-
         <!-- Social Links -->
-
         <div class="flex gap-3">
-
           <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Facebook">
-
-            <i class="fab fa-facebook-f text-purple-200"></i>
-
-          </a>
-
+            <i class="bi bi-behance"></i>
+          </a> 
           <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Twitter">
-
-            <i class="fab fa-twitter text-purple-200"></i>
-
+            <i class="bi bi-twitter-x"></i>
           </a>
-
           <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Instagram">
-
-            <i class="fab fa-instagram text-purple-200"></i>
-
+            <i class="bi bi-instagram"></i>
           </a>
-
           <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="LinkedIn">
-
-            <i class="fab fa-linkedin-in text-purple-200"></i>
-
+            <i class="bi bi-facebook"></i>
           </a>
-
         </div>
-
       </div>
-
-
-
       <!-- Quick Links -->
-
       <div>
-
         <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-
           <span class="w-1 h-6 bg-purple-400 rounded-full"></span>
-
           Quick Links
-
         </h3>
-
         <ul class="space-y-3">
-
           <li>
-
             <a href="{{ asset('/') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               Home
-
             </a>
-
           </li>
-
           <li>
-
             <a href="{{ asset('/about-bellah-options') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               About Us
-
             </a>
-
           </li>
-
           <li>
-
             <a href="{{ asset('/bellah-options-services') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               Services
-
             </a>
-
           </li>
-
           <li>
-
             <a href="{{ asset('/contact-bellah-options') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               Contact
-
             </a>
-
           </li>
-
         </ul>
-
       </div>
-
-
-
       <!-- Services -->
-
       <div>
-
         <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-
           <span class="w-1 h-6 bg-cyan-400 rounded-full"></span>
-
           Services
-
         </h3>
-
         <ul class="space-y-3">
-
           <li>
-
             <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               Brand Design
-
             </a>
-
           </li>
-
-          <li>
-
+         <li>
             <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               Graphic Design
-
             </a>
-
           </li>
-
           <li>
-
             <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               Web Design
-
             </a>
-
           </li>
-
           <li>
-
             <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-
               </svg>
-
               UI/UX Design
-
             </a>
-
           </li>
-
         </ul>
-
       </div>
-
-
-
       <!-- Contact Info -->
-
       <div>
-
         <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-
           <span class="w-1 h-6 bg-purple-400 rounded-full"></span>
-
           Get In Touch
-
         </h3>
-
         <ul class="space-y-4">
-
           <li class="flex items-start gap-3">
-
             <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-
               <i class="fas fa-phone text-purple-300"></i>
-
             </div>
-
             <div>
-
               <p class="text-sm text-purple-300 mb-1">Phone</p>
-
               <a href="tel:+2348108671804" class="text-white hover:text-purple-200 transition-colors">
-
-                +234 810 867 1804
-
+                +234 803 352 9330
               </a>
-
             </div>
-
           </li>
 
           <li class="flex items-start gap-3">
@@ -394,7 +254,7 @@
 
       "backgroundColor": "#10b926ff",
 
-      "ctaText": "Message Us",
+      "ctaText": "",
 
       "borderRadius": "12",
 
@@ -408,7 +268,7 @@
 
       "textColor": "#ffffff",
 
-      "phoneNumber": "+2348108671804",
+      "phoneNumber": "#",
 
       "messageText": "👋🏻 Hello, I'm visiting from your website",
 
