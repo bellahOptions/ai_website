@@ -5,9 +5,9 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="{{ asset('/') }}" class="flex items-center space-x-2">
-                <img src="{{ asset('logo.svg') }}" alt="AI Digitals Logo" class="h-10 w-auto block dark:hidden">
+                <img src="{{ asset('logo.svg') }}" alt="AI Digitals Logo" class="h-8 md:h-10 w-auto block dark:hidden">
     <!-- Dark Mode Logo -->
-    <img src="{{ asset('logo-wt.svg') }}" alt="Bellah Options Logo (Dark Mode)" class="h-10 w-auto hidden dark:block">
+    <img src="{{ asset('logo-wt.svg') }}" alt="Bellah Options Logo (Dark Mode)" class="h-8 md:h-10 w-auto hidden dark:block">
           </a>
         </div>
         <!-- Desktop Menu -->
@@ -30,7 +30,7 @@
       </div>
     </div>
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-purple-100 dark:bg-gray-900">
       <a href="{{ asset('/') }}" class="block px-4 py-2 nav-link">Home</a>
       <a href="{{ asset('/about-bellah-options') }}" class="block px-4 py-2 nav-link dark:text-white">About Us</a>
       <a href="{{ asset('/bellah-options-services') }}" class="block px-4 py-2 nav-link dark:text-white">Services</a>

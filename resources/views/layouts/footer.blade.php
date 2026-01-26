@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-gradient-to-br from-purple-950 via-purle-900 to-purple-900 dark:from-slate-950 dark:via-purple-950 dark:to-purple-950 text-white">
+<footer class="bg-linear-to-br from-purple-950 via-purle-900 to-purple-900 dark:from-slate-950 dark:via-purple-950 dark:to-purple-950 text-white">
   <!-- Main Footer Content -->
    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16"> 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -8,7 +8,7 @@
         <div>
           <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" class="h-10 w-auto mb-4">
           <p class="text-purple-200 text-sm leading-relaxed">
-            Creative design agency transforming ideas into meaningful visual experiences through branding, design, and development.
+            We currently specialize in social media management, helping brands become visible, relevant, and unforgettable online
           </p>
         </div>
         <!-- Social Links -->
