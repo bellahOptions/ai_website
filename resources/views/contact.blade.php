@@ -9,4 +9,6 @@
                 <p class="text-center text-2xl text-purple-100">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, sunt quam iste eligendi, doloribus assumenda placeat a, deserunt qui quo doloremque ratione explicabo rerum non impedit! Repudiandae voluptas eaque neque!</p>
             </div>
         </section>
+
+        <!--Mainboard
 @endsection
