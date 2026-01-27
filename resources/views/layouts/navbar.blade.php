@@ -4,7 +4,7 @@
       <div class="flex justify-between h-16">
         <!-- Logo -->
         <div class="flex items-center">
-          <a href="{{ asset('home.page') }}" class="flex items-center space-x-2">
+          <a href="{{ route('home.page') }}" class="flex items-center space-x-2">
                 <img src="{{ asset('logo.svg') }}" alt="AI Digitals Logo" class="h-8 md:h-10 w-auto block dark:hidden">
     <!-- Dark Mode Logo -->
     <img src="{{ asset('logo-wt.svg') }}" alt="Bellah Options Logo (Dark Mode)" class="h-8 md:h-10 w-auto hidden dark:block">

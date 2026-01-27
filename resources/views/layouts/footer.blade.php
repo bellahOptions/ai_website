@@ -80,7 +80,7 @@
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
-              Brand Design
+              Content creation
             </a>
           </li>
          <li>
@@ -88,7 +88,7 @@
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
-              Graphic Design
+              Social Media Management
             </a>
           </li>
           <li>
@@ -96,7 +96,7 @@
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
-              Web Design
+              Content strategy & planning
             </a>
           </li>
           <li>
@@ -104,7 +104,7 @@
               <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
-              UI/UX Design
+              Community management
             </a>
           </li>
         </ul>
