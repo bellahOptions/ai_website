@@ -2,6 +2,10 @@
 @section('title', 'Welcome to AI Digital agency')
 @section('content')
 <main class="bg-purple-100 ">
+    <!--First view-->
+    <section class="">
+
+    </section>
     <!--Hero-->
     <div class="hero flex flex-col mn-h-screen mb-20 start-cta py-30 md:py-40 md:px-50 h-auto relative overflow-hidden items-center">
           <!-- Animated Background -->

@@ -4,7 +4,7 @@
       <div class="flex justify-between h-16">
         <!-- Logo -->
         <div class="flex items-center">
-          <a href="{{ asset('/') }}" class="flex items-center space-x-2">
+          <a href="{{ asset('home.page') }}" class="flex items-center space-x-2">
                 <img src="{{ asset('logo.svg') }}" alt="AI Digitals Logo" class="h-8 md:h-10 w-auto block dark:hidden">
     <!-- Dark Mode Logo -->
     <img src="{{ asset('logo-wt.svg') }}" alt="Bellah Options Logo (Dark Mode)" class="h-8 md:h-10 w-auto hidden dark:block">
@@ -12,11 +12,10 @@
         </div>
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 items-center">
-          <a href="{{ asset('/') }}" class="nav-link dark:text-white">Home</a>
-          <a href="{{ asset('/about-bellah-options') }}" class="nav-link dark:text-white">About Us</a>
-          <a href="{{ asset('/bellah-options-services') }}" class="nav-link dark:text-white">Services</a>
-          <a href="{{ asset('/gallery') }}" class="nav-link dark:text-white">Gallery</a>
-          <a href="{{ asset('/contact-bellah-options') }}" class="nav-link dark:text-white">Contact</a>
+          <a href="{{ route('home.page') }}" class="nav-link dark:text-white">Home</a>
+          <a href="{{ route('about.page') }}" class="nav-link dark:text-white">About Us</a>
+          <a href="{{ route('services.page') }}" class="nav-link dark:text-white">Services</a>
+          <a href="{{ route('contact.page') }}" class="nav-link dark:text-white">Contact</a>
           <a href="#" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">Book an Appointment </a>
         </div>
         <!-- Mobile Menu Button -->
@@ -31,14 +30,13 @@
     </div>
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 bg-purple-100 dark:bg-gray-900">
-      <a href="{{ asset('/') }}" class="block px-4 py-2 nav-link">Home</a>
-      <a href="{{ asset('/about-bellah-options') }}" class="block px-4 py-2 nav-link dark:text-white">About Us</a>
-      <a href="{{ asset('/bellah-options-services') }}" class="block px-4 py-2 nav-link dark:text-white">Services</a>
-      <a href="{{ asset('/gallery') }}" class="block px-4 py-2 nav-link dark:text-white">Gallery</a>
-      <a href="{{ asset('/contact-bellah-options') }}" class="block px-4 py-2 nav-link dark:text-white">Contact</a>
+      <a href="{{ route('home.page') }}" class="block px-4 py-2 nav-link">Home</a>
+      <a href="{{ route('about.page') }}" class="block px-4 py-2 nav-link dark:text-white">About Us</a>
+      <a href="{{ route('services.page') }}" class="block px-4 py-2 nav-link dark:text-white">Services</a>
+      <a href="{{ route('contact.page') }}" class="block px-4 py-2 nav-link dark:text-white">Contact</a>
       <div class="flex items-center justify-between px-4 py-2">
       </div>
-      <a href="{{ asset('/order-design') }}" class="px-4 py-2 mb-3 bg-purple-600 w-full block text-white rounded-lg hover:bg-purple-700 transition">Book an Appointment</a>
+      <a href="{{ route('services.page') }}" class="px-4 py-2 mb-3 bg-purple-600 w-full block text-white rounded-lg hover:bg-purple-700 transition">Book an Appointment</a>
     </div>
   </nav>
   <!-- Custom Styles -->
