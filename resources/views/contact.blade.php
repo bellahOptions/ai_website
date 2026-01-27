@@ -312,7 +312,13 @@
                             </svg>
                         </summary>
                         <div class="px-6 pb-6 text-gray-600 dark:text-gray-400">
-                            We provide comprehensive digital solutions including web development, mobile apps, AI integration, and digital marketing services.
+                            We offer strategic social media management designed to attract, engage, and convert. What this includes:
+
+Content strategy & planning
+Content creation & scheduling
+Community management
+Brand positioning & messaging
+Growth-focused reporting
                         </div>
                     </details>
 
