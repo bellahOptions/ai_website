@@ -1,0 +1,216 @@
+/* Purple Theme Override for Xpovio Template */
+/* Replaces orange #ff7425 with AI Digital Agency purple #61078B */
+
+:root {
+    --primary-color: #7c22a8;
+    --primary-color-hover: #61078B;
+    --primary-rgb: 124, 34, 168;
+    --theme-bg: #ffffff;
+    --theme-color: #0e0e0e;
+}
+
+/* Primary color overrides */
+.btn--primary,
+.btn--primary:hover {
+    background-color: #61078B;
+    border-color: #61078B;
+    color: #ffffff;
+}
+
+.btn--primary:hover {
+    background-color: #7c22a8;
+    border-color: #7c22a8;
+}
+
+.btn--secondary {
+    border-color: #61078B;
+    color: #61078B;
+}
+
+.btn--secondary:hover {
+    background-color: #61078B;
+    color: #ffffff;
+}
+
+/* Sub-title arrow color */
+.sub-title,
+.sub-title i {
+    color: #7c22a8;
+}
+
+/* Primary text references */
+.primary-text {
+    color: #61078B;
+}
+
+/* Skill bar fill */
+.skill-bar {
+    background-color: #61078B;
+}
+
+/* Active/hover states */
+.navbar__item.active > a,
+.navbar__item > a:hover {
+    color: #61078B;
+}
+
+/* Portfolio hover overlay */
+.portfolio__single:hover .portfolio__single-content {
+    background-color: #61078B;
+}
+
+.portfolio__single-content a i {
+    color: #61078B;
+}
+
+.portfolio__single-content h4 a:hover {
+    color: #61078B;
+}
+
+/* Offer section item numbers */
+.offer__cta-single .sub-title {
+    color: #7c22a8;
+}
+
+.offer__cta-single h2 a:hover {
+    color: #61078B;
+}
+
+/* Blog links */
+.blog__single-content h4 a:hover,
+.blog__single-meta a:hover {
+    color: #61078B;
+}
+
+/* Testimonial quote icon */
+.testimonial-s__content .quote i {
+    color: #61078B;
+}
+
+/* Footer */
+.footer__single-form .subscribe {
+    background-color: #61078B;
+}
+
+.footer__single-meta a:hover,
+.footer__single-content ul li a:hover {
+    color: #7c22a8;
+}
+
+/* Banner accent */
+.banner .text-stroke {
+    -webkit-text-stroke-color: #61078B;
+}
+
+/* Lines decoration */
+.line span,
+.lines .line {
+    background-color: rgba(97, 7, 139, 0.08);
+}
+
+/* Preloader */
+.preloader {
+    background-color: #61078B;
+}
+
+/* Input focus */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #61078B !important;
+    outline-color: #61078B !important;
+}
+
+/* Scroll up button */
+#scrollUp {
+    background-color: #61078B;
+}
+
+/* Custom cursor */
+.cursor-big,
+.cursor-small {
+    border-color: #61078B;
+    background-color: #61078B;
+}
+
+/* Next page section hover */
+.next__text-slider-single h2 a:hover {
+    color: #61078B;
+}
+
+/* Banner interval span */
+.banner__content h1 .interval {
+    color: #7c22a8;
+}
+
+/* Social links hover */
+.social a:hover {
+    color: #61078B;
+    border-color: #61078B;
+}
+
+/* Agency section */
+.agency__content .section__content-cta a.btn--primary {
+    background-color: #61078B;
+    border-color: #61078B;
+}
+
+/* Light theme specific overrides */
+.home-light .offer__cta-single {
+    border-bottom-color: rgba(97, 7, 139, 0.12);
+}
+
+.home-light .offer__cta-single:hover h2 a {
+    color: #61078B;
+}
+
+/* Contact form */
+.contact-form .btn--primary {
+    background-color: #61078B;
+}
+
+/* FAQ accordion */
+.accordion-button:not(.collapsed) {
+    color: #61078B;
+    background-color: rgba(97, 7, 139, 0.06);
+}
+
+.accordion-button:not(.collapsed)::after {
+    filter: invert(12%) sepia(92%) saturate(2690%) hue-rotate(277deg) brightness(60%) contrast(110%);
+}
+
+/* Page header breadcrumb */
+.page-header .sub-title,
+.page-header .breadcrumb-item.active {
+    color: #7c22a8;
+}
+
+/* Highlight / selection */
+::selection {
+    background-color: #61078B;
+    color: #ffffff;
+}
+
+/* Mobile offcanvas close button */
+.close-offcanvas-menu:hover i {
+    color: #61078B;
+}
+
+/* Star decorations — tint them purple instead of yellow */
+.star {
+    filter: hue-rotate(200deg) saturate(1.5);
+}
+
+/* Slick dots */
+.slick-dots li.slick-active button:before,
+.slick-dots li.slick-active button {
+    color: #61078B;
+    background-color: #61078B;
+}
+
+/* Slide nav arrows */
+.slide-btn:hover {
+    background-color: #61078B;
+    border-color: #61078B;
+    color: #ffffff;
+}

@@ -1,370 +1,115 @@
-<!-- Footer -->
-<footer class="bg-linear-to-br from-purple-950 via-purle-900 to-purple-900 dark:from-slate-950 dark:via-purple-950 dark:to-purple-950 text-white">
-  <!-- Main Footer Content -->
-   <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16"> 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-      <!-- Company Info -->
-       <div class="space-y-6">
-        <div>
-          <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" class="h-10 w-auto mb-4">
-          <p class="text-purple-200 text-sm leading-relaxed">
-            We currently specialize in social media management, helping brands become visible, relevant, and unforgettable online
-          </p>
+{{-- ==== footer start ==== --}}
+<footer class="footer section pb-0" data-background="{{ asset('assets/images/footer/footer-bg.png') }}">
+    <div class="container">
+        <div class="row gaper">
+            {{-- Company Info --}}
+            <div class="col-12 col-lg-5 col-xl-5">
+                <div class="footer__single">
+                    <a href="{{ route('home.page') }}" class="logo">
+                        <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" style="height:40px;width:auto;filter:brightness(0) invert(1);">
+                    </a>
+                    <div class="footer__single-meta">
+                        <a href="https://maps.google.com" target="_blank">
+                            <i class="fa-sharp fa-solid fa-location-dot"></i>
+                            Lagos State, Nigeria
+                        </a>
+                        <a href="tel:+2347077776734">
+                            <i class="fa-sharp fa-solid fa-phone-volume"></i>
+                            +234 707 777 6734
+                        </a>
+                        <a href="mailto:aidigitalagency08@gmail.com">
+                            <i class="fa-sharp fa-solid fa-envelope"></i>
+                            aidigitalagency08@gmail.com
+                        </a>
+                    </div>
+                    <div class="footer__cta text-start">
+                        <a href="{{ route('contact.page') }}" class="btn btn--secondary">Book a Call Now</a>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Quick Links --}}
+            <div class="col-12 col-lg-2 col-xl-2">
+                <div class="footer__single">
+                    <div class="footer__single-intro">
+                        <h5>Discover</h5>
+                    </div>
+                    <div class="footer__single-content">
+                        <ul>
+                            <li><a href="{{ route('about.page') }}">About Us</a></li>
+                            <li><a href="{{ route('services.page') }}">Our Services</a></li>
+                            <li><a href="{{ route('blog.list') }}">News & Blog</a></li>
+                            <li><a href="{{ route('contact.page') }}">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Services --}}
+            <div class="col-12 col-lg-2 col-xl-2">
+                <div class="footer__single">
+                    <div class="footer__single-intro">
+                        <h5>Services</h5>
+                    </div>
+                    <div class="footer__single-content">
+                        <ul>
+                            <li><a href="{{ route('services.page') }}">Content Creation</a></li>
+                            <li><a href="{{ route('services.page') }}">Social Media Mgmt</a></li>
+                            <li><a href="{{ route('services.page') }}">Content Strategy</a></li>
+                            <li><a href="{{ route('services.page') }}">Community Mgmt</a></li>
+                            <li><a href="{{ route('services.page') }}">Brand Positioning</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Newsletter --}}
+            <div class="col-12 col-lg-3 col-xl-3">
+                <div class="footer__single">
+                    <div class="footer__single-intro">
+                        <h5>Stay in the Loop</h5>
+                    </div>
+                    <div class="footer__single-content">
+                        <p>Get insights on social media strategy and brand growth straight to your inbox.</p>
+                        <div class="footer__single-form">
+                            <form action="#" method="post">
+                                @csrf
+                                <div class="input-email">
+                                    <input type="email" name="subscribe_email" placeholder="Enter Your Email" required>
+                                    <button type="submit" class="subscribe" aria-label="Subscribe">
+                                        <i class="fa-sharp fa-solid fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Social Links -->
-        <div class="flex gap-3">
-          <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Facebook">
-            <i class="bi bi-behance"></i>
-          </a> 
-          <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Twitter">
-            <i class="bi bi-twitter-x"></i>
-          </a>
-          <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="Instagram">
-            <i class="bi bi-instagram"></i>
-          </a>
-          <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all hover:scale-110" aria-label="LinkedIn">
-            <i class="bi bi-facebook"></i>
-          </a>
+
+        {{-- Copyright bar --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="footer__copyright">
+                    <div class="row align-items-center gaper">
+                        <div class="col-12 col-lg-8">
+                            <div class="footer__copyright-text text-center text-lg-start">
+                                <p>Copyright &copy; <span id="copyYear"></span> AI Digital Agency. All Rights Reserved.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="social justify-content-center justify-content-lg-end">
+                                <a href="#" target="_blank" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" target="_blank" aria-label="twitter"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#" target="_blank" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#" target="_blank" aria-label="linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#" target="_blank" aria-label="behance"><i class="fa-brands fa-behance"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- Quick Links -->
-      <div>
-        <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-          <span class="w-1 h-6 bg-purple-400 rounded-full"></span>
-          Quick Links
-        </h3>
-        <ul class="space-y-3">
-          <li>
-            <a href="{{ asset('/') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="{{ asset('/about-bellah-options') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              About Us
-            </a>
-          </li>
-          <li>
-            <a href="{{ asset('/bellah-options-services') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="{{ asset('/contact-bellah-options') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Contact
-            </a>
-          </li>
-        </ul>
-      </div>
-      <!-- Services -->
-      <div>
-        <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-          <span class="w-1 h-6 bg-cyan-400 rounded-full"></span>
-          Services
-        </h3>
-        <ul class="space-y-3">
-          <li>
-            <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Content creation
-            </a>
-          </li>
-         <li>
-            <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Social Media Management
-            </a>
-          </li>
-          <li>
-            <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Content strategy & planning
-            </a>
-          </li>
-          <li>
-            <a href="{{ asset('/graphic-design') }}" class="text-purple-200 hover:text-white transition-colors flex items-center gap-2 group">
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" class="text-gray-300" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-              Community management
-            </a>
-          </li>
-        </ul>
-      </div>
-      <!-- Contact Info -->
-      <div>
-        <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-          <span class="w-1 h-6 bg-purple-400 rounded-full"></span>
-          Get In Touch
-        </h3>
-        <ul class="space-y-4">
-          <li class="flex items-start gap-3">
-            <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-              <i class="bi bi-telephone"></i>
-            </div>
-            <div>
-              <p class="text-sm text-purple-300 mb-1">Phone</p>
-              <a href="tel:+2347077776734" class="text-white hover:text-purple-200 transition-colors">
-                +234 707 777 6734
-              </a>
-            </div>
-          </li>
-
-          <li class="flex items-start gap-3">
-
-            <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-
-              <i class="bi bi-envelope"></i>
-
-            </div>
-
-            <div>
-
-              <p class="text-sm text-purple-300 mb-1">Email</p>
-
-              <a href="mailto:info@aidigitalagency.com" class="text-white hover:text-purple-200 transition-colors break-all">
-
-                aidigitalagency08@gmail.com
-
-              </a>
-
-            </div>
-
-          </li>
-
-          <li class="flex items-start gap-3">
-
-            <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-
-              <i class="bi bi-geo"></i>
-
-            </div>
-
-            <div>
-
-              <p class="text-sm text-purple-300 mb-1">Location</p>
-
-              <p class="text-white">Lagos State, Nigeria</p>
-
-            </div>
-
-          </li>
-
-        </ul>
-
-      </div>
-
-
-
     </div>
-
-  </div>
-
-
-
-  <!-- Bottom Bar -->
-
-  <div class="border-t border-white/10">
-
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-
-        <p class="text-purple-200 text-sm text-center md:text-left">
-
-          © {{  date('Y') }} AI Digital Agency. All rights reserved.
-
-        </p>
-
-        <div class="flex gap-6 text-sm">
-
-          <a href="#" class="text-purple-200 hover:text-white transition-colors">Privacy Policy</a>
-
-          <a href="#" class="text-purple-200 hover:text-white transition-colors">Terms of Service</a>
-
-          <a href="#" class="text-purple-200 hover:text-white transition-colors">Cookie Policy</a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
 </footer>
-
-
-
-<!-- Scroll to Top Button -->
-
-<button id="scrollToTop" 
-
-        class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-600 hover:from-purple-700 hover:to-purple-700 text-white rounded-xl shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center group z-40"
-
-        aria-label="Scroll to top">
-
-  <svg class="w-6 h-6 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-    <path stroke-linecap="round" style="color:#ffffff" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-
-  </svg>
-
-</button>
-
-
-
-<!-- WhatsApp Chat Widget -->
-
-<script>
-
-  var url = 'https://cdn.waplus.io/waplus-crm/settings/ossembed.js';
-
-  var s = document.createElement('script');
-
-  s.type = 'text/javascript';
-
-  s.async = true;
-
-  s.src = url;
-
-  var options = {
-
-    "enabled": true,
-
-    "chatButtonSetting": {
-
-      "backgroundColor": "#10b926ff",
-
-      "ctaText": "",
-
-      "borderRadius": "12",
-
-      "marginLeft": "20",
-
-      "marginBottom": "50",
-
-      "marginRight": "20",
-
-      "position": "left",
-
-      "textColor": "#ffffff",
-
-      "phoneNumber": "#",
-
-      "messageText": "👋🏻 Hello, I'm visiting from your website",
-
-      "trackClick": true
-
-    }
-
-  };
-
-  s.onload = function() {
-
-    CreateWhatsappBtn(options);
-
-  };
-
-  var x = document.getElementsByTagName('script')[0];
-
-  x.parentNode.insertBefore(s, x);
-
-</script>
-
-
-
-<!-- Global Scripts -->
-
-<script>
-
-  // Scroll to Top functionality
-
-  const scrollToTopBtn = document.getElementById('scrollToTop');
-
-  
-
-  window.addEventListener('scroll', () => {
-
-    if (window.pageYOffset > 300) {
-
-      scrollToTopBtn.classList.remove('opacity-0', 'invisible');
-
-      scrollToTopBtn.classList.add('opacity-100', 'visible');
-
-    } else {
-
-      scrollToTopBtn.classList.add('opacity-0', 'invisible');
-
-      scrollToTopBtn.classList.remove('opacity-100', 'visible');
-
-    }
-
-  });
-
-  
-
-  scrollToTopBtn.addEventListener('click', () => {
-
-    window.scrollTo({
-
-      top: 0,
-
-      behavior: 'smooth'
-
-    });
-
-  });
-
-
-
-  // Add smooth scroll to all anchor links
-
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-    anchor.addEventListener('click', function (e) {
-
-      const href = this.getAttribute('href');
-
-      if (href !== '#' && href !== '#0') {
-
-        e.preventDefault();
-
-        const target = document.querySelector(href);
-
-        if (target) {
-
-          target.scrollIntoView({
-
-            behavior: 'smooth',
-
-            block: 'start'
-
-          });
-
-        }
-
-      }
-
-    });
-
-  });
-  </script>
+{{-- ==== / footer end ==== --}}
