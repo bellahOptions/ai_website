@@ -113,6 +113,7 @@ class InvoiceController extends Controller
     {
         $data = $request->validate([
             'client_id'   => ['required', 'exists:clients,id'],
+            'status'      => ['required', 'in:draft,sent,paid,overdue,cancelled'],
             'issue_date'  => ['required', 'date'],
             'due_date'    => ['required', 'date', 'after_or_equal:issue_date'],
             'tax_rate'    => ['nullable', 'numeric', 'min:0', 'max:100'],
@@ -129,6 +130,7 @@ class InvoiceController extends Controller
         DB::transaction(function () use ($invoice, $data) {
             $invoice->update([
                 'client_id'  => $data['client_id'],
+                'status'     => $data['status'],
                 'issue_date' => $data['issue_date'],
                 'due_date'   => $data['due_date'],
                 'tax_rate'   => $data['tax_rate'] ?? 0,

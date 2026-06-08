@@ -4,157 +4,140 @@
 
 @section('content')
 
-<div class="mt-2 mb-6 flex items-start justify-between">
-    <div>
-        <a href="{{ route('admin.clients.index') }}" class="text-sm flex items-center gap-1.5 text-gray-500 hover:text-gray-700 transition mb-3">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-            Back to Clients
-        </a>
-        <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold text-white shadow" style="background:#61078B;">
+<div style="margin-top:4px;">
+    <a href="{{ route('admin.clients.index') }}" class="back-link">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Clients
+    </a>
+
+    <div class="page-header" style="margin-top:10px;align-items:center;">
+        <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:52px;height:52px;border-radius:50%;background:#61078B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0;">
                 {{ substr($client->name, 0, 1) }}
             </div>
             <div>
-                <h2 class="text-xl font-bold text-gray-900">{{ $client->name }}</h2>
-                <div class="flex items-center gap-2 mt-1">
-                    @if($client->company)
-                    <span class="text-sm text-gray-500">{{ $client->company }}</span>
-                    <span class="text-gray-300">·</span>
-                    @endif
+                <h2 style="margin:0;">{{ $client->name }}</h2>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:5px;">
+                    @if($client->company)<span style="font-size:13.5px;color:#6b7280;">{{ $client->company }}</span><span style="color:#d1d5db;">·</span>@endif
                     <span class="badge {{ $client->status === 'active' ? 'badge-active' : 'badge-inactive' }}">{{ ucfirst($client->status) }}</span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex items-center gap-2 mt-8">
-        <a href="{{ route('admin.clients.edit', $client) }}"
-           class="px-4 py-2 rounded-lg text-sm font-semibold text-white transition shadow-sm"
-           style="background:#61078B;"
-           onmouseover="this.style.background='#7c22a8'"
-           onmouseout="this.style.background='#61078B'">
-            Edit Client
-        </a>
-        <a href="{{ route('admin.invoices.create') }}?client_id={{ $client->id }}"
-           class="px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition">
-            + New Invoice
-        </a>
+        <div style="display:flex;gap:8px;">
+            <a href="{{ route('admin.clients.edit', $client) }}" class="btn btn-primary">Edit Client</a>
+            <a href="{{ route('admin.invoices.create') }}?client_id={{ $client->id }}" class="btn btn-secondary">+ New Invoice</a>
+        </div>
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div style="display:grid;grid-template-columns:280px 1fr;gap:20px;">
 
-    {{-- Left: contact info + stats --}}
-    <div class="space-y-5">
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
-            <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Contact Info</h3>
-            <dl class="space-y-3">
+    {{-- Left column --}}
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
+        {{-- Contact info --}}
+        <div class="admin-card" style="padding:20px;">
+            <p style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px;">Contact Info</p>
+            <dl style="display:flex;flex-direction:column;gap:12px;margin:0;">
                 <div>
-                    <dt class="text-xs text-gray-400 mb-0.5">Email</dt>
-                    <dd class="text-sm text-gray-900">
-                        <a href="mailto:{{ $client->email }}" class="hover:underline" style="color:#61078B;">{{ $client->email }}</a>
-                    </dd>
+                    <dt style="font-size:11.5px;color:#9ca3af;margin-bottom:2px;">Email</dt>
+                    <dd style="margin:0;"><a href="mailto:{{ $client->email }}" style="font-size:13.5px;color:#61078B;text-decoration:none;">{{ $client->email }}</a></dd>
                 </div>
                 @if($client->phone)
                 <div>
-                    <dt class="text-xs text-gray-400 mb-0.5">Phone</dt>
-                    <dd class="text-sm text-gray-900">{{ $client->phone }}</dd>
+                    <dt style="font-size:11.5px;color:#9ca3af;margin-bottom:2px;">Phone</dt>
+                    <dd style="margin:0;font-size:13.5px;color:#374151;">{{ $client->phone }}</dd>
                 </div>
                 @endif
                 @if($client->address || $client->city)
                 <div>
-                    <dt class="text-xs text-gray-400 mb-0.5">Address</dt>
-                    <dd class="text-sm text-gray-900">
-                        @if($client->address)<span class="block">{{ $client->address }}</span>@endif
-                        {{ $client->city ? $client->city . ', ' : '' }}{{ $client->country }}
+                    <dt style="font-size:11.5px;color:#9ca3af;margin-bottom:2px;">Address</dt>
+                    <dd style="margin:0;font-size:13.5px;color:#374151;line-height:1.5;">
+                        @if($client->address)<span style="display:block;">{{ $client->address }}</span>@endif
+                        {{ $client->city ? "{$client->city}, " : '' }}{{ $client->country }}
                     </dd>
                 </div>
                 @endif
                 <div>
-                    <dt class="text-xs text-gray-400 mb-0.5">Member since</dt>
-                    <dd class="text-sm text-gray-900">{{ $client->created_at->format('M j, Y') }}</dd>
+                    <dt style="font-size:11.5px;color:#9ca3af;margin-bottom:2px;">Member since</dt>
+                    <dd style="margin:0;font-size:13.5px;color:#374151;">{{ $client->created_at->format('M j, Y') }}</dd>
                 </div>
             </dl>
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
-            <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Billing Summary</h3>
-            <dl class="space-y-3">
-                <div class="flex justify-between">
-                    <dt class="text-sm text-gray-500">Total Billed</dt>
-                    <dd class="text-sm font-semibold text-gray-900">₦{{ number_format($client->totalBilled(), 2) }}</dd>
+        {{-- Billing summary --}}
+        <div class="admin-card" style="padding:20px;">
+            <p style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px;">Billing Summary</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:13.5px;color:#6b7280;">Total Billed</span>
+                    <span style="font-size:13.5px;font-weight:600;color:#111827;">₦{{ number_format($client->totalBilled(), 2) }}</span>
                 </div>
-                <div class="flex justify-between">
-                    <dt class="text-sm text-gray-500">Total Paid</dt>
-                    <dd class="text-sm font-semibold text-green-700">₦{{ number_format($client->totalPaid(), 2) }}</dd>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:13.5px;color:#6b7280;">Total Paid</span>
+                    <span style="font-size:13.5px;font-weight:600;color:#15803d;">₦{{ number_format($client->totalPaid(), 2) }}</span>
                 </div>
-                <div class="flex justify-between border-t border-gray-100 pt-3">
-                    <dt class="text-sm text-gray-500">Outstanding</dt>
-                    <dd class="text-sm font-semibold text-orange-600">₦{{ number_format($client->totalBilled() - $client->totalPaid(), 2) }}</dd>
+                <div style="border-top:1px solid #f0f1f3;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:13.5px;color:#6b7280;">Outstanding</span>
+                    <span style="font-size:13.5px;font-weight:600;color:#ea580c;">₦{{ number_format($client->totalBilled() - $client->totalPaid(), 2) }}</span>
                 </div>
-            </dl>
+            </div>
         </div>
 
         @if($client->notes)
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
-            <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Notes</h3>
-            <p class="text-sm text-gray-700 leading-relaxed">{{ $client->notes }}</p>
+        <div class="admin-card" style="padding:20px;">
+            <p style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px;">Notes</p>
+            <p style="font-size:13.5px;color:#374151;line-height:1.6;margin:0;">{{ $client->notes }}</p>
         </div>
         @endif
     </div>
 
-    {{-- Right: invoice history --}}
-    <div class="lg:col-span-2">
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-            <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-                <h3 class="text-sm font-semibold text-gray-900">Invoice History</h3>
-                <span class="text-xs text-gray-400">{{ $client->invoices->count() }} invoice{{ $client->invoices->count() !== 1 ? 's' : '' }}</span>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b border-gray-100 bg-gray-50">
-                            <th class="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Invoice #</th>
-                            <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Issue Date</th>
-                            <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Due Date</th>
-                            <th class="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</th>
-                            <th class="text-right px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        @forelse($client->invoices->sortByDesc('created_at') as $invoice)
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-5 py-3.5">
-                                <a href="{{ route('admin.invoices.show', $invoice) }}"
-                                   class="text-sm font-medium hover:underline" style="color:#61078B;">
-                                    {{ $invoice->invoice_number }}
-                                </a>
-                            </td>
-                            <td class="px-4 py-3.5 text-sm text-gray-600">{{ $invoice->issue_date->format('M j, Y') }}</td>
-                            <td class="px-4 py-3.5 text-sm text-gray-600">
-                                <span class="{{ $invoice->isOverdue() ? 'text-red-600 font-medium' : '' }}">
-                                    {{ $invoice->due_date->format('M j, Y') }}
-                                </span>
-                            </td>
-                            <td class="px-4 py-3.5">
-                                <span class="badge badge-{{ $invoice->status }}">{{ ucfirst($invoice->status) }}</span>
-                            </td>
-                            <td class="px-5 py-3.5 text-right text-sm font-semibold text-gray-900">
-                                {{ $invoice->currency }} {{ number_format($invoice->total, 2) }}
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="px-5 py-10 text-center text-sm text-gray-400">
-                                No invoices yet.
-                                <a href="{{ route('admin.invoices.create') }}?client_id={{ $client->id }}" class="underline" style="color:#61078B;">Create one</a>
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+    {{-- Invoice history --}}
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <span class="admin-card-title">Invoice History</span>
+            <span style="font-size:12px;color:#9ca3af;">{{ $client->invoices->count() }} invoice{{ $client->invoices->count() !== 1 ? 's' : '' }}</span>
+        </div>
+        <div style="overflow-x:auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Invoice #</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($client->invoices->sortByDesc('created_at') as $invoice)
+                    <tr>
+                        <td>
+                            <a href="{{ route('admin.invoices.show', $invoice) }}" style="color:#61078B;font-weight:600;text-decoration:none;">
+                                {{ $invoice->invoice_number }}
+                            </a>
+                        </td>
+                        <td style="color:#6b7280;">{{ $invoice->issue_date->format('M j, Y') }}</td>
+                        <td>
+                            <span style="font-size:13.5px;{{ $invoice->isOverdue() ? 'color:#b91c1c;font-weight:600;' : 'color:#6b7280;' }}">
+                                {{ $invoice->due_date->format('M j, Y') }}
+                            </span>
+                        </td>
+                        <td><span class="badge badge-{{ $invoice->status }}">{{ ucfirst($invoice->status) }}</span></td>
+                        <td class="text-right" style="font-weight:600;color:#111827;">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" style="text-align:center;padding:40px;color:#9ca3af;font-size:13.5px;">
+                            No invoices yet. <a href="{{ route('admin.invoices.create') }}?client_id={{ $client->id }}" style="color:#61078B;">Create one</a>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
+
 </div>
 
 @endsection

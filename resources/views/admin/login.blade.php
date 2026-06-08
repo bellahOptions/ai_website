@@ -5,84 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login — AI Digital Agency</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css'])
     @endif
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', system-ui, sans-serif; }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f0ff;
+            padding: 20px;
+            margin: 0;
+        }
+        .login-wrap { width: 100%; max-width: 400px; }
+        .login-brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .login-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            background: #61078B;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px;
+            box-shadow: 0 6px 24px rgba(97,7,139,.35);
+        }
+        .login-brand h1 { font-size: 22px; font-weight: 700; color: #111827; margin: 0 0 4px; }
+        .login-brand p  { font-size: 13.5px; color: #9ca3af; margin: 0; }
+        .login-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.07);
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-size: 13.5px; font-weight: 500; color: #374151; margin-bottom: 7px; }
+        .form-input {
+            width: 100%; padding: 10px 14px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 14px; color: #111827;
+            font-family: inherit;
+            outline: none;
+            transition: border 150ms, box-shadow 150ms;
+            background: #fff;
+        }
+        .form-input:focus { border-color: #61078B; box-shadow: 0 0 0 3px rgba(97,7,139,.12); }
+        .form-input::placeholder { color: #d1d5db; }
+        .remember-row { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; }
+        .remember-row label { font-size: 13.5px; color: #4b5563; cursor: pointer; }
+        .remember-row input[type="checkbox"] { accent-color: #61078B; width: 15px; height: 15px; cursor: pointer; }
+        .btn-submit {
+            width: 100%; padding: 11px;
+            background: #61078B; color: #fff;
+            border: none; border-radius: 9px;
+            font-size: 14.5px; font-weight: 600;
+            font-family: inherit; cursor: pointer;
+            transition: background 150ms, box-shadow 150ms;
+            box-shadow: 0 2px 8px rgba(97,7,139,.3);
+        }
+        .btn-submit:hover { background: #7c22a8; box-shadow: 0 4px 16px rgba(97,7,139,.4); }
+        .alert-error {
+            background: #fef2f2; border: 1px solid #fecaca;
+            color: #b91c1c; padding: 10px 14px;
+            border-radius: 9px; font-size: 13px;
+            margin-bottom: 18px;
+        }
+        .back-link-wrap { text-align: center; margin-top: 20px; }
+        .back-link-wrap a { font-size: 13px; color: #9ca3af; text-decoration: none; transition: color 120ms; }
+        .back-link-wrap a:hover { color: #61078B; }
     </style>
 </head>
-<body class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-
-    <div class="w-full max-w-sm">
-
-        {{-- Logo --}}
-        <div class="text-center mb-8">
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg" style="background:#61078B;">
-                <svg width="28" height="28" viewBox="0 0 20 20" fill="white"><path d="M10 2L3 7v11h5v-5h4v5h5V7L10 2z"/></svg>
+<body>
+    <div class="login-wrap">
+        <div class="login-brand">
+            <div class="login-icon">
+                <svg width="26" height="26" viewBox="0 0 20 20" fill="white"><path d="M10 2L3 7v11h5v-5h4v5h5V7L10 2z"/></svg>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900">Admin Portal</h1>
-            <p class="text-sm text-gray-500 mt-1">AI Digital Agency</p>
+            <h1>Admin Portal</h1>
+            <p>AI Digital Agency</p>
         </div>
 
-        {{-- Card --}}
-        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
-
+        <div class="login-card">
             @if(session('error'))
-            <div class="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg mb-5">
-                {{ session('error') }}
-            </div>
+            <div class="alert-error">{{ session('error') }}</div>
             @endif
-
             @if($errors->any())
-            <div class="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg mb-5">
-                @foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach
+            <div class="alert-error">
+                @foreach($errors->all() as $error)<p style="margin:0 0 3px;">{{ $error }}</p>@endforeach
             </div>
             @endif
 
-            <form action="{{ route('admin.login.submit') }}" method="POST" class="space-y-5">
+            <form action="{{ route('admin.login.submit') }}" method="POST">
                 @csrf
-
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email address</label>
-                    <input
-                        type="email" id="email" name="email" required autofocus
-                        value="{{ old('email') }}"
-                        class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:border-transparent transition"
-                        style="focus:ring-color:#61078B;"
-                        placeholder="admin@aidigitalagency.com"
-                    >
+                <div class="form-group">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" id="email" name="email" class="form-input"
+                           value="{{ old('email') }}" required autofocus
+                           placeholder="you@example.com">
                 </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
-                    <input
-                        type="password" id="password" name="password" required
-                        class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:border-transparent transition"
-                        placeholder="••••••••"
-                    >
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input"
+                           required placeholder="••••••••">
                 </div>
-
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" id="remember" name="remember" class="rounded border-gray-300" style="accent-color:#61078B;">
-                    <label for="remember" class="text-sm text-gray-600">Remember me</label>
+                <div class="remember-row">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Keep me signed in</label>
                 </div>
-
-                <button type="submit"
-                        class="w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-white transition shadow-sm hover:shadow-md"
-                        style="background:#61078B;"
-                        onmouseover="this.style.background='#7c22a8'"
-                        onmouseout="this.style.background='#61078B'">
-                    Sign In to Admin
-                </button>
+                <button type="submit" class="btn-submit">Sign In</button>
             </form>
         </div>
 
-        <p class="text-center text-xs text-gray-400 mt-6">
-            <a href="{{ route('home.page') }}" class="hover:text-gray-600 transition-colors">← Back to website</a>
-        </p>
+        <div class="back-link-wrap">
+            <a href="{{ route('home.page') }}">← Back to website</a>
+        </div>
     </div>
-
 </body>
 </html>

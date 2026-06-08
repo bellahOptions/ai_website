@@ -4,84 +4,68 @@
 
 @section('content')
 
-<div class="max-w-2xl mt-2">
-    <div class="mb-6">
-        <a href="{{ route('admin.clients.index') }}" class="text-sm flex items-center gap-1.5 text-gray-500 hover:text-gray-700 transition">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+<div style="max-width:680px;">
+    <div style="margin-top:4px;">
+        <a href="{{ route('admin.clients.index') }}" class="back-link">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             Back to Clients
         </a>
-        <h2 class="text-xl font-bold text-gray-900 mt-3">Add New Client</h2>
+        <div class="page-header" style="margin-top:6px;">
+            <div><h2>Add New Client</h2></div>
+        </div>
     </div>
 
-    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-        <form action="{{ route('admin.clients.store') }}" method="POST" class="space-y-5">
+    <div class="admin-card" style="padding:28px;">
+        <form action="{{ route('admin.clients.store') }}" method="POST">
             @csrf
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Full Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" value="{{ old('name') }}" required
-                           class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
+                <div class="form-group">
+                    <label class="form-label">Full Name <span class="req">*</span></label>
+                    <input type="text" name="name" value="{{ old('name') }}" required class="form-input" placeholder="e.g. John Doe">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Email <span class="text-red-500">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" required
-                           class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <div class="form-group">
+                    <label class="form-label">Email <span class="req">*</span></label>
+                    <input type="email" name="email" value="{{ old('email') }}" required class="form-input" placeholder="client@example.com">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Phone</label>
-                    <input type="tel" name="phone" value="{{ old('phone') }}"
-                           class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" name="phone" value="{{ old('phone') }}" class="form-input" placeholder="+234 700 000 0000">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label>
-                    <input type="text" name="company" value="{{ old('company') }}"
-                           class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input type="text" name="company" value="{{ old('company') }}" class="form-input" placeholder="Company name (optional)">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">City</label>
-                    <input type="text" name="city" value="{{ old('city') }}"
-                           class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <div class="form-group">
+                    <label class="form-label">City</label>
+                    <input type="text" name="city" value="{{ old('city') }}" class="form-input" placeholder="Lagos">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Country</label>
-                    <input type="text" name="country" value="{{ old('country', 'Nigeria') }}"
-                           class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <div class="form-group">
+                    <label class="form-label">Country</label>
+                    <input type="text" name="country" value="{{ old('country', 'Nigeria') }}" class="form-input">
                 </div>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1.5">Address</label>
-                <textarea name="address" rows="2"
-                          class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none">{{ old('address') }}</textarea>
+            <div class="form-group" style="margin-bottom:18px;">
+                <label class="form-label">Address</label>
+                <textarea name="address" rows="2" class="form-input" placeholder="Street address (optional)">{{ old('address') }}</textarea>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
-                <select name="status" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400">
-                    <option value="active" {{ old('status', 'active') === 'active' ? 'selected' : '' }}>Active</option>
+            <div class="form-group" style="margin-bottom:18px;">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-input" style="max-width:200px;">
+                    <option value="active"   {{ old('status', 'active') === 'active'   ? 'selected' : '' }}>Active</option>
                     <option value="inactive" {{ old('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
                 </select>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1.5">Notes</label>
-                <textarea name="notes" rows="3"
-                          class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none"
-                          placeholder="Internal notes about this client…">{{ old('notes') }}</textarea>
+            <div class="form-group" style="margin-bottom:26px;">
+                <label class="form-label">Notes</label>
+                <textarea name="notes" rows="3" class="form-input" placeholder="Internal notes about this client…">{{ old('notes') }}</textarea>
             </div>
 
-            <div class="flex items-center gap-3 pt-2">
-                <button type="submit"
-                        class="px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition shadow-sm"
-                        style="background:#61078B;"
-                        onmouseover="this.style.background='#7c22a8'"
-                        onmouseout="this.style.background='#61078B'">
-                    Create Client
-                </button>
-                <a href="{{ route('admin.clients.index') }}" class="px-5 py-2.5 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition">
-                    Cancel
-                </a>
+            <div style="display:flex;gap:10px;">
+                <button type="submit" class="btn btn-primary">Create Client</button>
+                <a href="{{ route('admin.clients.index') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
