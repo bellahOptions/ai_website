@@ -1,5 +1,5 @@
 {{-- ==== footer start ==== --}}
-<footer class="footer section pb-0" data-background="{{ asset('assets/images/footer/footer-bg.png') }}">
+<footer class="footer section pb-0 bg-[#62068d]">
     <div class="container">
         <div class="row gaper">
             {{-- Company Info --}}

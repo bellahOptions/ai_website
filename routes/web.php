@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\InvoiceController;
 
+// Redirect Fortify's /login to admin login (Fortify is installed but unused)
+Route::get('/login', fn() => redirect()->route('admin.login'))->name('login');
+
 // =============================================
 // PUBLIC SITE ROUTES
 // =============================================
@@ -31,7 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     // Protected admin routes
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

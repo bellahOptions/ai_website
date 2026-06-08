@@ -54,25 +54,25 @@
 {{-- ==== / banner end ==== --}}
 
 {{-- ==== agency / about intro start ==== --}}
-<section class="section agency">
+<section class="section agency bg-purple-600" style="background-color: #62068d;">
     <div class="container">
         <div class="row gaper align-items-center">
             <div class="col-12 col-lg-6">
                 <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-one.png') }}" alt="AI Digital Agency Team" class="thumb-one fade-left">
+                    <img src="{{ asset('assets/images/agency/thumb-one.png') }}" alt="AI Digital Agency Team" class="rounded-lg thumb-one fade-left">
                     <img src="{{ asset('assets/images/agency/thumb-two.png') }}" alt="AI Digital Agency Work" class="thumb-two fade-right">
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="agency__content section__content">
-                    <span class="sub-title">
+                    <span class="sub-title text-white">
                         WHO WE ARE
                         <i class="fa-solid fa-arrow-right"></i>
                     </span>
-                    <h2 class="title title-anim">
+                    <h2 class="title title-anim text-white leading-tight">
                         Results-driven social media management for growing brands
                     </h2>
-                    <div class="paragraph">
+                    <div class="paragraph text-white">
                         <p>AI Digital Agency is a results-driven digital solutions company helping brands stand out in today's crowded digital space. We specialize in social media management — helping brands become visible, relevant, and unforgettable online.</p>
                     </div>
                     <div class="skill-wrap">
