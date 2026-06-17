@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login — AI Digital Agency</title>
+    <title>Forgot Password — AI Digital Agency</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +45,8 @@
             padding: 32px;
             box-shadow: 0 4px 24px rgba(0,0,0,.07);
         }
+        .card-title { font-size: 16px; font-weight: 600; color: #111827; margin: 0 0 6px; }
+        .card-desc  { font-size: 13.5px; color: #6b7280; margin: 0 0 22px; line-height: 1.5; }
         .form-group { margin-bottom: 18px; }
         .form-label { display: block; font-size: 13.5px; font-weight: 500; color: #374151; margin-bottom: 7px; }
         .form-input {
@@ -59,9 +61,6 @@
         }
         .form-input:focus { border-color: #61078B; box-shadow: 0 0 0 3px rgba(97,7,139,.12); }
         .form-input::placeholder { color: #d1d5db; }
-        .remember-row { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; }
-        .remember-row label { font-size: 13.5px; color: #4b5563; cursor: pointer; }
-        .remember-row input[type="checkbox"] { accent-color: #61078B; width: 15px; height: 15px; cursor: pointer; }
         .btn-submit {
             width: 100%; padding: 11px;
             background: #61078B; color: #fff;
@@ -75,6 +74,12 @@
         .alert-error {
             background: #fef2f2; border: 1px solid #fecaca;
             color: #b91c1c; padding: 10px 14px;
+            border-radius: 9px; font-size: 13px;
+            margin-bottom: 18px;
+        }
+        .alert-success {
+            background: #f0fdf4; border: 1px solid #bbf7d0;
+            color: #15803d; padding: 10px 14px;
             border-radius: 9px; font-size: 13px;
             margin-bottom: 18px;
         }
@@ -94,19 +99,20 @@
         </div>
 
         <div class="login-card">
+            <p class="card-title">Forgot your password?</p>
+            <p class="card-desc">Enter your email address and we'll send you a link to reset your password.</p>
+
             @if(session('status'))
-            <div style="background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;padding:10px 14px;border-radius:9px;font-size:13px;margin-bottom:18px;">{{ session('status') }}</div>
+            <div class="alert-success">{{ session('status') }}</div>
             @endif
-            @if(session('error'))
-            <div class="alert-error">{{ session('error') }}</div>
-            @endif
+
             @if($errors->any())
             <div class="alert-error">
                 @foreach($errors->all() as $error)<p style="margin:0 0 3px;">{{ $error }}</p>@endforeach
             </div>
             @endif
 
-            <form action="{{ route('admin.login.submit') }}" method="POST">
+            <form action="{{ route('admin.password.email') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="email" class="form-label">Email address</label>
@@ -114,22 +120,12 @@
                            value="{{ old('email') }}" required autofocus
                            placeholder="you@example.com">
                 </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-input"
-                           required placeholder="••••••••">
-                </div>
-                <div class="remember-row">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Keep me signed in</label>
-                    <a href="{{ route('admin.password.request') }}" style="margin-left:auto;font-size:13px;color:#61078B;text-decoration:none;">Forgot password?</a>
-                </div>
-                <button type="submit" class="btn-submit">Sign In</button>
+                <button type="submit" class="btn-submit">Send Reset Link</button>
             </form>
         </div>
 
         <div class="back-link-wrap">
-            <a href="{{ route('home.page') }}">← Back to website</a>
+            <a href="{{ route('admin.login') }}">← Back to login</a>
         </div>
     </div>
 </body>
