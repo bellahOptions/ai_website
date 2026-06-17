@@ -30,7 +30,7 @@ class InvoiceIssued extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.invoice-issued',
+            view: 'emails.invoice-issued',
             with: ['invoice' => $this->invoice],
         );
     }

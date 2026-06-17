@@ -30,7 +30,7 @@ class InvoicePaymentConfirmed extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.invoice-payment-confirmed',
+            view: 'emails.invoice-payment-confirmed',
             with: ['invoice' => $this->invoice],
         );
     }
