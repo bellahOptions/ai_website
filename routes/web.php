@@ -1,9 +1,12 @@
 <?php
 
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\PasswordResetController;
+use App\Http\Controllers\Admin\TwoFactorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -27,12 +30,31 @@ Route::get('/blog/{slug}', [PageController::class, 'blogDetail'])->name('blog.de
 // =============================================
 // ADMIN PORTAL ROUTES
 // =============================================
+// Email verification — uses Laravel's required route names, under /admin/ URL prefix
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('email/verify', fn() => view('admin.verify-email'))
+        ->name('verification.notice');
+    Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect()->route('admin.dashboard')->with('success', 'Email verified successfully.');
+    })->middleware('signed')->name('verification.verify');
+    Route::post('email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('status', 'verification-link-sent');
+    })->middleware('throttle:6,1')->name('verification.send');
+});
+
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // Auth (unauthenticated)
     Route::get('login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('login.submit');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Two-factor authentication
+    Route::get('2fa', [TwoFactorController::class, 'showForm'])->name('2fa.form');
+    Route::post('2fa/verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+    Route::post('2fa/resend', [TwoFactorController::class, 'resend'])->middleware('throttle:3,1')->name('2fa.resend');
 
     // Password reset
     Route::get('forgot-password', [PasswordResetController::class, 'showForgotForm'])->name('password.request');
@@ -50,6 +72,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Invoices
         Route::resource('invoices', InvoiceController::class);
+        Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'downloadPdf'])->name('invoices.pdf');
         Route::post('invoices/{invoice}/send', [InvoiceController::class, 'send'])->name('invoices.send');
         Route::post('invoices/{invoice}/mark-paid', [InvoiceController::class, 'markPaid'])->name('invoices.mark-paid');
     });

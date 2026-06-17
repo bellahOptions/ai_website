@@ -79,6 +79,7 @@
 <body>
     <div class="container">
         <div class="header">
+            <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" style="height:40px;width:auto;display:block;margin:0 auto 12px;">
             <h1>📧 New Contact Form Submission</h1>
         </div>
 

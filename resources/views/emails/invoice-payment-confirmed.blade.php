@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -17,15 +17,11 @@
           <td style="background:#61078B;border-radius:14px 14px 0 0;padding:32px 40px;">
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td>
+                <td> 
                   <table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="background:rgba(255,255,255,.15);border-radius:10px;width:42px;height:42px;text-align:center;vertical-align:middle;">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0id2hpdGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDJMMyA3djExaDV2LTVoNHY1aDVWN0wxMCAyeiIvPjwvc3ZnPg==" width="22" height="22" alt="logo" style="display:block;margin:10px auto;">
-                      </td>
-                      <td style="padding-left:12px;">
-                        <p style="font-size:16px;font-weight:700;color:#fff;margin:0;line-height:1.2;">AI Digital Agency</p>
-                        <p style="font-size:12px;color:rgba(255,255,255,.7);margin:0;">aidigitalagency08@gmail.com</p>
+                      <td>
+                        <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" style="height:44px;width:auto;display:block;">
                       </td>
                     </tr>
                   </table>
@@ -78,7 +74,7 @@
                     </tr>
                     <tr>
                       <td style="padding:10px 0 0;font-size:14px;font-weight:700;color:#111827;">Amount Paid</td>
-                      <td style="padding:10px 0 0;font-size:22px;font-weight:800;color:#61078B;text-align:right;">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</td>
+                      <td style="padding:10px 0 0;font-size:22px;font-weight:800;color:#61078B;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->total, 2) }}</td>
                     </tr>
                   </table>
                 </td>
@@ -91,16 +87,15 @@
               @foreach($invoice->items as $item)
               <tr style="border-bottom:1px solid #f3f4f6;">
                 <td style="padding:10px 0;font-size:13.5px;color:#374151;">{{ $item->description }}</td>
-                <td style="padding:10px 0;font-size:13.5px;color:#6b7280;text-align:center;width:50px;">×{{ $item->quantity }}</td>
-                <td style="padding:10px 0;font-size:13.5px;font-weight:600;color:#111827;text-align:right;width:110px;">{{ $invoice->currency }} {{ number_format($item->total, 2) }}</td>
+                <td style="padding:10px 0;font-size:13.5px;font-weight:600;color:#111827;text-align:right;width:110px;">{{ $invoice->currencySymbol() }}{{ number_format($item->total, 2) }}</td>
               </tr>
               @endforeach
             </table>
 
             <p style="font-size:13.5px;color:#6b7280;line-height:1.6;margin:0;">
               If you have any questions about this receipt, please don't hesitate to reach out at
-              <a href="mailto:aidigitalagency08@gmail.com" style="color:#61078B;text-decoration:none;font-weight:600;">aidigitalagency08@gmail.com</a>
-              or call <strong style="color:#111827;">+234 707 777 6734</strong>.
+              <a href="mailto:sales@aidigitalagency.com.ng" style="color:#61078B;text-decoration:none;font-weight:600;">sales@aidigitalagency.com.ng</a>
+              or call <strong style="color:#111827;">+234 902 408 3203</strong>.
             </p>
 
           </td>
@@ -110,7 +105,7 @@
         <tr>
           <td style="background:#f9f5ff;border-radius:0 0 14px 14px;padding:20px 40px;text-align:center;">
             <p style="font-size:13px;font-weight:600;color:#61078B;margin:0 0 4px;">AI Digital Agency</p>
-            <p style="font-size:12px;color:#9ca3af;margin:0;">aidigitalagency08@gmail.com &nbsp;·&nbsp; +234 707 777 6734 &nbsp;·&nbsp; Lagos, Nigeria</p>
+            <p style="font-size:12px;color:#9ca3af;margin:0;">sales@aidigitalagency.com.ng &nbsp;·&nbsp; +234 902 408 3203 &nbsp;·&nbsp; Lagos, Nigeria</p>
           </td>
         </tr>
 

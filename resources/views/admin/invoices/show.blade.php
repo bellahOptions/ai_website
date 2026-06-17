@@ -1,4 +1,4 @@
-@extends('admin.layout')
+﻿@extends('admin.layout')
 @section('title', $invoice->invoice_number)
 @section('page_title', 'Invoice Preview')
 
@@ -54,10 +54,10 @@
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
             Print
         </button>
-        <button id="download_btn" class="inv-download-btn">
+        <a href="{{ route('admin.invoices.pdf', $invoice) }}" class="inv-download-btn">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download PDF
-        </button>
+        </a>
         <a href="{{ route('admin.invoices.edit', $invoice) }}" class="btn btn-secondary">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             Edit
@@ -93,13 +93,12 @@
 
     {{-- PDF Header band --}}
     <div style="background:#61078B;padding:28px 36px;display:flex;align-items:center;justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;">
-                <svg width="22" height="22" viewBox="0 0 20 20" fill="white"><path d="M10 2L3 7v11h5v-5h4v5h5V7L10 2z"/></svg>
-            </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+            <img src="{{ asset('assets/images/logo-light.png') }}" alt="AI Digital Agency"
+                 style="height:48px;width:auto;display:block;object-fit:contain;">
             <div>
                 <p style="font-size:16px;font-weight:700;color:#fff;margin:0;line-height:1.2;">AI Digital Agency</p>
-                <p style="font-size:12px;color:rgba(255,255,255,.7);margin:0;">aidigitalagency08@gmail.com</p>
+                <p style="font-size:12px;color:rgba(255,255,255,.7);margin:0;">sales@aidigitalagency.com.ng</p>
             </div>
         </div>
         <div style="text-align:right;">
@@ -152,18 +151,24 @@
             <thead>
                 <tr style="background:#f9f5ff;">
                     <th style="text-align:left;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;border-radius:6px 0 0 6px;">Description</th>
-                    <th style="text-align:center;padding:10px 14px;width:60px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;">Qty</th>
-                    <th style="text-align:right;padding:10px 14px;width:130px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;">Unit Price</th>
-                    <th style="text-align:right;padding:10px 14px;width:130px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;border-radius:0 6px 6px 0;">Total</th>
+                    <th style="text-align:right;padding:10px 14px;width:120px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;">Price</th>
+                    <th style="text-align:right;padding:10px 14px;width:110px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;">Discount</th>
+                    <th style="text-align:center;padding:10px 14px;width:70px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;">VAT</th>
+                    <th style="text-align:right;padding:10px 14px;width:120px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;border-radius:0 6px 6px 0;">Total</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($invoice->items as $item)
                 <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:13px 14px;font-size:13.5px;color:#374151;">{{ $item->description }}</td>
-                    <td style="padding:13px 14px;font-size:13.5px;color:#6b7280;text-align:center;">{{ $item->quantity }}</td>
-                    <td style="padding:13px 14px;font-size:13.5px;color:#6b7280;text-align:right;">{{ $invoice->currency }} {{ number_format($item->unit_price, 2) }}</td>
-                    <td style="padding:13px 14px;font-size:13.5px;font-weight:600;color:#111827;text-align:right;">{{ $invoice->currency }} {{ number_format($item->total, 2) }}</td>
+                    <td style="padding:13px 14px;font-size:13.5px;color:#6b7280;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($item->unit_price, 2) }}</td>
+                    <td style="padding:13px 14px;font-size:13.5px;color:#6b7280;text-align:right;">
+                        @if($item->discount > 0)− {{ $invoice->currencySymbol() }}{{ number_format($item->discount, 2) }}@else—@endif
+                    </td>
+                    <td style="padding:13px 14px;font-size:12px;text-align:center;">
+                        @if($item->apply_vat)<span style="background:#f5f0ff;color:#61078B;padding:2px 7px;border-radius:10px;font-weight:600;">7.5%</span>@else—@endif
+                    </td>
+                    <td style="padding:13px 14px;font-size:13.5px;font-weight:600;color:#111827;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($item->total, 2) }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -175,23 +180,23 @@
         <div style="max-width:280px;margin-left:auto;display:flex;flex-direction:column;gap:8px;">
             <div style="display:flex;justify-content:space-between;">
                 <span style="font-size:13.5px;color:#6b7280;">Subtotal</span>
-                <span style="font-size:13.5px;color:#374151;">{{ $invoice->currency }} {{ number_format($invoice->subtotal, 2) }}</span>
+                <span style="font-size:13.5px;color:#374151;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->subtotal, 2) }}</span>
             </div>
-            @if($invoice->tax_rate > 0)
+            @if($invoice->tax_amount > 0)
             <div style="display:flex;justify-content:space-between;">
-                <span style="font-size:13.5px;color:#6b7280;">Tax ({{ number_format($invoice->tax_rate, 1) }}%)</span>
-                <span style="font-size:13.5px;color:#374151;">{{ $invoice->currency }} {{ number_format($invoice->tax_amount, 2) }}</span>
+                <span style="font-size:13.5px;color:#6b7280;">VAT (7.5%)</span>
+                <span style="font-size:13.5px;color:#374151;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->tax_amount, 2) }}</span>
             </div>
             @endif
             @if($invoice->discount > 0)
             <div style="display:flex;justify-content:space-between;">
                 <span style="font-size:13.5px;color:#6b7280;">Discount</span>
-                <span style="font-size:13.5px;color:#b91c1c;">− {{ $invoice->currency }} {{ number_format($invoice->discount, 2) }}</span>
+                <span style="font-size:13.5px;color:#b91c1c;">− {{ $invoice->currencySymbol() }}{{ number_format($invoice->discount, 2) }}</span>
             </div>
             @endif
             <div style="border-top:2px solid #e9eaec;padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
                 <span style="font-size:14px;font-weight:700;color:#111827;">Total Due</span>
-                <span style="font-size:22px;font-weight:800;color:#61078B;">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</span>
+                <span style="font-size:22px;font-weight:800;color:#61078B;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->total, 2) }}</span>
             </div>
             @if($invoice->status === 'paid')
             <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:8px;padding:9px 14px;text-align:center;margin-top:4px;">
@@ -219,10 +224,40 @@
     </div>
     @endif
 
+    {{-- Bank Account Details --}}
+    <div style="padding:20px 36px;border-bottom:1px solid #f0f1f3;background:#fdfbff;">
+        <p style="font-size:10.5px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px;">Payment Details</p>
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:8px;background:#f0e6f8;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" fill="none" stroke="#61078B" stroke-width="1.8" viewBox="0 0 24 24">
+                    <rect x="3" y="8" width="18" height="13" rx="2"/>
+                    <path d="M3 10l9-6 9 6"/>
+                    <line x1="12" y1="12" x2="12" y2="17"/>
+                    <line x1="8" y1="14" x2="8" y2="17"/>
+                    <line x1="16" y1="14" x2="16" y2="17"/>
+                </svg>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,auto);gap:6px 32px;">
+                <div>
+                    <p style="font-size:10.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em;margin:0 0 2px;">Bank Name</p>
+                    <p style="font-size:13.5px;font-weight:700;color:#111827;margin:0;">FCMB</p>
+                </div>
+                <div>
+                    <p style="font-size:10.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em;margin:0 0 2px;">Account Name</p>
+                    <p style="font-size:13.5px;font-weight:700;color:#111827;margin:0;">Alet Inspirationz</p>
+                </div>
+                <div>
+                    <p style="font-size:10.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em;margin:0 0 2px;">Account Number</p>
+                    <p style="font-size:15px;font-weight:800;color:#61078B;margin:0;letter-spacing:.05em;">9693297015</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Footer --}}
     <div style="padding:16px 36px;background:#f9f5ff;display:flex;align-items:center;justify-content:space-between;">
         <p style="font-size:12px;color:#9ca3af;margin:0;">Thank you for your business</p>
-        <p style="font-size:12px;color:#9ca3af;margin:0;">AI Digital Agency · aidigitalagency08@gmail.com · +234 707 777 6734</p>
+        <p style="font-size:12px;color:#9ca3af;margin:0;">AI Digital Agency · sales@aidigitalagency.com.ng · +234 902 408 3203</p>
     </div>
 </div>
 
@@ -240,46 +275,3 @@
 
 @endsection
 
-@push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-document.getElementById('download_btn').addEventListener('click', function () {
-    var btn = this;
-    btn.disabled = true;
-    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Generating…';
-
-    var section = document.getElementById('invoice_pdf_section');
-
-    html2canvas(section, { scale: 2, useCORS: true, backgroundColor: '#ffffff' }).then(function (canvas) {
-        var { jsPDF } = window.jspdf;
-        var pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-
-        var pageW = pdf.internal.pageSize.getWidth();
-        var pageH = pdf.internal.pageSize.getHeight();
-        var imgW  = pageW;
-        var imgH  = (canvas.height * pageW) / canvas.width;
-
-        if (imgH <= pageH) {
-            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgW, imgH);
-        } else {
-            var pos = 0;
-            while (pos < imgH) {
-                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, -pos, imgW, imgH);
-                pos += pageH;
-                if (pos < imgH) pdf.addPage();
-            }
-        }
-
-        pdf.save('{{ $invoice->invoice_number }}.pdf');
-
-        btn.disabled = false;
-        btn.innerHTML = '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download PDF';
-    }).catch(function () {
-        btn.disabled = false;
-        btn.innerHTML = '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download PDF';
-        alert('Could not generate PDF. Please use the Print option instead.');
-    });
-});
-</script>
-@endpush

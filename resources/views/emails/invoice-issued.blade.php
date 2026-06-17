@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,12 +20,8 @@
                 <td>
                   <table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td style="background:rgba(255,255,255,.15);border-radius:10px;width:42px;height:42px;text-align:center;vertical-align:middle;">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0id2hpdGUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDJMMyA3djExaDV2LTVoNHY1aDVWN0wxMCAyeiIvPjwvc3ZnPg==" width="22" height="22" alt="logo" style="display:block;margin:10px auto;">
-                      </td>
-                      <td style="padding-left:12px;">
-                        <p style="font-size:16px;font-weight:700;color:#fff;margin:0;line-height:1.2;">AI Digital Agency</p>
-                        <p style="font-size:12px;color:rgba(255,255,255,.7);margin:0;">aidigitalagency08@gmail.com</p>
+                      <td>
+                        <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" style="height:44px;width:auto;display:block;">
                       </td>
                     </tr>
                   </table>
@@ -70,18 +66,20 @@
               <thead>
                 <tr style="background:#f9f5ff;">
                   <th style="text-align:left;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;border-radius:6px 0 0 6px;">Description</th>
-                  <th style="text-align:center;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:50px;">Qty</th>
-                  <th style="text-align:right;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:110px;">Unit Price</th>
-                  <th style="text-align:right;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:110px;border-radius:0 6px 6px 0;">Total</th>
+                  <th style="text-align:right;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:100px;">Price</th>
+                  <th style="text-align:right;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:90px;">Discount</th>
+                  <th style="text-align:center;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:55px;">VAT</th>
+                  <th style="text-align:right;padding:10px 14px;font-size:11px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.07em;width:100px;border-radius:0 6px 6px 0;">Total</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($invoice->items as $item)
                 <tr style="border-bottom:1px solid #f3f4f6;">
                   <td style="padding:12px 14px;font-size:13.5px;color:#374151;">{{ $item->description }}</td>
-                  <td style="padding:12px 14px;font-size:13.5px;color:#6b7280;text-align:center;">{{ $item->quantity }}</td>
-                  <td style="padding:12px 14px;font-size:13.5px;color:#6b7280;text-align:right;">{{ $invoice->currency }} {{ number_format($item->unit_price, 2) }}</td>
-                  <td style="padding:12px 14px;font-size:13.5px;font-weight:600;color:#111827;text-align:right;">{{ $invoice->currency }} {{ number_format($item->total, 2) }}</td>
+                  <td style="padding:12px 14px;font-size:13.5px;color:#6b7280;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($item->unit_price, 2) }}</td>
+                  <td style="padding:12px 14px;font-size:13.5px;color:#6b7280;text-align:right;">@if($item->discount > 0)−{{ $invoice->currencySymbol() }}{{ number_format($item->discount, 2) }}@else—@endif</td>
+                  <td style="padding:12px 14px;font-size:12px;text-align:center;color:#6b7280;">{{ $item->apply_vat ? '7.5%' : '—' }}</td>
+                  <td style="padding:12px 14px;font-size:13.5px;font-weight:600;color:#111827;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($item->total, 2) }}</td>
                 </tr>
                 @endforeach
               </tbody>
@@ -95,18 +93,18 @@
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td style="padding:5px 0;font-size:13.5px;color:#6b7280;">Subtotal</td>
-                      <td style="padding:5px 0;font-size:13.5px;color:#374151;text-align:right;">{{ $invoice->currency }} {{ number_format($invoice->subtotal, 2) }}</td>
+                      <td style="padding:5px 0;font-size:13.5px;color:#374151;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->subtotal, 2) }}</td>
                     </tr>
-                    @if($invoice->tax_rate > 0)
+                    @if($invoice->tax_amount > 0)
                     <tr>
-                      <td style="padding:5px 0;font-size:13.5px;color:#6b7280;">Tax ({{ number_format($invoice->tax_rate, 1) }}%)</td>
-                      <td style="padding:5px 0;font-size:13.5px;color:#374151;text-align:right;">{{ $invoice->currency }} {{ number_format($invoice->tax_amount, 2) }}</td>
+                      <td style="padding:5px 0;font-size:13.5px;color:#6b7280;">VAT (7.5%)</td>
+                      <td style="padding:5px 0;font-size:13.5px;color:#374151;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->tax_amount, 2) }}</td>
                     </tr>
                     @endif
                     @if($invoice->discount > 0)
                     <tr>
                       <td style="padding:5px 0;font-size:13.5px;color:#6b7280;">Discount</td>
-                      <td style="padding:5px 0;font-size:13.5px;color:#b91c1c;text-align:right;">− {{ $invoice->currency }} {{ number_format($invoice->discount, 2) }}</td>
+                      <td style="padding:5px 0;font-size:13.5px;color:#b91c1c;text-align:right;">− {{ $invoice->currencySymbol() }}{{ number_format($invoice->discount, 2) }}</td>
                     </tr>
                     @endif
                     <tr>
@@ -114,7 +112,7 @@
                     </tr>
                     <tr>
                       <td style="padding:6px 0;font-size:14px;font-weight:700;color:#111827;">Total Due</td>
-                      <td style="padding:6px 0;font-size:20px;font-weight:800;color:#61078B;text-align:right;">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</td>
+                      <td style="padding:6px 0;font-size:20px;font-weight:800;color:#61078B;text-align:right;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->total, 2) }}</td>
                     </tr>
                   </table>
                 </td>
@@ -137,7 +135,7 @@
 
             <p style="font-size:13.5px;color:#6b7280;line-height:1.6;margin:20px 0 0;">
               To arrange payment or for any queries, please reply to this email or call us at
-              <strong style="color:#111827;">+234 707 777 6734</strong>.
+              <strong style="color:#111827;">+234 902 408 3203</strong>.
             </p>
 
           </td>
@@ -147,7 +145,7 @@
         <tr>
           <td style="background:#f9f5ff;border-radius:0 0 14px 14px;padding:20px 40px;text-align:center;">
             <p style="font-size:13px;font-weight:600;color:#61078B;margin:0 0 4px;">AI Digital Agency</p>
-            <p style="font-size:12px;color:#9ca3af;margin:0;">aidigitalagency08@gmail.com &nbsp;·&nbsp; +234 707 777 6734 &nbsp;·&nbsp; Lagos, Nigeria</p>
+            <p style="font-size:12px;color:#9ca3af;margin:0;">sales@aidigitalagency.com.ng &nbsp;·&nbsp; +234 902 408 3203 &nbsp;·&nbsp; Lagos, Nigeria</p>
           </td>
         </tr>
 

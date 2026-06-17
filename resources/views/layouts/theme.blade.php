@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
@@ -119,7 +119,7 @@
                 "marginRight": "20",
                 "position": "left",
                 "textColor": "#ffffff",
-                "phoneNumber": "+2347077776734",
+                "phoneNumber": "+2349024083203",
                 "messageText": "👋🏻 Hello, I'm visiting from your website"
             }
         };

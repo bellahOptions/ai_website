@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -43,7 +43,7 @@ class PageController extends Controller
             ]);
 
             // Send notification email to admin
-            Mail::to('aidigitalagency08@gmail.com')->send(new ContactNotification($contact));
+            Mail::to('sales@aidigitalagency.com.ng')->send(new ContactNotification($contact));
 
             return redirect()
                 ->back()

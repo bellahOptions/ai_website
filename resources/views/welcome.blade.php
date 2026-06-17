@@ -1,4 +1,4 @@
-@extends('layouts.theme')
+﻿@extends('layouts.theme')
 @section('title', 'AI Digital Agency — Building Brands That Thrive')
 @section('meta_description', 'Strategic social media management that drives visibility, engagement, and growth for your brand.')
 
@@ -38,8 +38,8 @@
     <img src="{{ asset('assets/images/banner/banner-one-thumb.png') }}" alt="AI Digital Agency" class="banner-one-thumb d-none d-sm-block g-ban-one">
     <img src="{{ asset('assets/images/star.png') }}" alt="" class="star">
     <div class="banner-left-text banner-social-text d-none d-md-flex">
-        <a href="tel:+2347077776734">Call : +234 707 777 6734</a>
-        <a href="mailto:aidigitalagency08@gmail.com">mail : aidigitalagency08@gmail.com</a>
+        <a href="tel:+2349024083203">Call : +234 902 408 3203</a>
+        <a href="mailto:sales@aidigitalagency.com.ng">mail : sales@aidigitalagency.com.ng</a>
     </div>
     <div class="banner-right-text banner-social-text d-none d-md-flex">
         <a href="#" target="_blank">Instagram</a>

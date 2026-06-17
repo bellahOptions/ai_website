@@ -18,6 +18,16 @@ class AdminMiddleware
         if (!auth()->check() || !auth()->user()->is_admin) {
             return redirect()->route('admin.login');
         }
+
+        if (!auth()->user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
+        if (!$request->session()->get('2fa_verified')) {
+            auth()->logout();
+            return redirect()->route('admin.login')->withErrors(['email' => 'Session expired. Please log in again.']);
+        }
+
         return $next($request);
     }
 }

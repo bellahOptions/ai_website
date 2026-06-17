@@ -1,4 +1,4 @@
-@extends('layouts.theme')
+﻿@extends('layouts.theme')
 @section('title', 'Contact Us — AI Digital Agency')
 @section('meta_description', 'Get in touch with AI Digital Agency. Book a clarity call or send us a message to start growing your brand today.')
 
@@ -37,7 +37,7 @@
                     <div class="thumb"><i class="fa-sharp fa-solid fa-phone-volume" style="font-size:2rem;color:#61078B;"></i></div>
                     <div class="content">
                         <h4>Phone</h4>
-                        <p><a href="tel:+2347077776734">+234 707 777 6734</a></p>
+                        <p><a href="tel:+2349024083203">+234 902 408 3203</a></p>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <div class="thumb"><i class="fa-sharp fa-solid fa-envelope" style="font-size:2rem;color:#61078B;"></i></div>
                     <div class="content">
                         <h4>Email</h4>
-                        <p><a href="mailto:aidigitalagency08@gmail.com">aidigitalagency08@gmail.com</a></p>
+                        <p><a href="mailto:sales@aidigitalagency.com.ng">sales@aidigitalagency.com.ng</a></p>
                     </div>
                 </div>
             </div>

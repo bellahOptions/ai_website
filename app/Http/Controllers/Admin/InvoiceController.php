@@ -8,6 +8,7 @@ use App\Mail\InvoicePaymentConfirmed;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -58,8 +59,9 @@ class InvoiceController extends Controller
             'terms'       => ['nullable', 'string'],
             'items'       => ['required', 'array', 'min:1'],
             'items.*.description' => ['required', 'string'],
-            'items.*.quantity'    => ['required', 'integer', 'min:1'],
             'items.*.unit_price'  => ['required', 'numeric', 'min:0'],
+            'items.*.discount'    => ['nullable', 'numeric', 'min:0'],
+            'items.*.apply_vat'   => ['nullable'],
         ]);
 
         DB::transaction(function () use ($data, $request) {
@@ -69,7 +71,7 @@ class InvoiceController extends Controller
                 'status'         => 'draft',
                 'issue_date'     => $data['issue_date'],
                 'due_date'       => $data['due_date'],
-                'tax_rate'       => $data['tax_rate'] ?? 0,
+                'tax_rate'       => 0,
                 'discount'       => $data['discount'] ?? 0,
                 'currency'       => $data['currency'] ?? 'NGN',
                 'notes'          => $data['notes'] ?? null,
@@ -83,8 +85,10 @@ class InvoiceController extends Controller
                 InvoiceItem::create([
                     'invoice_id'  => $invoice->id,
                     'description' => $item['description'],
-                    'quantity'    => $item['quantity'],
+                    'quantity'    => 1,
                     'unit_price'  => $item['unit_price'],
+                    'discount'    => $item['discount'] ?? 0,
+                    'apply_vat'   => !empty($item['apply_vat']),
                     'sort_order'  => $i,
                 ]);
             }
@@ -123,8 +127,9 @@ class InvoiceController extends Controller
             'terms'       => ['nullable', 'string'],
             'items'       => ['required', 'array', 'min:1'],
             'items.*.description' => ['required', 'string'],
-            'items.*.quantity'    => ['required', 'integer', 'min:1'],
             'items.*.unit_price'  => ['required', 'numeric', 'min:0'],
+            'items.*.discount'    => ['nullable', 'numeric', 'min:0'],
+            'items.*.apply_vat'   => ['nullable'],
         ]);
 
         DB::transaction(function () use ($invoice, $data) {
@@ -133,7 +138,7 @@ class InvoiceController extends Controller
                 'status'     => $data['status'],
                 'issue_date' => $data['issue_date'],
                 'due_date'   => $data['due_date'],
-                'tax_rate'   => $data['tax_rate'] ?? 0,
+                'tax_rate'   => 0,
                 'discount'   => $data['discount'] ?? 0,
                 'currency'   => $data['currency'] ?? 'NGN',
                 'notes'      => $data['notes'] ?? null,
@@ -146,8 +151,10 @@ class InvoiceController extends Controller
                 InvoiceItem::create([
                     'invoice_id'  => $invoice->id,
                     'description' => $item['description'],
-                    'quantity'    => $item['quantity'],
+                    'quantity'    => 1,
                     'unit_price'  => $item['unit_price'],
+                    'discount'    => $item['discount'] ?? 0,
+                    'apply_vat'   => !empty($item['apply_vat']),
                     'sort_order'  => $i,
                 ]);
             }
@@ -164,6 +171,13 @@ class InvoiceController extends Controller
         $invoice->delete();
         return redirect()->route('admin.invoices.index')
                          ->with('success', 'Invoice deleted.');
+    }
+
+    public function downloadPdf(Invoice $invoice)
+    {
+        $invoice->load(['client', 'items']);
+        $pdf = Pdf::loadView('pdf.invoice', ['invoice' => $invoice])->setPaper('a4', 'portrait');
+        return $pdf->download($invoice->invoice_number . '.pdf');
     }
 
     public function send(Invoice $invoice)

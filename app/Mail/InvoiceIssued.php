@@ -3,8 +3,10 @@
 namespace App\Mail;
 
 use App\Models\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -37,6 +39,14 @@ class InvoiceIssued extends Mailable
 
     public function attachments(): array
     {
-        return [];
+        $pdf = Pdf::loadView('pdf.invoice', ['invoice' => $this->invoice])
+                  ->setPaper('a4', 'portrait');
+
+        return [
+            Attachment::fromData(
+                fn() => $pdf->output(),
+                $this->invoice->invoice_number . '.pdf'
+            )->withMime('application/pdf'),
+        ];
     }
 }

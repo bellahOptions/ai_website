@@ -29,8 +29,14 @@
             <p style="font-size:13px;font-weight:600;color:#374151;margin:0 0 18px;">Invoice Details</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                 <div class="form-group">
-                    <label class="form-label">Client <span class="req">*</span></label>
-                    <select name="client_id" required class="form-input">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+                        <label class="form-label" style="margin-bottom:0;">Client <span class="req">*</span></label>
+                        <button type="button" onclick="Livewire.dispatch('open-create-client')"
+                                style="background:none;border:none;cursor:pointer;font-size:12.5px;color:#61078B;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:4px;padding:0;">
+                            <span style="font-size:16px;line-height:1;">+</span> New Client
+                        </button>
+                    </div>
+                    <select name="client_id" id="client_id_select" required class="form-input">
                         @foreach($clients as $client)
                         <option value="{{ $client->id }}" {{ old('client_id', $invoice->client_id) == $client->id ? 'selected' : '' }}>
                             {{ $client->name }}@if($client->company) — {{ $client->company }}@endif
@@ -38,6 +44,8 @@
                         @endforeach
                     </select>
                 </div>
+
+                <livewire:create-client-modal />
                 <div class="form-group">
                     <label class="form-label">Status</label>
                     <select name="status" class="form-input">
@@ -68,31 +76,39 @@
 
         {{-- Line items --}}
         <div class="admin-card" style="padding:24px;">
-            <p style="font-size:13px;font-weight:600;color:#374151;margin:0 0 16px;">Line Items</p>
+            <p style="font-size:13px;font-weight:600;color:#374151;margin:0 0 16px;">Services</p>
 
-            <div style="display:grid;grid-template-columns:1fr 80px 130px 100px 32px;gap:8px;align-items:center;margin-bottom:8px;">
-                <span style="font-size:11.5px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.04em;">Description</span>
-                <span style="font-size:11.5px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.04em;">Qty</span>
-                <span style="font-size:11.5px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.04em;">Unit Price</span>
-                <span style="font-size:11.5px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.04em;text-align:right;">Total</span>
+            <div style="display:grid;grid-template-columns:1fr 130px 110px auto 90px 32px;gap:8px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #f0f1f3;">
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Description</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Price (₦)</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Discount (₦)</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;text-align:center;">VAT 7.5%</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;text-align:right;">Total</span>
                 <span></span>
             </div>
 
-            <div id="items-container" style="display:flex;flex-direction:column;gap:8px;">
+            <div id="items-container" style="display:flex;flex-direction:column;gap:10px;">
                 @php $existingItems = old('items') ? collect(old('items'))->values() : $invoice->items; @endphp
                 @foreach($existingItems as $i => $item)
                 @php
-                    $desc  = is_array($item) ? ($item['description'] ?? '') : $item->description;
-                    $qty   = is_array($item) ? ($item['quantity']    ?? 1)  : $item->quantity;
-                    $price = is_array($item) ? ($item['unit_price']  ?? 0)  : $item->unit_price;
+                    $desc     = is_array($item) ? ($item['description'] ?? '') : $item->description;
+                    $price    = is_array($item) ? ($item['unit_price']  ?? 0)  : $item->unit_price;
+                    $discount = is_array($item) ? ($item['discount']    ?? 0)  : $item->discount;
+                    $applyVat = is_array($item) ? !empty($item['apply_vat'])   : $item->apply_vat;
+                    $net      = max(0, (float)$price - (float)$discount);
+                    $lineTotal = $net * ($applyVat ? 1.075 : 1);
                 @endphp
-                <div class="item-row" style="display:grid;grid-template-columns:1fr 80px 130px 100px 32px;gap:8px;align-items:center;">
-                    <input type="text"   name="items[{{ $i }}][description]" value="{{ $desc }}"  required placeholder="Service description" class="form-input">
-                    <input type="number" name="items[{{ $i }}][quantity]"    value="{{ $qty }}"   min="1" required class="form-input item-qty">
-                    <input type="number" name="items[{{ $i }}][unit_price]"  value="{{ $price }}" min="0" step="0.01" required class="form-input item-price">
-                    <div class="item-total" style="text-align:right;font-size:13.5px;font-weight:600;color:#111827;padding:9px 0;">{{ number_format($qty * $price, 2) }}</div>
+                <div class="item-row" style="display:grid;grid-template-columns:1fr 130px 110px auto 90px 32px;gap:8px;align-items:center;">
+                    <input type="text"   name="items[{{ $i }}][description]" value="{{ $desc }}"     required placeholder="Service description" class="form-input">
+                    <input type="number" name="items[{{ $i }}][unit_price]"  value="{{ $price }}"    min="0" step="0.01" required placeholder="0.00" class="form-input item-price">
+                    <input type="number" name="items[{{ $i }}][discount]"    value="{{ $discount }}" min="0" step="0.01" placeholder="0.00" class="form-input item-discount">
+                    <label style="display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;white-space:nowrap;font-size:13px;color:#374151;padding:0 4px;">
+                        <input type="checkbox" name="items[{{ $i }}][apply_vat]" value="1" class="item-vat" {{ $applyVat ? 'checked' : '' }} style="accent-color:#61078B;width:15px;height:15px;cursor:pointer;">
+                        Apply
+                    </label>
+                    <div class="item-total" style="text-align:right;font-size:13.5px;font-weight:600;color:#61078B;padding:9px 0;">{{ number_format($lineTotal, 2) }}</div>
                     @if(!$loop->first)
-                    <button type="button" class="remove-item" style="width:28px;height:28px;border:none;background:#fff0f0;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:16px;padding:0;">×</button>
+                    <button type="button" class="remove-item" style="width:28px;height:28px;border:none;background:#fff0f0;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:15px;padding:0;">×</button>
                     @else
                     <div style="width:28px;"></div>
                     @endif
@@ -101,8 +117,8 @@
             </div>
 
             <button type="button" id="add-item"
-                    style="margin-top:14px;background:none;border:none;cursor:pointer;font-size:13.5px;color:#61078B;font-weight:600;padding:0;display:flex;align-items:center;gap:6px;font-family:inherit;">
-                <span style="font-size:18px;line-height:1;">+</span> Add Line Item
+                    style="margin-top:16px;background:none;border:none;cursor:pointer;font-size:13.5px;color:#61078B;font-weight:600;padding:0;display:flex;align-items:center;gap:6px;font-family:inherit;">
+                <span style="font-size:18px;line-height:1;">+</span> Add Service
             </button>
         </div>
 
@@ -131,14 +147,8 @@
                     <span style="font-size:13.5px;font-weight:600;color:#111827;" id="preview-subtotal">{{ number_format($invoice->subtotal, 2) }}</span>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" style="font-size:12px;">Tax Rate (%)</label>
-                    <input type="number" name="tax_rate" value="{{ old('tax_rate', $invoice->tax_rate) }}" min="0" max="100" step="0.01"
-                           id="tax-rate-input" class="form-input" style="font-size:13px;">
-                </div>
-
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:13.5px;color:#6b7280;">Tax Amount</span>
+                    <span style="font-size:13.5px;color:#6b7280;">VAT (7.5%)</span>
                     <span style="font-size:13.5px;color:#374151;" id="preview-tax">{{ number_format($invoice->tax_amount, 2) }}</span>
                 </div>
 
@@ -169,35 +179,50 @@
 let itemIndex = {{ old('items') ? count(old('items')) : $invoice->items->count() }};
 
 function recalculate() {
-    let subtotal = 0;
+    let subtotal = 0, vatTotal = 0;
     document.querySelectorAll('.item-row').forEach(row => {
-        const qty   = parseFloat(row.querySelector('.item-qty')?.value)   || 0;
-        const price = parseFloat(row.querySelector('.item-price')?.value) || 0;
-        const total = qty * price;
+        const price    = parseFloat(row.querySelector('.item-price')?.value)    || 0;
+        const discount = parseFloat(row.querySelector('.item-discount')?.value) || 0;
+        const applyVat = row.querySelector('.item-vat')?.checked || false;
+        const net      = Math.max(0, price - discount);
+        const vat      = applyVat ? net * 0.075 : 0;
+        const total    = net + vat;
         const el = row.querySelector('.item-total');
         if (el) el.textContent = total.toFixed(2);
-        subtotal += total;
+        subtotal += net;
+        vatTotal += vat;
     });
-    const tax      = subtotal * ((parseFloat(document.getElementById('tax-rate-input').value) || 0) / 100);
-    const discount = parseFloat(document.getElementById('discount-input').value) || 0;
+    const invDiscount = parseFloat(document.getElementById('discount-input').value) || 0;
+    const grandTotal  = Math.max(0, subtotal + vatTotal - invDiscount);
     document.getElementById('preview-subtotal').textContent = subtotal.toFixed(2);
-    document.getElementById('preview-tax').textContent      = tax.toFixed(2);
-    document.getElementById('preview-total').textContent    = Math.max(0, subtotal + tax - discount).toFixed(2);
+    document.getElementById('preview-tax').textContent      = vatTotal.toFixed(2);
+    document.getElementById('preview-total').textContent    = grandTotal.toFixed(2);
+}
+
+function bindRow(row) {
+    row.querySelectorAll('.item-price,.item-discount').forEach(i => i.addEventListener('input', recalculate));
+    const vat = row.querySelector('.item-vat');
+    if (vat) vat.addEventListener('change', recalculate);
+    const rb = row.querySelector('.remove-item');
+    if (rb) rb.addEventListener('click', () => { row.remove(); recalculate(); });
 }
 
 function makeRow(index) {
     const div = document.createElement('div');
     div.className = 'item-row';
-    div.style.cssText = 'display:grid;grid-template-columns:1fr 80px 130px 100px 32px;gap:8px;align-items:center;';
+    div.style.cssText = 'display:grid;grid-template-columns:1fr 130px 110px auto 90px 32px;gap:8px;align-items:center;';
     div.innerHTML = `
         <input type="text"   name="items[${index}][description]" required placeholder="Service description" class="form-input">
-        <input type="number" name="items[${index}][quantity]"    value="1" min="1" required class="form-input item-qty">
         <input type="number" name="items[${index}][unit_price]"  min="0" step="0.01" required placeholder="0.00" class="form-input item-price">
-        <div class="item-total" style="text-align:right;font-size:13.5px;font-weight:600;color:#111827;padding:9px 0;">0.00</div>
+        <input type="number" name="items[${index}][discount]"    value="0" min="0" step="0.01" placeholder="0.00" class="form-input item-discount">
+        <label style="display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;white-space:nowrap;font-size:13px;color:#374151;padding:0 4px;">
+            <input type="checkbox" name="items[${index}][apply_vat]" value="1" class="item-vat" style="accent-color:#61078B;width:15px;height:15px;cursor:pointer;">
+            Apply
+        </label>
+        <div class="item-total" style="text-align:right;font-size:13.5px;font-weight:600;color:#61078B;padding:9px 0;">0.00</div>
         <button type="button" class="remove-item" style="width:28px;height:28px;border:none;background:#fff0f0;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:16px;padding:0;">×</button>
     `;
-    div.querySelectorAll('.item-qty,.item-price').forEach(i => i.addEventListener('input', recalculate));
-    div.querySelector('.remove-item').addEventListener('click', () => { div.remove(); recalculate(); });
+    bindRow(div);
     return div;
 }
 
@@ -206,13 +231,22 @@ document.getElementById('add-item').addEventListener('click', () => {
     recalculate();
 });
 
-document.querySelectorAll('.item-row').forEach(row => {
-    row.querySelectorAll('.item-qty,.item-price').forEach(i => i.addEventListener('input', recalculate));
-    const rb = row.querySelector('.remove-item');
-    if (rb) rb.addEventListener('click', () => { row.remove(); recalculate(); });
-});
-document.getElementById('tax-rate-input').addEventListener('input', recalculate);
+document.querySelectorAll('.item-row').forEach(bindRow);
 document.getElementById('discount-input').addEventListener('input', recalculate);
+recalculate();
+
+document.addEventListener('livewire:initialized', function () {
+    Livewire.on('clientCreated', function (params) {
+        var id      = params[0].id;
+        var name    = params[0].name;
+        var company = params[0].company;
+        var select  = document.getElementById('client_id_select');
+        var label   = name + (company ? ' — ' + company : '');
+        var option  = new Option(label, id, true, true);
+        select.appendChild(option);
+        select.value = id;
+    });
+});
 </script>
 @endpush
 

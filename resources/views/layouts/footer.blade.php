@@ -1,4 +1,4 @@
-{{-- ==== footer start ==== --}}
+﻿{{-- ==== footer start ==== --}}
 <footer class="footer section pb-0 bg-[#62068d]">
     <div class="container">
         <div class="row gaper">
@@ -13,13 +13,13 @@
                             <i class="fa-sharp fa-solid fa-location-dot"></i>
                             Lagos State, Nigeria
                         </a>
-                        <a href="tel:+2347077776734">
+                        <a href="tel:+2349024083203">
                             <i class="fa-sharp fa-solid fa-phone-volume"></i>
-                            +234 707 777 6734
+                            +234 902 408 3203
                         </a>
-                        <a href="mailto:aidigitalagency08@gmail.com">
+                        <a href="mailto:sales@aidigitalagency.com.ng">
                             <i class="fa-sharp fa-solid fa-envelope"></i>
-                            aidigitalagency08@gmail.com
+                            sales@aidigitalagency.com.ng
                         </a>
                     </div>
                     <div class="footer__cta text-start">

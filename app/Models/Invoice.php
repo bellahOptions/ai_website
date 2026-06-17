@@ -40,12 +40,26 @@ class Invoice extends Model
 
     public function recalculate(): void
     {
-        $subtotal = $this->items()->sum('total');
-        $tax = round($subtotal * ($this->tax_rate / 100), 2);
-        $this->subtotal   = $subtotal;
-        $this->tax_amount = $tax;
-        $this->total      = round($subtotal + $tax - $this->discount, 2);
+        $items = $this->items()->get();
+
+        $subtotal   = $items->sum(fn($i) => max(0, (float)$i->unit_price - (float)$i->discount));
+        $taxAmount  = $items->sum(fn($i) => $i->apply_vat ? round(max(0, (float)$i->unit_price - (float)$i->discount) * 0.075, 2) : 0);
+
+        $this->subtotal   = round($subtotal, 2);
+        $this->tax_amount = round($taxAmount, 2);
+        $this->total      = round($subtotal + $taxAmount - (float)$this->discount, 2);
         $this->saveQuietly();
+    }
+
+    public function currencySymbol(): string
+    {
+        return match($this->currency) {
+            'NGN'   => '₦',
+            'USD'   => '$',
+            'GBP'   => '£',
+            'EUR'   => '€',
+            default => $this->currency . ' ',
+        };
     }
 
     public static function generateNumber(): string

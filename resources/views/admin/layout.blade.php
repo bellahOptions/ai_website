@@ -12,6 +12,7 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+    @livewireStyles
     @stack('styles')
 </head>
 <body class="bg-[#f8f9fb] text-gray-900" style="font-family:'Inter',system-ui,sans-serif;margin:0;">
@@ -181,5 +182,6 @@
 </div>
 
 @stack('scripts')
+@livewireScripts
 </body>
 </html>
