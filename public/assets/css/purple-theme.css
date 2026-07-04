@@ -1,178 +1,208 @@
 /* Purple Theme Override for Xpovio Template */
 /* Replaces orange #ff7425 with AI Digital Agency purple #61078B */
 
+/*
+ * Brand purple scale — single source of truth.
+ * 800 is the canonical brand anchor (#61078B). Everything below should
+ * reference these custom properties rather than hardcoding a hex value,
+ * so the brand color only ever needs to change in one place.
+ *   900 — deep backgrounds / gradients
+ *   800 — canonical brand anchor (buttons, links, icons, borders)
+ *   700 — lighter accent (hover states, eyebrows/sub-titles)
+ *   100 / 050 — light tints (subtle borders, card backgrounds, badges)
+ */
 :root {
-    --primary-color: #7c22a8;
-    --primary-color-hover: #61078B;
+    --color-purple-900: #3d0570;
+    --color-purple-800: #61078B;
+    --color-purple-700: #7c22a8;
+    --color-purple-100: rgba(97, 7, 139, 0.12);
+    --color-purple-050: rgba(97, 7, 139, 0.06);
+    --color-purple-rgb: 97, 7, 139;
+
+    /* Aliases kept for anything already reading these names */
+    --primary-color: var(--color-purple-700);
+    --primary-color-hover: var(--color-purple-800);
     --primary-rgb: 124, 34, 168;
     --theme-bg: #ffffff;
     --theme-color: #0e0e0e;
 }
 
+/* Brand background utility — replaces the inert `bg-purple-600` / `bg-[#62068d]` classes */
+.bg-purple-brand {
+    background-color: var(--color-purple-800) !important;
+}
+
 /* Primary color overrides */
 .btn--primary,
 .btn--primary:hover {
-    background-color: #61078B;
-    border-color: #61078B;
+    background-color: var(--color-purple-800);
+    border-color: var(--color-purple-800);
     color: #ffffff;
 }
 
 .btn--primary:hover {
-    background-color: #7c22a8;
-    border-color: #7c22a8;
+    background-color: var(--color-purple-700);
+    border-color: var(--color-purple-700);
 }
 
 .btn--secondary {
-    border-color: #61078B;
-    color: #61078B;
+    border-color: var(--color-purple-800);
+    color: var(--color-purple-800);
 }
 
 .btn--secondary:hover {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
     color: #ffffff;
 }
 
 /* Sub-title arrow color */
 .sub-title,
 .sub-title i {
-    color: #7c22a8;
+    color: var(--color-purple-700);
 }
 
 /* Primary text references */
 .primary-text {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Skill bar fill */
 .skill-bar {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
 }
 
 /* Active/hover states */
 .navbar__item.active > a,
 .navbar__item > a:hover {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Portfolio hover overlay */
 .portfolio__single:hover .portfolio__single-content {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
 }
 
 .portfolio__single-content a i {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 .portfolio__single-content h4 a:hover {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Offer section item numbers */
 .offer__cta-single .sub-title {
-    color: #7c22a8;
+    color: var(--color-purple-700);
 }
 
 .offer__cta-single h2 a:hover {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Blog links */
 .blog__single-content h4 a:hover,
 .blog__single-meta a:hover {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Testimonial quote icon */
 .testimonial-s__content .quote i {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Footer */
 .footer__single-form .subscribe {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
 }
 
 .footer__single-meta a:hover,
 .footer__single-content ul li a:hover {
-    color: #7c22a8;
+    color: var(--color-purple-700);
 }
 
 /* Banner accent */
 .banner .text-stroke {
-    -webkit-text-stroke-color: #61078B;
+    -webkit-text-stroke-color: var(--color-purple-800);
 }
 
 /* Lines decoration */
 .line span,
 .lines .line {
-    background-color: rgba(97, 7, 139, 0.08);
+    background-color: var(--color-purple-050);
 }
 
 /* Preloader */
 .preloader {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
 }
 
 /* Input focus */
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #61078B !important;
-    outline-color: #61078B !important;
+    border-color: var(--color-purple-800) !important;
+    outline-color: var(--color-purple-800) !important;
 }
 
 /* Scroll up button */
 #scrollUp {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
 }
 
 /* Custom cursor */
 .cursor-big,
 .cursor-small {
-    border-color: #61078B;
-    background-color: #61078B;
+    border-color: var(--color-purple-800);
+    background-color: var(--color-purple-800);
 }
 
 /* Next page section hover */
 .next__text-slider-single h2 a:hover {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Banner interval span */
 .banner__content h1 .interval {
-    color: #7c22a8;
+    color: var(--color-purple-700);
 }
 
 /* Social links hover */
 .social a:hover {
-    color: #61078B;
-    border-color: #61078B;
+    color: var(--color-purple-800);
+    border-color: var(--color-purple-800);
+}
+
+/* Placeholder social links (no real URL configured yet) — visually muted, non-interactive */
+a.is-placeholder {
+    opacity: .4;
+    pointer-events: none;
+    cursor: default;
 }
 
 /* Agency section */
 .agency__content .section__content-cta a.btn--primary {
-    background-color: #61078B;
-    border-color: #61078B;
+    background-color: var(--color-purple-800);
+    border-color: var(--color-purple-800);
 }
 
 /* Light theme specific overrides */
 .home-light .offer__cta-single {
-    border-bottom-color: rgba(97, 7, 139, 0.12);
+    border-bottom-color: var(--color-purple-100);
 }
 
 .home-light .offer__cta-single:hover h2 a {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Contact form */
 .contact-form .btn--primary {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
 }
 
 /* FAQ accordion */
 .accordion-button:not(.collapsed) {
-    color: #61078B;
-    background-color: rgba(97, 7, 139, 0.06);
+    color: var(--color-purple-800);
+    background-color: var(--color-purple-050);
 }
 
 .accordion-button:not(.collapsed)::after {
@@ -182,18 +212,18 @@ select:focus {
 /* Page header breadcrumb */
 .page-header .sub-title,
 .page-header .breadcrumb-item.active {
-    color: #7c22a8;
+    color: var(--color-purple-700);
 }
 
 /* Highlight / selection */
 ::selection {
-    background-color: #61078B;
+    background-color: var(--color-purple-800);
     color: #ffffff;
 }
 
 /* Mobile offcanvas close button */
 .close-offcanvas-menu:hover i {
-    color: #61078B;
+    color: var(--color-purple-800);
 }
 
 /* Star decorations — tint them purple instead of yellow */
@@ -204,13 +234,90 @@ select:focus {
 /* Slick dots */
 .slick-dots li.slick-active button:before,
 .slick-dots li.slick-active button {
-    color: #61078B;
-    background-color: #61078B;
+    color: var(--color-purple-800);
+    background-color: var(--color-purple-800);
 }
 
 /* Slide nav arrows */
 .slide-btn:hover {
-    background-color: #61078B;
-    border-color: #61078B;
+    background-color: var(--color-purple-800);
+    border-color: var(--color-purple-800);
     color: #ffffff;
+}
+
+/* Sponsor/client logos — read as intentional placeholders until real logos are supplied */
+.sponsor__slider-item img {
+    filter: grayscale(1) opacity(.55);
+    transition: filter 200ms;
+}
+
+.sponsor__slider-item img:hover {
+    filter: grayscale(0) opacity(1);
+}
+
+/* Bootstrap pagination (blog list) */
+.pagination .page-link {
+    color: var(--color-purple-800);
+    border-color: var(--color-purple-100);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--color-purple-800);
+    border-color: var(--color-purple-800);
+}
+
+.pagination .page-link:hover {
+    color: var(--color-purple-700);
+    background-color: var(--color-purple-050);
+}
+
+/* Blog article body prose spacing */
+.blog-details .paragraph p {
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+}
+
+/* Value/audience cards (About "Our Values", Services "Who We Serve") */
+.value-card {
+    padding: 2rem;
+    border: 1px solid var(--color-purple-100);
+    border-radius: 12px;
+    height: 100%;
+}
+
+.value-card .thumb {
+    margin-bottom: 1.5rem;
+}
+
+.value-card .thumb i {
+    font-size: 2.5rem;
+    color: var(--color-purple-800);
+}
+
+/* Homepage portfolio showcase carousel */
+.portfolio__slider-item {
+    position: relative;
+    margin: 0 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+}
+
+.portfolio__slider-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio__slider-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 14px 16px;
+    background: linear-gradient(to top, rgba(0,0,0,.75), transparent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
 }

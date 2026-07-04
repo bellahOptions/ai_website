@@ -6,13 +6,29 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ContactFormRequest;
 use App\Mail\ContactNotification;
 use App\Models\Contact;
+use App\Models\Post;
+use App\Models\PortfolioItem;
+use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
     public function home()
     {
-        return view('welcome');
+        $latestPosts = Post::published()->latest('published_at')->take(2)->get();
+
+        $portfolioItems = PortfolioItem::published()->featured()->orderBy('sort_order')->take(8)->get();
+        if ($portfolioItems->count() < 8) {
+            $portfolioItems = $portfolioItems->concat(
+                PortfolioItem::published()
+                    ->whereNotIn('id', $portfolioItems->pluck('id'))
+                    ->orderByDesc('created_at')
+                    ->take(8 - $portfolioItems->count())
+                    ->get()
+            );
+        }
+
+        return view('welcome', compact('latestPosts', 'portfolioItems'));
     }
     public function about()
     {
@@ -54,5 +70,46 @@ class PageController extends Controller
                 ->withInput()
                 ->with('error', 'Sorry, something went wrong. Please try again.');
         }
+    }
+
+    /**
+     * Handle newsletter subscription from the footer form.
+     */
+    public function subscribeNewsletter(Request $request)
+    {
+        $request->validate([
+            'subscribe_email' => 'required|email|max:191',
+        ]);
+
+        Subscriber::firstOrCreate(['email' => $request->subscribe_email]);
+
+        return back()->with('success', 'Thanks for subscribing!')->with('_newsletter', true);
+    }
+
+    public function blogList()
+    {
+        $posts = Post::published()->latest('published_at')->paginate(6);
+
+        return view('blog.list', compact('posts'));
+    }
+
+    public function blogDetail(string $slug)
+    {
+        $post = Post::published()->where('slug', $slug)->firstOrFail();
+
+        $related = Post::published()
+            ->where('id', '!=', $post->id)
+            ->latest('published_at')
+            ->take(2)
+            ->get();
+
+        return view('blog.detail', compact('post', 'related'));
+    }
+
+    public function portfolio()
+    {
+        $items = PortfolioItem::published()->orderBy('sort_order')->orderByDesc('created_at')->paginate(12);
+
+        return view('portfolio', compact('items'));
     }
 }

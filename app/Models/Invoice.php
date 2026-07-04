@@ -51,15 +51,14 @@ class Invoice extends Model
         $this->saveQuietly();
     }
 
+    public static function currencySymbols(): array
+    {
+        return ['NGN' => '₦', 'USD' => '$', 'GBP' => '£', 'EUR' => '€'];
+    }
+
     public function currencySymbol(): string
     {
-        return match($this->currency) {
-            'NGN'   => '₦',
-            'USD'   => '$',
-            'GBP'   => '£',
-            'EUR'   => '€',
-            default => $this->currency . ' ',
-        };
+        return static::currencySymbols()[$this->currency] ?? $this->currency . ' ';
     }
 
     public static function generateNumber(): string

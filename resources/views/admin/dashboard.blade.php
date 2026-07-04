@@ -7,7 +7,7 @@
 <div style="margin-top:8px;">
 
     {{-- Stats row --}}
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:20px;">
+    <div style="display:grid; grid-template-columns:repeat({{ auth()->user()->isSuperAdmin() ? 4 : 3 }},1fr); gap:16px; margin-bottom:20px;">
         <div class="stat-card">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
                 <p style="font-size:11px; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:.06em; margin:0;">Total Revenue</p>
@@ -30,6 +30,7 @@
             <p style="font-size:12px;color:#9ca3af;margin:5px 0 0;">{{ $stats['sent_count'] + $stats['overdue_count'] }} pending</p>
         </div>
 
+        @if(auth()->user()->isSuperAdmin())
         <div class="stat-card">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
                 <p style="font-size:11px; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:.06em; margin:0;">Total Clients</p>
@@ -40,6 +41,7 @@
             <p style="font-size:26px;font-weight:700;color:#111827;margin:0;">{{ $stats['total_clients'] }}</p>
             <p style="font-size:12px;color:#9ca3af;margin:5px 0 0;">Registered clients</p>
         </div>
+        @endif
 
         <div class="stat-card">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
@@ -69,7 +71,7 @@
     </div>
 
     {{-- Content grid --}}
-    <div style="display:grid; grid-template-columns:1fr 320px; gap:20px;">
+    <div style="display:grid; grid-template-columns:{{ auth()->user()->isSuperAdmin() ? '1fr 320px' : '1fr' }}; gap:20px;">
 
         {{-- Recent invoices --}}
         <div class="admin-card">
@@ -99,7 +101,7 @@
                             </td>
                             <td style="color:#374151;">{{ $invoice->client->name ?? '—' }}</td>
                             <td><span class="badge badge-{{ $invoice->status }}">{{ ucfirst($invoice->status) }}</span></td>
-                            <td class="text-right" style="font-weight:600;color:#111827;">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</td>
+                            <td class="text-right" style="font-weight:600;color:#111827;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->total, 2) }}</td>
                         </tr>
                         @empty
                         <tr><td colspan="4" style="text-align:center;padding:32px;color:#9ca3af;font-size:13.5px;">
@@ -114,6 +116,7 @@
             </div>
         </div>
 
+        @if(auth()->user()->isSuperAdmin())
         {{-- Recent clients --}}
         <div class="admin-card">
             <div class="admin-card-header">
@@ -141,6 +144,7 @@
                 <a href="{{ route('admin.clients.index') }}" style="font-size:13px;color:#61078B;font-weight:500;text-decoration:none;">View all clients →</a>
             </div>
         </div>
+        @endif
 
     </div>
 </div>

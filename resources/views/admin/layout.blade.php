@@ -93,6 +93,23 @@
                 </svg>
                 Clients
             </a>
+
+            <p class="px-2.5 pt-3.5 pb-1.5 text-[10.5px] font-semibold text-gray-400 uppercase tracking-[.06em]">
+                Content
+            </p>
+            <a href="{{ route('admin.portfolio.index') }}"
+               class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13.5px] font-medium no-underline mb-0.5 transition-colors duration-150
+                      {{ request()->routeIs('admin.portfolio.*')
+                           ? 'bg-[#f3e8ff] text-[#61078B] font-semibold'
+                           : 'text-gray-600 hover:bg-[#f5f0ff] hover:text-[#61078B]' }}">
+                <svg class="{{ request()->routeIs('admin.portfolio.*') ? 'opacity-100' : 'opacity-60' }} shrink-0"
+                     width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <path d="M21 15l-5-5L5 21"/>
+                </svg>
+                Portfolio
+            </a>
         </nav>
 
         {{-- User footer --}}

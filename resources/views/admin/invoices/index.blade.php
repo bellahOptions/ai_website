@@ -67,7 +67,7 @@
                         {{ $invoice->due_date->format('M j, Y') }}
                     </td>
                     <td><span class="badge badge-{{ $invoice->status }}">{{ ucfirst($invoice->status) }}</span></td>
-                    <td class="text-right" style="font-weight:600;color:#111827;">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</td>
+                    <td class="text-right" style="font-weight:600;color:#111827;">{{ $invoice->currencySymbol() }}{{ number_format($invoice->total, 2) }}</td>
                     <td class="text-right">
                         <div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;">
                             <a href="{{ route('admin.invoices.show', $invoice) }}" class="btn btn-secondary btn-sm">View</a>

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Http\Controllers\Admin\TwoFactorController;
 
 class AuthController extends Controller
 {
@@ -35,9 +34,12 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'You do not have admin access.']);
         }
 
-        $request->session()->put('pending_2fa_user_id', $user->id);
+        Auth::login($user);
+        $request->session()->regenerate();
 
-        TwoFactorController::sendOtp($user);
+        if (is_null($user->two_factor_confirmed_at)) {
+            return redirect()->route('admin.2fa.setup');
+        }
 
         return redirect()->route('admin.2fa.form');
     }

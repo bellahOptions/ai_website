@@ -89,14 +89,11 @@
 
         <div class="card">
             <div class="lock-icon">
-                <svg width="26" height="26" fill="none" stroke="#61078B" stroke-width="1.8" viewBox="0 0 24 24">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
+                <img src="{{ asset('ms-icon-144x144.png') }}" width="26" height="26" alt="">
             </div>
 
-            <h2 class="card-title">Check your email</h2>
-            <p class="card-desc">We sent a 6-digit code to your email address. Enter it below to continue.</p>
+            <h2 class="card-title" id="code-title">Enter authenticator code</h2>
+            <p class="card-desc" id="code-desc">Open your authenticator app and enter the 6-digit code.</p>
 
             @if(session('status'))
             <div class="alert-success">{{ session('status') }}</div>
@@ -108,7 +105,7 @@
             </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.2fa.verify') }}">
+            <form method="POST" action="{{ route('admin.2fa.verify') }}" id="code-form">
                 @csrf
                 <input type="text" name="code" inputmode="numeric" pattern="\d{6}" maxlength="6"
                        autocomplete="one-time-code" autofocus placeholder="000000"
@@ -116,15 +113,39 @@
                 <button type="submit" class="btn-verify">Verify & Sign In</button>
             </form>
 
+            <form method="POST" action="{{ route('admin.2fa.verify') }}" id="recovery-form" style="display:none;">
+                @csrf
+                <input type="text" name="recovery_code" placeholder="xxxxx-xxxxx" autocomplete="off"
+                       class="otp-input" style="letter-spacing:2px;font-size:18px;" value="{{ old('recovery_code') }}">
+                <button type="submit" class="btn-verify">Verify & Sign In</button>
+            </form>
+
             <hr class="divider">
 
-            <form method="POST" action="{{ route('admin.2fa.resend') }}" style="display:inline;">
-                @csrf
-                <button type="submit" class="link-btn">Resend code</button>
-            </form>
+            <button type="button" class="link-btn" id="toggle-recovery">Use a recovery code instead</button>
             &nbsp;·&nbsp;
             <a href="{{ route('admin.login') }}" class="grey-link">Back to login</a>
         </div>
     </div>
+
+    <script>
+        var toggle = document.getElementById('toggle-recovery');
+        var codeForm = document.getElementById('code-form');
+        var recoveryForm = document.getElementById('recovery-form');
+        var title = document.getElementById('code-title');
+        var desc = document.getElementById('code-desc');
+        var usingRecovery = false;
+
+        toggle.addEventListener('click', function () {
+            usingRecovery = !usingRecovery;
+            codeForm.style.display = usingRecovery ? 'none' : 'block';
+            recoveryForm.style.display = usingRecovery ? 'block' : 'none';
+            title.textContent = usingRecovery ? 'Enter recovery code' : 'Enter authenticator code';
+            desc.textContent = usingRecovery
+                ? 'Enter one of the recovery codes you saved when you set up two-factor authentication.'
+                : 'Open your authenticator app and enter the 6-digit code.';
+            toggle.textContent = usingRecovery ? 'Use authenticator code instead' : 'Use a recovery code instead';
+        });
+    </script>
 </body>
 </html>

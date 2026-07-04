@@ -32,6 +32,8 @@ class CreateClientModal extends Component
 
     public function save(): void
     {
+        abort_unless(auth()->user()?->isSuperAdmin(), 403);
+
         $data = $this->validate([
             'name'    => ['required', 'string', 'max:255'],
             'email'   => ['required', 'email', 'max:255', 'unique:clients,email'],

@@ -31,10 +31,12 @@
                 <div class="form-group">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
                         <label class="form-label" style="margin-bottom:0;">Client <span class="req">*</span></label>
+                        @if(auth()->user()->isSuperAdmin())
                         <button type="button" onclick="Livewire.dispatch('open-create-client')"
                                 style="background:none;border:none;cursor:pointer;font-size:12.5px;color:#61078B;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:4px;padding:0;">
                             <span style="font-size:16px;line-height:1;">+</span> New Client
                         </button>
+                        @endif
                     </div>
                     <select name="client_id" id="client_id_select" required class="form-input">
                         @foreach($clients as $client)
@@ -45,7 +47,9 @@
                     </select>
                 </div>
 
+                @if(auth()->user()->isSuperAdmin())
                 <livewire:create-client-modal />
+                @endif
                 <div class="form-group">
                     <label class="form-label">Status</label>
                     <select name="status" class="form-input">
@@ -56,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Currency</label>
-                    <select name="currency" class="form-input">
+                    <select name="currency" id="currency-select" class="form-input">
                         @foreach(['NGN'=>'NGN — Nigerian Naira','USD'=>'USD — US Dollar','GBP'=>'GBP — British Pound','EUR'=>'EUR — Euro'] as $code => $label)
                         <option value="{{ $code }}" {{ old('currency',$invoice->currency) === $code ? 'selected':'' }}>{{ $label }}</option>
                         @endforeach
@@ -80,8 +84,8 @@
 
             <div style="display:grid;grid-template-columns:1fr 130px 110px auto 90px 32px;gap:8px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #f0f1f3;">
                 <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Description</span>
-                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Price (₦)</span>
-                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Discount (₦)</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Price (<span id="price-header-symbol">{{ $invoice->currencySymbol() }}</span>)</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Discount (<span id="discount-header-symbol">{{ $invoice->currencySymbol() }}</span>)</span>
                 <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;text-align:center;">VAT 7.5%</span>
                 <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;text-align:right;">Total</span>
                 <span></span>
@@ -106,7 +110,7 @@
                         <input type="checkbox" name="items[{{ $i }}][apply_vat]" value="1" class="item-vat" {{ $applyVat ? 'checked' : '' }} style="accent-color:#61078B;width:15px;height:15px;cursor:pointer;">
                         Apply
                     </label>
-                    <div class="item-total" style="text-align:right;font-size:13.5px;font-weight:600;color:#61078B;padding:9px 0;">{{ number_format($lineTotal, 2) }}</div>
+                    <div class="item-total" style="text-align:right;font-size:13.5px;font-weight:600;color:#61078B;padding:9px 0;">{{ $invoice->currencySymbol() }}{{ number_format($lineTotal, 2) }}</div>
                     @if(!$loop->first)
                     <button type="button" class="remove-item" style="width:28px;height:28px;border:none;background:#fff0f0;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:15px;padding:0;">×</button>
                     @else
@@ -144,12 +148,12 @@
             <div style="display:flex;flex-direction:column;gap:12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:13.5px;color:#6b7280;">Subtotal</span>
-                    <span style="font-size:13.5px;font-weight:600;color:#111827;" id="preview-subtotal">{{ number_format($invoice->subtotal, 2) }}</span>
+                    <span style="font-size:13.5px;font-weight:600;color:#111827;" id="preview-subtotal">{{ $invoice->currencySymbol() }}{{ number_format($invoice->subtotal, 2) }}</span>
                 </div>
 
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:13.5px;color:#6b7280;">VAT (7.5%)</span>
-                    <span style="font-size:13.5px;color:#374151;" id="preview-tax">{{ number_format($invoice->tax_amount, 2) }}</span>
+                    <span style="font-size:13.5px;color:#374151;" id="preview-tax">{{ $invoice->currencySymbol() }}{{ number_format($invoice->tax_amount, 2) }}</span>
                 </div>
 
                 <div class="form-group">
@@ -160,7 +164,7 @@
 
                 <div style="border-top:2px solid #f0f1f3;padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:14px;font-weight:700;color:#111827;">Total Due</span>
-                    <span style="font-size:18px;font-weight:700;color:#61078B;" id="preview-total">{{ number_format($invoice->total, 2) }}</span>
+                    <span style="font-size:18px;font-weight:700;color:#61078B;" id="preview-total">{{ $invoice->currencySymbol() }}{{ number_format($invoice->total, 2) }}</span>
                 </div>
             </div>
 
@@ -178,7 +182,18 @@
 <script>
 let itemIndex = {{ old('items') ? count(old('items')) : $invoice->items->count() }};
 
+const CURRENCY_SYMBOLS = @json(\App\Models\Invoice::currencySymbols());
+
+function currentSymbol() {
+    const code = document.getElementById('currency-select').value;
+    return CURRENCY_SYMBOLS[code] || (code + ' ');
+}
+
 function recalculate() {
+    const symbol = currentSymbol();
+    document.getElementById('price-header-symbol').textContent = symbol;
+    document.getElementById('discount-header-symbol').textContent = symbol;
+
     let subtotal = 0, vatTotal = 0;
     document.querySelectorAll('.item-row').forEach(row => {
         const price    = parseFloat(row.querySelector('.item-price')?.value)    || 0;
@@ -188,15 +203,15 @@ function recalculate() {
         const vat      = applyVat ? net * 0.075 : 0;
         const total    = net + vat;
         const el = row.querySelector('.item-total');
-        if (el) el.textContent = total.toFixed(2);
+        if (el) el.textContent = symbol + total.toFixed(2);
         subtotal += net;
         vatTotal += vat;
     });
     const invDiscount = parseFloat(document.getElementById('discount-input').value) || 0;
     const grandTotal  = Math.max(0, subtotal + vatTotal - invDiscount);
-    document.getElementById('preview-subtotal').textContent = subtotal.toFixed(2);
-    document.getElementById('preview-tax').textContent      = vatTotal.toFixed(2);
-    document.getElementById('preview-total').textContent    = grandTotal.toFixed(2);
+    document.getElementById('preview-subtotal').textContent = symbol + subtotal.toFixed(2);
+    document.getElementById('preview-tax').textContent      = symbol + vatTotal.toFixed(2);
+    document.getElementById('preview-total').textContent    = symbol + grandTotal.toFixed(2);
 }
 
 function bindRow(row) {
@@ -233,13 +248,14 @@ document.getElementById('add-item').addEventListener('click', () => {
 
 document.querySelectorAll('.item-row').forEach(bindRow);
 document.getElementById('discount-input').addEventListener('input', recalculate);
+document.getElementById('currency-select').addEventListener('change', recalculate);
 recalculate();
 
 document.addEventListener('livewire:initialized', function () {
     Livewire.on('clientCreated', function (params) {
-        var id      = params[0].id;
-        var name    = params[0].name;
-        var company = params[0].company;
+        var id      = params.id;
+        var name    = params.name;
+        var company = params.company;
         var select  = document.getElementById('client_id_select');
         var label   = name + (company ? ' — ' + company : '');
         var option  = new Option(label, id, true, true);

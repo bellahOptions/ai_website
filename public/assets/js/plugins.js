@@ -600,6 +600,41 @@
 				],
 			});
 
+		// 18b. portfolio showcase slider (homepage)
+		$(".portfolio__slider")
+			.not(".slick-initialized")
+			.slick({
+				infinite: true,
+				autoplay: true,
+				slidesToShow: 4,
+				speed: 1000,
+				autoplaySpeed: 4000,
+				slidesToScroll: 1,
+				arrows: false,
+				dots: false,
+				centerMode: true,
+				centerPadding: "0px",
+				responsive: [{
+						breakpoint: 1400,
+						settings: {
+							slidesToShow: 3,
+						},
+					},
+					{
+						breakpoint: 1200,
+						settings: {
+							slidesToShow: 2,
+						},
+					},
+					{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: 1,
+						},
+					},
+				],
+			});
+
 		// 18. project details poster slider
 		$(".poster__slider")
 			.not(".slick-initialized")

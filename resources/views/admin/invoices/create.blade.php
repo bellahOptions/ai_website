@@ -29,10 +29,12 @@
                 <div class="form-group">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
                         <label class="form-label" style="margin-bottom:0;">Client <span class="req">*</span></label>
+                        @if(auth()->user()->isSuperAdmin())
                         <button type="button" onclick="Livewire.dispatch('open-create-client')"
                                 style="background:none;border:none;cursor:pointer;font-size:12.5px;color:#61078B;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:4px;padding:0;">
                             <span style="font-size:16px;line-height:1;">+</span> New Client
                         </button>
+                        @endif
                     </div>
                     <select name="client_id" id="client_id_select" required class="form-input">
                         <option value="">Select a client…</option>
@@ -44,10 +46,12 @@
                     </select>
                 </div>
 
+                @if(auth()->user()->isSuperAdmin())
                 <livewire:create-client-modal />
+                @endif
                 <div class="form-group">
                     <label class="form-label">Currency</label>
-                    <select name="currency" class="form-input">
+                    <select name="currency" id="currency-select" class="form-input">
                         <option value="NGN" {{ old('currency','NGN') === 'NGN' ? 'selected':'' }}>NGN — Nigerian Naira</option>
                         <option value="USD" {{ old('currency') === 'USD' ? 'selected':'' }}>USD — US Dollar</option>
                         <option value="GBP" {{ old('currency') === 'GBP' ? 'selected':'' }}>GBP — British Pound</option>
@@ -71,8 +75,8 @@
 
             <div style="display:grid;grid-template-columns:1fr 130px 110px auto 90px 32px;gap:8px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #f0f1f3;">
                 <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Description</span>
-                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Price (₦)</span>
-                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Discount (₦)</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Price (<span id="price-header-symbol">₦</span>)</span>
+                <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;">Discount (<span id="discount-header-symbol">₦</span>)</span>
                 <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;text-align:center;">VAT 7.5%</span>
                 <span style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;text-align:right;">Total</span>
                 <span></span>
@@ -171,12 +175,23 @@
 <script>
 let itemIndex = {{ old('items') ? count(old('items')) : 1 }};
 
+const CURRENCY_SYMBOLS = @json(\App\Models\Invoice::currencySymbols());
+
+function currentSymbol() {
+    const code = document.getElementById('currency-select').value;
+    return CURRENCY_SYMBOLS[code] || (code + ' ');
+}
+
 function rowTotal(price, discount, applyVat) {
     const net = Math.max(0, price - discount);
     return net * (applyVat ? 1.075 : 1);
 }
 
 function recalculate() {
+    const symbol = currentSymbol();
+    document.getElementById('price-header-symbol').textContent = symbol;
+    document.getElementById('discount-header-symbol').textContent = symbol;
+
     let subtotal = 0, vatTotal = 0;
     document.querySelectorAll('.item-row').forEach(row => {
         const price    = parseFloat(row.querySelector('.item-price')?.value)    || 0;
@@ -186,15 +201,15 @@ function recalculate() {
         const vat      = applyVat ? net * 0.075 : 0;
         const total    = net + vat;
         const el = row.querySelector('.item-total');
-        if (el) el.textContent = total.toFixed(2);
+        if (el) el.textContent = symbol + total.toFixed(2);
         subtotal += net;
         vatTotal += vat;
     });
     const invDiscount = parseFloat(document.getElementById('discount-input').value) || 0;
     const grandTotal  = Math.max(0, subtotal + vatTotal - invDiscount);
-    document.getElementById('preview-subtotal').textContent = subtotal.toFixed(2);
-    document.getElementById('preview-tax').textContent      = vatTotal.toFixed(2);
-    document.getElementById('preview-total').textContent    = grandTotal.toFixed(2);
+    document.getElementById('preview-subtotal').textContent = symbol + subtotal.toFixed(2);
+    document.getElementById('preview-tax').textContent      = symbol + vatTotal.toFixed(2);
+    document.getElementById('preview-total').textContent    = symbol + grandTotal.toFixed(2);
 }
 
 function bindRow(row) {
@@ -231,13 +246,14 @@ document.getElementById('add-item').addEventListener('click', () => {
 
 document.querySelectorAll('.item-row').forEach(bindRow);
 document.getElementById('discount-input').addEventListener('input', recalculate);
+document.getElementById('currency-select').addEventListener('change', recalculate);
 recalculate();
 
 document.addEventListener('livewire:initialized', function () {
     Livewire.on('clientCreated', function (params) {
-        var id      = params[0].id;
-        var name    = params[0].name;
-        var company = params[0].company;
+        var id      = params.id;
+        var name    = params.name;
+        var company = params.company;
         var select  = document.getElementById('client_id_select');
         var label   = name + (company ? ' — ' + company : '');
         var option  = new Option(label, id, true, true);

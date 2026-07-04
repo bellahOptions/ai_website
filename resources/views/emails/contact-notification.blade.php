@@ -1,137 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Contact Form Submission</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .header {
-            background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
-            color: #ffffff;
-            padding: 20px;
-            border-radius: 8px 8px 0 0;
-            margin: -30px -30px 30px -30px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .field {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .field:last-child {
-            border-bottom: none;
-        }
-        .label {
-            font-weight: bold;
-            color: #7c3aed;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .value {
-            color: #333;
-        }
-        .message-box {
-            background-color: #f9fafb;
-            border-left: 4px solid #7c3aed;
-            padding: 15px;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #666;
-            font-size: 12px;
-        }
-        .reply-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
-            color: #ffffff;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 6px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Contact Form Submission — AI Digital Agency</title>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
+<body style="margin:0;padding:0;background:#f3f4f6;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f3f4f6;padding:40px 16px;">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+        {{-- Header --}}
+        <tr>
+          <td style="background:#61078B;border-radius:14px 14px 0 0;padding:32px 40px;text-align:center;">
             <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" style="height:40px;width:auto;display:block;margin:0 auto 12px;">
-            <h1>📧 New Contact Form Submission</h1>
-        </div>
+            <span style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;">New Contact Form Submission</span>
+          </td>
+        </tr>
 
-        <div class="field">
-            <span class="label">Name:</span>
-            <span class="value">{{ $contact->full_name }}</span>
-        </div>
+        {{-- Body --}}
+        <tr>
+          <td style="background:#ffffff;padding:36px 40px 28px;">
 
-        <div class="field">
-            <span class="label">Email:</span>
-            <span class="value">
-                <a href="mailto:{{ $contact->email }}" style="color: #7c3aed;">{{ $contact->email }}</a>
-            </span>
-        </div>
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin-bottom:20px;">
+              <tr>
+                <td style="padding:10px 0;font-size:13px;color:#6b7280;border-bottom:1px solid #f3f4f6;width:120px;">Name</td>
+                <td style="padding:10px 0;font-size:13.5px;font-weight:600;color:#111827;border-bottom:1px solid #f3f4f6;">{{ $contact->full_name }}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;font-size:13px;color:#6b7280;border-bottom:1px solid #f3f4f6;">Email</td>
+                <td style="padding:10px 0;font-size:13.5px;border-bottom:1px solid #f3f4f6;">
+                  <a href="mailto:{{ $contact->email }}" style="color:#61078B;text-decoration:none;font-weight:600;">{{ $contact->email }}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;font-size:13px;color:#6b7280;border-bottom:1px solid #f3f4f6;">Phone</td>
+                <td style="padding:10px 0;font-size:13.5px;border-bottom:1px solid #f3f4f6;">
+                  <a href="tel:{{ $contact->phone }}" style="color:#61078B;text-decoration:none;font-weight:600;">{{ $contact->phone }}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;font-size:13px;color:#6b7280;">Subject</td>
+                <td style="padding:10px 0;font-size:13.5px;font-weight:600;color:#111827;">{{ $contact->subject }}</td>
+              </tr>
+            </table>
 
-        <div class="field">
-            <span class="label">Phone:</span>
-            <span class="value">
-                <a href="tel:{{ $contact->phone }}" style="color: #7c3aed;">{{ $contact->phone }}</a>
-            </span>
-        </div>
-
-        <div class="field">
-            <span class="label">Subject:</span>
-            <span class="value">{{ $contact->subject }}</span>
-        </div>
-
-        <div class="field">
-            <span class="label">Message:</span>
-            <div class="message-box">
-                {{ $contact->message }}
+            <p style="font-size:10.5px;font-weight:700;color:#61078B;text-transform:uppercase;letter-spacing:.1em;margin:0 0 8px;">Message</p>
+            <div style="background:#f9fafb;border-left:3px solid #61078B;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:24px;">
+              <p style="font-size:13.5px;color:#374151;line-height:1.6;margin:0;">{{ $contact->message }}</p>
             </div>
-        </div>
 
-        <div class="field">
-            <span class="label">Submitted:</span>
-            <span class="value">{{ $contact->created_at->format('F d, Y \a\t g:i A') }}</span>
-        </div>
+            <p style="font-size:12.5px;color:#9ca3af;margin:0 0 24px;">Submitted {{ $contact->created_at->format('F j, Y \a\t g:i A') }}</p>
 
-        <div style="text-align: center;">
-            <a href="mailto:{{ $contact->email }}?subject=Re: {{ $contact->subject }}" class="reply-button">
-                Reply to {{ $contact->full_name }}
-            </a>
-        </div>
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+              <tr>
+                <td style="background:#61078B;border-radius:8px;">
+                  <a href="mailto:{{ $contact->email }}?subject={{ rawurlencode('Re: ' . $contact->subject) }}"
+                     style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:700;color:#fff;text-decoration:none;">
+                    Reply to {{ $contact->full_name }}
+                  </a>
+                </td>
+              </tr>
+            </table>
 
-        <div class="footer">
-            <p><strong>AI Digital Agency</strong></p>
-            <p>Lagos State, Nigeria</p>
-            <p style="margin-top: 10px; color: #999;">
-                This is an automated notification from your contact form.
-            </p>
-        </div>
-    </div>
+          </td>
+        </tr>
+
+        {{-- Footer --}}
+        <tr>
+          <td style="background:#f9f5ff;border-radius:0 0 14px 14px;padding:20px 40px;text-align:center;">
+            <p style="font-size:13px;font-weight:600;color:#61078B;margin:0 0 4px;">AI Digital Agency</p>
+            <p style="font-size:12px;color:#9ca3af;margin:0;">This is an automated notification from your contact form &nbsp;·&nbsp; Lagos, Nigeria</p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>

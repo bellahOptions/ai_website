@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\AdminOtpMail;
-use App\Models\AdminOtp;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
+use Laravel\Fortify\Fortify;
 
 class TwoFactorController extends Controller
 {
     public function showForm(Request $request)
     {
-        if (!$request->session()->has('pending_2fa_user_id')) {
+        if (!$request->user()) {
             return redirect()->route('admin.login');
+        }
+
+        if (is_null($request->user()->two_factor_confirmed_at)) {
+            return redirect()->route('admin.2fa.setup');
         }
 
         return view('admin.two-factor');
@@ -23,60 +24,63 @@ class TwoFactorController extends Controller
 
     public function verify(Request $request)
     {
-        $request->validate(['code' => ['required', 'digits:6']]);
+        $request->validate([
+            'code' => ['nullable', 'digits:6'],
+            'recovery_code' => ['nullable', 'string'],
+        ]);
 
-        $userId = $request->session()->get('pending_2fa_user_id');
+        $user = $request->user();
 
-        if (!$userId) {
-            return redirect()->route('admin.login');
+        if ($request->filled('recovery_code')) {
+            $match = collect($user->recoveryCodes())->first(
+                fn ($code) => hash_equals($code, $request->input('recovery_code'))
+            );
+
+            if (!$match) {
+                return back()->withErrors(['recovery_code' => 'Invalid recovery code.']);
+            }
+
+            $user->replaceRecoveryCode($match);
+        } else {
+            $valid = $request->filled('code') && app(TwoFactorAuthenticationProvider::class)->verify(
+                Fortify::currentEncrypter()->decrypt($user->two_factor_secret),
+                $request->input('code')
+            );
+
+            if (!$valid) {
+                return back()->withErrors(['code' => 'Invalid or expired code. Please try again.']);
+            }
         }
 
-        $otp = AdminOtp::where('user_id', $userId)
-                       ->where('code', $request->code)
-                       ->latest('created_at')
-                       ->first();
-
-        if (!$otp || $otp->isExpired()) {
-            return back()->withErrors(['code' => 'Invalid or expired code. Please try again.']);
-        }
-
-        $otp->delete();
-
-        $user = User::find($userId);
-        Auth::login($user);
-        $request->session()->forget('pending_2fa_user_id');
         $request->session()->put('2fa_verified', true);
         $request->session()->regenerate();
 
         return redirect()->route('admin.dashboard');
     }
 
-    public function resend(Request $request)
+    public function showSetup(Request $request)
     {
-        $userId = $request->session()->get('pending_2fa_user_id');
-
-        if (!$userId) {
-            return redirect()->route('admin.login');
+        // Only bounce to the dashboard once this session has actually completed
+        // the flow — a confirmed account with no session flag yet means the user
+        // is still mid-setup (e.g. refreshed the page after confirming but before
+        // clicking "Continue"), and redirecting them into AdminMiddleware here
+        // would force-logout them for failing the 2fa_verified check.
+        if ($request->session()->get('2fa_verified')) {
+            return redirect()->route('admin.dashboard');
         }
 
-        $user = User::find($userId);
-        $this->sendOtp($user);
-
-        return back()->with('status', 'A new code has been sent to ' . $user->email);
+        return view('admin.two-factor-setup', [
+            'confirmed' => !is_null($request->user()->two_factor_confirmed_at),
+        ]);
     }
 
-    public static function sendOtp(User $user): void
+    public function completeSetup(Request $request)
     {
-        AdminOtp::where('user_id', $user->id)->delete();
+        abort_unless(!is_null($request->user()->two_factor_confirmed_at), 403);
 
-        $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        $request->session()->put('2fa_verified', true);
+        $request->session()->regenerate();
 
-        AdminOtp::create([
-            'user_id'    => $user->id,
-            'code'       => $code,
-            'expires_at' => now()->addMinutes(10),
-        ]);
-
-        Mail::to($user->email)->send(new AdminOtpMail($user, $code));
+        return redirect()->route('admin.dashboard')->with('success', 'Two-factor authentication is now active.');
     }
 }

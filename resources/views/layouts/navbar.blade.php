@@ -52,6 +52,9 @@
                         <li class="navbar__item nav-fade {{ request()->routeIs('blog.*') ? 'active' : '' }}">
                             <a href="{{ route('blog.list') }}">Blog</a>
                         </li>
+                        <li class="navbar__item nav-fade {{ request()->routeIs('portfolio.page') ? 'active' : '' }}">
+                            <a href="{{ route('portfolio.page') }}">Portfolio</a>
+                        </li>
                         <li class="navbar__item nav-fade {{ request()->routeIs('contact.page') ? 'active' : '' }}">
                             <a href="{{ route('contact.page') }}">Contact</a>
                         </li>
@@ -66,10 +69,7 @@
             </div>
 
             <div class="offcanvas-menu__social social nav-fade">
-                <a href="#" target="_blank" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" target="_blank" aria-label="twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" target="_blank" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" target="_blank" aria-label="linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                <x-social-links :platforms="['facebook', 'twitter', 'instagram', 'linkedin']" />
             </div>
         </nav>
     </div>

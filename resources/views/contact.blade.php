@@ -83,7 +83,7 @@
     <div class="container">
 
         {{-- Flash messages --}}
-        @if(session('success'))
+        @if(session('success') && !session('_newsletter'))
         <div class="alert alert-success mb-4" style="background:rgba(97,7,139,0.1); border:1px solid #61078B; color:#61078B; border-radius:8px; padding:1rem 1.5rem;">
             <i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}
         </div>
@@ -109,6 +109,10 @@
                         <span class="sub-title">SEND A MESSAGE <i class="fa-solid fa-arrow-right"></i></span>
                         <h2 class="title title-anim">Let's Start a Conversation</h2>
                     </div>
+                    <a href="https://wa.me/2349024083203?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20growing%20my%20brand"
+                       target="_blank" class="btn btn--secondary" style="margin-bottom:2rem;">
+                        <i class="fa-brands fa-whatsapp me-2"></i>Prefer WhatsApp? Chat with us instantly
+                    </a>
                     <form action="{{ route('contact.submit') }}" method="POST">
                         @csrf
                         <div class="row gaper">
@@ -160,11 +164,7 @@
                 <div class="section__content">
                     <h4 style="margin-bottom:1rem;">Follow Us</h4>
                     <div class="social" style="justify-content:flex-start; gap:0.75rem;">
-                        <a href="#" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#" target="_blank" aria-label="Behance"><i class="fa-brands fa-behance"></i></a>
+                        <x-social-links :platforms="['facebook', 'twitter', 'instagram', 'linkedin', 'behance']" />
                     </div>
                 </div>
             </div>

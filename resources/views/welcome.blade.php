@@ -42,9 +42,9 @@
         <a href="mailto:sales@aidigitalagency.com.ng">mail : sales@aidigitalagency.com.ng</a>
     </div>
     <div class="banner-right-text banner-social-text d-none d-md-flex">
-        <a href="#" target="_blank">Instagram</a>
-        <a href="#" target="_blank">LinkedIn</a>
-        <a href="#" target="_blank">Facebook</a>
+        <a href="https://wa.me/2349024083203" target="_blank">WhatsApp : +234 902 408 3203</a>
+        <a href="{{ config('social.instagram') ?? '#' }}" target="_blank" @unless(config('social.instagram')) class="is-placeholder" @endunless>Instagram</a>
+        <a href="{{ config('social.linkedin') ?? '#' }}" target="_blank" @unless(config('social.linkedin')) class="is-placeholder" @endunless>LinkedIn</a>
     </div>
     <div class="lines d-none d-lg-flex">
         <div class="line"></div><div class="line"></div><div class="line"></div>
@@ -54,7 +54,7 @@
 {{-- ==== / banner end ==== --}}
 
 {{-- ==== agency / about intro start ==== --}}
-<section class="section agency bg-purple-600" style="background-color: #62068d;">
+<section class="section agency bg-purple-brand">
     <div class="container">
         <div class="row gaper align-items-center">
             <div class="col-12 col-lg-6">
@@ -150,7 +150,7 @@
                         <h2>
                             <a href="{{ route('services.page') }}">Brand Positioning & Messaging <i class="fa-sharp fa-solid fa-arrow-up-right"></i></a>
                         </h2>
-                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/blog-thumb.png') }}"></div>
+                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/thumb.png') }}"></div>
                     </div>
                     <div class="offer__cta-single fade-top">
                         <span class="sub-title">05 <i class="fa-solid fa-arrow-right"></i></span>
@@ -241,8 +241,6 @@
                     <div class="sponsor__slider-item"><img src="{{ asset('assets/images/sponsor/four-dark.png') }}" alt="Client"></div>
                     <div class="sponsor__slider-item"><img src="{{ asset('assets/images/sponsor/five-dark.png') }}" alt="Client"></div>
                     <div class="sponsor__slider-item"><img src="{{ asset('assets/images/sponsor/six-dark.png') }}" alt="Client"></div>
-                    <div class="sponsor__slider-item"><img src="{{ asset('assets/images/sponsor/one-dark.png') }}" alt="Client"></div>
-                    <div class="sponsor__slider-item"><img src="{{ asset('assets/images/sponsor/two-dark.png') }}" alt="Client"></div>
                 </div>
             </div>
         </div>
@@ -329,6 +327,41 @@
 </section>
 {{-- ==== / testimonial end ==== --}}
 
+{{-- ==== portfolio start ==== --}}
+@if($portfolioItems->isNotEmpty())
+<section class="section portfolio-showcase fade-wrapper light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="section__header text-center">
+                    <span class="sub-title">OUR WORK <i class="fa-solid fa-arrow-right"></i></span>
+                    <h2 class="title title-anim">A Look at Work We've Done</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="portfolio__slider">
+                    @foreach($portfolioItems as $item)
+                    <div class="portfolio__slider-item">
+                        <img src="{{ $item->imageUrl() }}" alt="{{ $item->title }}">
+                        <div class="portfolio__slider-caption">{{ $item->title }}</div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lines d-none d-lg-flex">
+        <div class="line"></div><div class="line"></div><div class="line"></div>
+        <div class="line"></div><div class="line"></div>
+    </div>
+</section>
+@endif
+{{-- ==== / portfolio end ==== --}}
+
 {{-- ==== blog start ==== --}}
 <section class="section blog fade-wrapper">
     <div class="container">
@@ -341,65 +374,27 @@
             </div>
         </div>
         <div class="row gaper">
+            @foreach($latestPosts as $post)
             <div class="col-12 col-md-6">
                 <div class="blog__single fade-top">
                     <div class="blog__single-thumb topy-tilt">
-                        <a href="{{ route('blog.list') }}"><img src="{{ asset('assets/images/blog/one.png') }}" alt="Blog"></a>
+                        <a href="{{ route('blog.detail', $post->slug) }}"><img src="{{ asset('assets/images/blog/' . ($post->cover_image ?? 'one.png')) }}" alt="{{ $post->title }}"></a>
                     </div>
                     <div class="blog__single-content">
-                        <h4><a href="{{ route('blog.list') }}">A Simple Social Media Marketing Checklist for Businesses</a></h4>
+                        <h4><a href="{{ route('blog.detail', $post->slug) }}">{{ $post->title }}</a></h4>
                         <div class="blog__single-meta">
-                            <a href="{{ route('blog.list') }}" class="sub-title">strategy <i class="fa-solid fa-arrow-right"></i></a>
-                            <p>JUNE 1, 2025</p>
+                            <a href="{{ route('blog.detail', $post->slug) }}" class="sub-title">{{ $post->category ?? 'insights' }} <i class="fa-solid fa-arrow-right"></i></a>
+                            <p>{{ strtoupper($post->published_at->format('M j, Y')) }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-                <div class="blog__single fade-top">
-                    <div class="blog__single-thumb topy-tilt">
-                        <a href="{{ route('blog.list') }}"><img src="{{ asset('assets/images/blog/two.png') }}" alt="Blog"></a>
-                    </div>
-                    <div class="blog__single-content">
-                        <h4><a href="{{ route('blog.list') }}">Transforming Social Media Challenges into Opportunities</a></h4>
-                        <div class="blog__single-meta">
-                            <a href="{{ route('blog.list') }}" class="sub-title">growth <i class="fa-solid fa-arrow-right"></i></a>
-                            <p>MAY 15, 2025</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
 {{-- ==== / blog end ==== --}}
 
-{{-- ==== CTA / next page start ==== --}}
-<section class="section next-page light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-                <div class="section__header text-center">
-                    <a href="{{ route('contact.page') }}" class="sub-title mb-0">
-                        Ready to Get Started?
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="next__text-slider">
-        @for($i = 0; $i < 6; $i++)
-        <div class="next__text-slider-single">
-            <h2 class="h1"><a href="{{ route('contact.page') }}">Book a Clarity Call <i class="fa-sharp fa-solid fa-arrow-down-right"></i></a></h2>
-        </div>
-        @endfor
-    </div>
-    <div class="lines d-none d-lg-flex">
-        <div class="line"></div><div class="line"></div><div class="line"></div>
-        <div class="line"></div><div class="line"></div>
-    </div>
-</section>
-{{-- ==== / CTA end ==== --}}
+<x-cta-marquee heading="Ready to Get Started?" linkText="Book a Clarity Call" />
 
 @endsection

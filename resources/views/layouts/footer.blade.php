@@ -1,5 +1,5 @@
 ﻿{{-- ==== footer start ==== --}}
-<footer class="footer section pb-0 bg-[#62068d]">
+<footer class="footer section pb-0 bg-purple-brand">
     <div class="container">
         <div class="row gaper">
             {{-- Company Info --}}
@@ -39,6 +39,7 @@
                             <li><a href="{{ route('about.page') }}">About Us</a></li>
                             <li><a href="{{ route('services.page') }}">Our Services</a></li>
                             <li><a href="{{ route('blog.list') }}">News & Blog</a></li>
+                            <li><a href="{{ route('portfolio.page') }}">Portfolio</a></li>
                             <li><a href="{{ route('contact.page') }}">Contact Us</a></li>
                         </ul>
                     </div>
@@ -71,8 +72,11 @@
                     </div>
                     <div class="footer__single-content">
                         <p>Get insights on social media strategy and brand growth straight to your inbox.</p>
+                        @if(session('success') && session('_newsletter'))
+                            <p class="text-white mb-2">{{ session('success') }}</p>
+                        @endif
                         <div class="footer__single-form">
-                            <form action="#" method="post">
+                            <form action="{{ route('newsletter.subscribe') }}" method="post">
                                 @csrf
                                 <div class="input-email">
                                     <input type="email" name="subscribe_email" placeholder="Enter Your Email" required>
@@ -99,11 +103,7 @@
                         </div>
                         <div class="col-12 col-lg-4">
                             <div class="social justify-content-center justify-content-lg-end">
-                                <a href="#" target="_blank" aria-label="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#" target="_blank" aria-label="twitter"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#" target="_blank" aria-label="instagram"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="#" target="_blank" aria-label="linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#" target="_blank" aria-label="behance"><i class="fa-brands fa-behance"></i></a>
+                                <x-social-links :platforms="['facebook', 'twitter', 'instagram', 'linkedin', 'behance']" />
                             </div>
                         </div>
                     </div>
