@@ -2,7 +2,7 @@
     $sym     = $invoice->currencySymbol();
     $client  = $invoice->client;
     $overdue = $invoice->isOverdue();
-    $logoSrc = 'file://' . str_replace('\\', '/', public_path('assets/images/logo-light.png'));
+    $logoSrc = 'file://' . str_replace('\\', '/', public_path('logo-wt.svg'));
 @endphp
 <!DOCTYPE html>
 <html lang="en">

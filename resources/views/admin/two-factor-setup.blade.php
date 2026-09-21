@@ -83,8 +83,8 @@
         <div class="card">
             {{-- Step 1: scan QR --}}
             <div class="step active" id="step-scan">
-                <h2 class="card-title">Set up two-factor authentication</h2>
-                <p class="card-desc">Scan this QR code with an authenticator app (Google Authenticator, Authy, etc.), then enter the 6-digit code it shows you.</p>
+                <h2 class="card-title">Add an authenticator app</h2>
+                <p class="card-desc">Scan this QR code with an authenticator app (Google Authenticator, Authy, etc.), then enter the 6-digit code it shows you. You'll still get email codes by default and can switch to the app when signing in.</p>
                 <div id="qr-wrap"></div>
                 <div id="scan-error" class="alert-error" style="display:none;"></div>
                 <input type="text" id="confirm-code" inputmode="numeric" pattern="\d{6}" maxlength="6"
@@ -99,15 +99,14 @@
                 <ul class="recovery-codes" id="recovery-codes-list"></ul>
                 <form method="POST" action="{{ route('admin.2fa.setup.complete') }}">
                     @csrf
-                    <button type="submit" class="btn-verify">I've saved my recovery codes — Continue to Dashboard</button>
+                    <button type="submit" class="btn-verify">I've saved my recovery codes. Back to dashboard</button>
                 </form>
             </div>
         </div>
 
         <div style="text-align:center;margin-top:16px;">
-            <a href="{{ route('admin.logout') }}" class="grey-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>
+            <a href="{{ route('admin.dashboard') }}" class="grey-link">Cancel and return to dashboard</a>
         </div>
-        <form id="logout-form" method="POST" action="{{ route('admin.logout') }}" style="display:none;">@csrf</form>
     </div>
 
     <script>

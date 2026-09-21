@@ -127,6 +127,13 @@
                     </span>
                 </div>
             </div>
+            <a href="{{ route('admin.2fa.setup') }}"
+               class="flex items-center gap-2 w-full px-2.5 py-[7px] text-[13px] text-gray-500 rounded-[7px] no-underline transition-colors hover:bg-[#f5f0ff] hover:text-[#61078B]">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                {{ auth()->user()->two_factor_confirmed_at ? 'Authenticator app' : 'Add authenticator app' }}
+            </a>
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
                 <button type="submit"

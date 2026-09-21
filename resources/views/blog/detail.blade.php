@@ -1,62 +1,48 @@
 @extends('layouts.theme')
-@section('title', $post->title . ' — AI Digital Agency')
+@section('title', $post->title . ' | AI Digital Agency')
 @section('meta_description', $post->excerpt ?? $post->title)
 
 @section('content')
 
-<x-page-banner :title="$post->title" breadcrumb="Blog" />
+<article class="pb-16 lg:pb-24">
+    <header class="container-site max-w-4xl pt-10 sm:pt-16">
+        <a href="{{ route('blog.list') }}" class="inline-flex min-h-11 items-center gap-2 text-[15px] font-medium text-ink-soft hover:text-brand">
+            <x-icon name="arrow-right" :size="18" class="rotate-180" /> All articles
+        </a>
+        <div class="mt-4 flex items-center gap-3 text-sm text-ink-soft">
+            @if($post->category)<span class="rounded-full bg-orchid px-3 py-1 font-semibold text-brand">{{ $post->category }}</span>@endif
+            <time datetime="{{ $post->published_at->toDateString() }}">{{ $post->published_at->format('F j, Y') }}</time>
+        </div>
+        <h1 class="mt-5 text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl">{{ $post->title }}</h1>
+        @if($post->excerpt)<p class="mt-5 max-w-2xl text-xl leading-9 text-ink-soft">{{ $post->excerpt }}</p>@endif
+    </header>
 
-<section class="section blog-details fade-wrapper light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-9">
-                <div class="blog__single-thumb mb-4">
-                    <img src="{{ asset('assets/images/blog/' . ($post->cover_image ?? 'one.png')) }}" alt="{{ $post->title }}" style="width:100%;border-radius:12px;">
-                </div>
-                <div class="blog__single-meta mb-4">
-                    <span class="sub-title">{{ $post->category ?? 'insights' }} <i class="fa-solid fa-arrow-right"></i></span>
-                    <p>{{ strtoupper($post->published_at->format('M j, Y')) }}</p>
-                </div>
-                <div class="paragraph">
-                    {!! $post->body !!}
-                </div>
-            </div>
+    <div class="container-site mt-10 max-w-5xl">
+        <div class="overflow-hidden rounded-[2rem] bg-orchid">
+            <img src="{{ $post->coverUrl(1600, 900) }}" alt="" class="aspect-[16/9] w-full object-cover" fetchpriority="high">
         </div>
+    </div>
 
-        @if($related->isNotEmpty())
-        <div class="row justify-content-center mt-5">
-            <div class="col-12 col-lg-9">
-                <div class="section__header">
-                    <span class="sub-title">Related Posts <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
+    <div class="container-site mt-12 max-w-2xl">
+        <div class="prose-site">{!! $post->body !!}</div>
+
+        <div class="mt-12 rounded-3xl bg-orchid p-7">
+            <p class="font-display text-xl font-semibold">Want this working for your brand?</p>
+            <p class="mt-1 text-ink-soft">Book a clarity call and we'll map out a plan.</p>
+            <a href="{{ route('contact.page') }}" class="btn-site btn-site-primary mt-5">Book a clarity call <x-icon name="arrow-right" :size="18" /></a>
         </div>
-        <div class="row gaper justify-content-center">
-            <div class="col-12 col-lg-9">
-                <div class="row gaper">
-                    @foreach($related as $relatedPost)
-                    <div class="col-12 col-md-6">
-                        <div class="blog__single fade-top">
-                            <div class="blog__single-thumb topy-tilt">
-                                <a href="{{ route('blog.detail', $relatedPost->slug) }}"><img src="{{ asset('assets/images/blog/' . ($relatedPost->cover_image ?? 'one.png')) }}" alt="{{ $relatedPost->title }}"></a>
-                            </div>
-                            <div class="blog__single-content">
-                                <h4><a href="{{ route('blog.detail', $relatedPost->slug) }}">{{ $relatedPost->title }}</a></h4>
-                                <div class="blog__single-meta">
-                                    <a href="{{ route('blog.detail', $relatedPost->slug) }}" class="sub-title">{{ $relatedPost->category ?? 'insights' }} <i class="fa-solid fa-arrow-right"></i></a>
-                                    <p>{{ strtoupper($relatedPost->published_at->format('M j, Y')) }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
+    </div>
+</article>
+
+@if($related->isNotEmpty())
+<section class="bg-white py-16 lg:py-24">
+    <div class="container-site">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Keep reading</h2>
+        <div class="mt-10 grid gap-8 md:grid-cols-2">
+            @foreach($related as $relatedPost)<x-post-card :post="$relatedPost" />@endforeach
         </div>
-        @endif
     </div>
 </section>
-
-<x-cta-marquee heading="Ready to Get Started?" linkText="Book a Clarity Call" />
+@endif
 
 @endsection

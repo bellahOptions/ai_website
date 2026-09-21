@@ -1,164 +1,88 @@
 @extends('layouts.theme')
-@section('title', 'About Us — AI Digital Agency')
-@section('meta_description', 'Learn about AI Digital Agency — a results-driven social media management company helping brands become visible, relevant, and unforgettable.')
+@section('title', 'About us | AI Digital Agency')
+@section('meta_description', 'AI Digital Agency is a results-driven social media management company helping brands become visible, relevant, and unforgettable.')
+
+@php
+    use App\Support\Photos;
+
+    $values = [
+        ['target', 'Focused expertise', "We're not scattered. We do social media and we do it exceptionally well."],
+        ['compass', 'Strategy before aesthetics', "Every post, caption, and campaign has a purpose. Beauty without direction doesn't convert."],
+        ['shield', 'Audacity with integrity', 'We help brands show up boldly while operating with honesty and genuine care.'],
+        ['sprout', 'Genuine care', 'We are personally invested in the long-term growth of every brand we manage.'],
+    ];
+    $burdens = [
+        'Plan content consistently',
+        'Study trends and platform algorithms',
+        'Show up online with clarity and intention',
+        'Stay disciplined long enough to see results',
+    ];
+@endphp
 
 @section('content')
 
-<x-page-banner title="About Us" />
+<x-page-banner title="Empowering brands to show up boldly and grow with integrity" breadcrumb="About us" image="team" />
 
-{{-- ==== agency / mission start ==== --}}
-<section class="section agency">
-    <div class="container">
-        <div class="row gaper align-items-center">
-            <div class="col-12 col-lg-6">
-                <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-one.png') }}" alt="Our Team" class="thumb-one fade-left">
-                    <img src="{{ asset('assets/images/agency/thumb-two.png') }}" alt="Our Work" class="thumb-two fade-right">
-                </div>
+<section class="py-20 lg:py-28">
+    <div class="container-site grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-6">
+            <h2 class="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">Our mission</h2>
+            <div class="prose-site mt-6 max-w-xl">
+                <p>AI Digital Agency is a results-driven digital solutions company helping brands stand out in today's crowded digital space. We currently specialise in social media management, helping brands become visible, relevant, and unforgettable online.</p>
+                <p>We take social media off your plate, so you can focus on running your business while your brand shows up consistently, strategically, and confidently online.</p>
             </div>
-            <div class="col-12 col-lg-6">
-                <div class="agency__content section__content">
-                    <span class="sub-title">OUR MISSION <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Empowering brands to show up boldly and grow with integrity</h2>
-                    <div class="paragraph">
-                        <p>AI Digital Agency is a results-driven digital solutions company helping brands stand out in today's crowded digital space. We currently specialize in social media management, helping brands become visible, relevant, and unforgettable online.</p>
-                        <p style="margin-top:1rem;">Our mission is to empower brands to show up boldly and grow with integrity. We take social media off your plate, so you can focus on running your business, while your brand shows up consistently, strategically, and confidently online.</p>
-                    </div>
-                    <div class="skill-wrap">
-                        <div class="skill-bar-single">
-                            <div class="skill-bar-title"><p class="primary-text">Social Media Strategy</p></div>
-                            <div class="skill-bar-wrapper" data-percent="94%">
-                                <div class="skill-bar"><div class="skill-bar-percent"><span class="percent-value"></span></div></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar-single">
-                            <div class="skill-bar-title"><p class="primary-text">Content Creation</p></div>
-                            <div class="skill-bar-wrapper" data-percent="90%">
-                                <div class="skill-bar"><div class="skill-bar-percent"><span class="percent-value"></span></div></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar-single">
-                            <div class="skill-bar-title"><p class="primary-text">Community Management</p></div>
-                            <div class="skill-bar-wrapper" data-percent="87%">
-                                <div class="skill-bar"><div class="skill-bar-percent"><span class="percent-value"></span></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Work With Us</a>
-                        <a href="{{ route('services.page') }}" class="btn btn--secondary">Our Services</a>
-                    </div>
-                </div>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href="{{ route('contact.page') }}" class="btn-site btn-site-primary">Work with us <x-icon name="arrow-right" :size="18" /></a>
+                <a href="{{ route('services.page') }}" class="btn-site btn-site-outline">Our services</a>
             </div>
         </div>
-    </div>
-    <img src="{{ asset('assets/images/star.png') }}" alt="" class="star">
-</section>
-{{-- ==== / agency end ==== --}}
-
-{{-- ==== the problem start ==== --}}
-<section class="section offer fade-wrapper light">
-    <div class="container">
-        <div class="row gaper">
-            <div class="col-12 col-lg-5">
-                <div class="offer__content section__content">
-                    <span class="sub-title">THE PROBLEM WE SOLVE <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Running a business already demands your full attention</h2>
-                    <div class="paragraph">
-                        <p>Most business owners understand that social media matters. They know visibility leads to trust, and trust leads to sales. But social media isn't magic — it requires time, consistency, and strategy.</p>
-                        <p style="margin-top:1rem;">Over <strong>5.3 billion</strong> people spend <strong>2+ hours</strong> daily on social media. Your audience is already there, but staying visible requires more than occasional posting.</p>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('services.page') }}" class="btn btn--secondary">See Our Solution</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-7 col-xl-6 offset-xl-1">
-                <div class="offer__cta">
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">01 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2>Plan content consistently <i class="fa-sharp fa-solid fa-arrow-up-right"></i></h2>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">02 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2>Study trends & platform algorithms <i class="fa-sharp fa-solid fa-arrow-up-right"></i></h2>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">03 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2>Show up online with clarity & intention <i class="fa-sharp fa-solid fa-arrow-up-right"></i></h2>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">04 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2>Stay disciplined long enough to see results <i class="fa-sharp fa-solid fa-arrow-up-right"></i></h2>
-                    </div>
-                </div>
+        <div class="lg:col-span-6">
+            <div class="overflow-hidden rounded-[2rem]">
+                <img src="{{ Photos::url('workshop', 1100, 800) }}" alt="A team planning content on a whiteboard" class="aspect-[11/8] w-full object-cover">
             </div>
         </div>
-    </div>
-    <div class="lines d-none d-lg-flex">
-        <div class="line"></div><div class="line"></div><div class="line"></div>
-        <div class="line"></div><div class="line"></div>
     </div>
 </section>
-{{-- ==== / problem end ==== --}}
 
-{{-- ==== values start ==== --}}
-<section class="section fade-wrapper light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-                <div class="section__header text-center">
-                    <span class="sub-title">OUR VALUES <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">What Makes Us Different</h2>
-                </div>
+<section class="bg-white py-20 lg:py-28">
+    <div class="container-site grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+            <h2 class="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">Running a business already demands your full attention</h2>
+            <div class="prose-site mt-6">
+                <p>Most business owners understand that social media matters. Visibility leads to trust, and trust leads to sales. But social media takes time, consistency, and strategy.</p>
+                <p>Over <strong class="text-ink">5.3 billion</strong> people spend <strong class="text-ink">2+ hours</strong> daily on social media. Your audience is already there, but staying visible takes more than occasional posting.</p>
             </div>
+            <a href="{{ route('services.page') }}" class="btn-site btn-site-outline mt-2">See our solution <x-icon name="arrow-right" :size="18" /></a>
         </div>
-        <div class="row gaper">
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-bullseye"></i></div>
-                    <div class="content">
-                        <h4>Focused Expertise</h4>
-                        <p>We're not scattered. We do social media and we do it exceptionally well.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-chess"></i></div>
-                    <div class="content">
-                        <h4>Strategy Before Aesthetics</h4>
-                        <p>Every post, caption, and campaign has a purpose. Beauty without direction doesn't convert.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-shield-heart"></i></div>
-                    <div class="content">
-                        <h4>Audacity with Integrity</h4>
-                        <p>We help brands show up boldly while operating with honesty and genuine care.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-seedling"></i></div>
-                    <div class="content">
-                        <h4>Genuine Care</h4>
-                        <p>We are personally invested in the long-term growth of every brand we manage.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="lg:col-span-7">
+            <p class="font-display text-xl font-semibold">Doing it yourself means you have to:</p>
+            <ol class="mt-6">
+                @foreach($burdens as $i => $item)
+                    <li class="flex items-baseline gap-5 border-t border-line py-6 last:border-b">
+                        <span class="font-display text-lg font-semibold text-brand">{{ $i + 1 }}</span>
+                        <span class="font-display text-2xl font-semibold leading-snug sm:text-3xl">{{ $item }}</span>
+                    </li>
+                @endforeach
+            </ol>
         </div>
-    </div>
-    <div class="lines d-none d-lg-flex">
-        <div class="line"></div><div class="line"></div><div class="line"></div>
-        <div class="line"></div><div class="line"></div>
     </div>
 </section>
-{{-- ==== / values end ==== --}}
 
-<x-cta-marquee heading="Ready to Build Your Brand?" linkText="Book a Clarity Call" />
+<section class="py-20 lg:py-28">
+    <div class="container-site">
+        <h2 class="max-w-2xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">What makes us different</h2>
+        <ul class="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            @foreach($values as [$icon, $title, $text])
+                <li class="rounded-3xl border border-line bg-white p-7">
+                    <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-orchid text-brand"><x-icon :name="$icon" :size="24" /></span>
+                    <h3 class="mt-5 text-xl font-semibold">{{ $title }}</h3>
+                    <p class="mt-2 text-[15px] leading-7 text-ink-soft">{{ $text }}</p>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+</section>
+
+<x-cta-marquee heading="Ready to build your brand?" linkText="Book a clarity call" />
 
 @endsection

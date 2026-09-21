@@ -1,115 +1,75 @@
-﻿{{-- ==== footer start ==== --}}
-<footer class="footer section pb-0 bg-purple-brand">
-    <div class="container">
-        <div class="row gaper">
-            {{-- Company Info --}}
-            <div class="col-12 col-lg-5 col-xl-5">
-                <div class="footer__single">
-                    <a href="{{ route('home.page') }}" class="logo">
-                        <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" style="height:40px;width:auto;filter:brightness(0) invert(1);">
-                    </a>
-                    <div class="footer__single-meta">
-                        <a href="https://maps.google.com" target="_blank">
-                            <i class="fa-sharp fa-solid fa-location-dot"></i>
-                            Lagos State, Nigeria
-                        </a>
-                        <a href="tel:+2349024083203">
-                            <i class="fa-sharp fa-solid fa-phone-volume"></i>
-                            +234 902 408 3203
-                        </a>
-                        <a href="mailto:sales@aidigitalagency.com.ng">
-                            <i class="fa-sharp fa-solid fa-envelope"></i>
-                            sales@aidigitalagency.com.ng
-                        </a>
-                    </div>
-                    <div class="footer__cta text-start">
-                        <a href="{{ route('contact.page') }}" class="btn btn--secondary">Book a Call Now</a>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Quick Links --}}
-            <div class="col-12 col-lg-2 col-xl-2">
-                <div class="footer__single">
-                    <div class="footer__single-intro">
-                        <h5>Discover</h5>
-                    </div>
-                    <div class="footer__single-content">
-                        <ul>
-                            <li><a href="{{ route('about.page') }}">About Us</a></li>
-                            <li><a href="{{ route('services.page') }}">Our Services</a></li>
-                            <li><a href="{{ route('blog.list') }}">News & Blog</a></li>
-                            <li><a href="{{ route('portfolio.page') }}">Portfolio</a></li>
-                            <li><a href="{{ route('contact.page') }}">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Services --}}
-            <div class="col-12 col-lg-2 col-xl-2">
-                <div class="footer__single">
-                    <div class="footer__single-intro">
-                        <h5>Services</h5>
-                    </div>
-                    <div class="footer__single-content">
-                        <ul>
-                            <li><a href="{{ route('services.page') }}">Content Creation</a></li>
-                            <li><a href="{{ route('services.page') }}">Social Media Mgmt</a></li>
-                            <li><a href="{{ route('services.page') }}">Content Strategy</a></li>
-                            <li><a href="{{ route('services.page') }}">Community Mgmt</a></li>
-                            <li><a href="{{ route('services.page') }}">Brand Positioning</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Newsletter --}}
-            <div class="col-12 col-lg-3 col-xl-3">
-                <div class="footer__single">
-                    <div class="footer__single-intro">
-                        <h5>Stay in the Loop</h5>
-                    </div>
-                    <div class="footer__single-content">
-                        <p>Get insights on social media strategy and brand growth straight to your inbox.</p>
-                        @if(session('success') && session('_newsletter'))
-                            <p class="text-white mb-2">{{ session('success') }}</p>
-                        @endif
-                        <div class="footer__single-form">
-                            <form action="{{ route('newsletter.subscribe') }}" method="post">
-                                @csrf
-                                <div class="input-email">
-                                    <input type="email" name="subscribe_email" placeholder="Enter Your Email" required>
-                                    <button type="submit" class="subscribe" aria-label="Subscribe">
-                                        <i class="fa-sharp fa-solid fa-paper-plane"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<footer class="bg-ink text-white/80">
+    <div class="container-site grid gap-12 py-16 lg:grid-cols-12 lg:py-20">
+        <div class="lg:col-span-5">
+            <a href="{{ route('home.page') }}" aria-label="AI Digital Agency, home">
+                <img src="{{ asset('logo-wt.svg') }}" alt="AI Digital Agency" class="h-9 w-auto">
+            </a>
+            <p class="mt-6 max-w-sm text-[15px] leading-7 text-white/70">
+                Social media management for brands that want to show up consistently, strategically, and confidently online.
+            </p>
+            <ul class="mt-6 space-y-3 text-[15px]">
+                <li><a href="tel:+2349024083203" class="inline-flex min-h-8 items-center gap-3 hover:text-white"><x-icon name="phone" :size="18" /> +234 902 408 3203</a></li>
+                <li><a href="mailto:sales@aidigitalagency.com.ng" class="inline-flex min-h-8 items-center gap-3 break-all hover:text-white"><x-icon name="mail" :size="18" /> sales@aidigitalagency.com.ng</a></li>
+                <li class="inline-flex items-center gap-3"><x-icon name="map-pin" :size="18" /> Lagos State, Nigeria</li>
+            </ul>
         </div>
 
-        {{-- Copyright bar --}}
-        <div class="row">
-            <div class="col-12">
-                <div class="footer__copyright">
-                    <div class="row align-items-center gaper">
-                        <div class="col-12 col-lg-8">
-                            <div class="footer__copyright-text text-center text-lg-start">
-                                <p>Copyright &copy; <span id="copyYear"></span> AI Digital Agency. All Rights Reserved.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-4">
-                            <div class="social justify-content-center justify-content-lg-end">
-                                <x-social-links :platforms="['facebook', 'twitter', 'instagram', 'linkedin', 'behance']" />
-                            </div>
-                        </div>
-                    </div>
+        <nav aria-label="Footer" class="grid grid-cols-2 gap-8 lg:col-span-3">
+            <div>
+                <h2 class="font-display text-base font-semibold text-white">Company</h2>
+                <ul class="mt-4 space-y-1 text-[15px]">
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('about.page') }}">About</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('services.page') }}">Services</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('portfolio.page') }}">Portfolio</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('blog.list') }}">Blog</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('contact.page') }}">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="font-display text-base font-semibold text-white">Services</h2>
+                <ul class="mt-4 space-y-1 text-[15px]">
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('services.page') }}#content-strategy">Content strategy</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('services.page') }}#content-creation">Content creation</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('services.page') }}#community">Community</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('services.page') }}#brand-positioning">Brand positioning</a></li>
+                    <li><a class="inline-flex min-h-9 items-center hover:text-white" href="{{ route('services.page') }}#reporting">Reporting</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="lg:col-span-4">
+            <h2 class="font-display text-base font-semibold text-white">Social media tips, monthly</h2>
+            <p class="mt-4 text-[15px] leading-7 text-white/70">Short, practical notes on strategy and brand growth. No spam.</p>
+
+            @if(session('success') && session('_newsletter'))
+                <p role="status" class="mt-4 inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-[15px] text-white">
+                    <x-icon name="check-circle" :size="18" /> {{ session('success') }}
+                </p>
+            @endif
+            @error('subscribe_email')
+                <p role="alert" class="mt-4 text-[15px] text-[#ffb4b4]">{{ $message }}</p>
+            @enderror
+
+            <form action="{{ route('newsletter.subscribe') }}" method="post" class="mt-4">
+                @csrf
+                <label for="subscribe_email" class="sr-only">Email address</label>
+                <div class="flex flex-col gap-2 sm:flex-row">
+                    <input id="subscribe_email" type="email" name="subscribe_email" required autocomplete="email" placeholder="you@company.com"
+                           class="min-h-12 w-full rounded-full border border-white/20 bg-white/5 px-5 text-[15px] text-white placeholder:text-white/40 focus:border-marigold focus:outline-none">
+                    <button type="submit" class="btn-site btn-site-accent">Subscribe</button>
                 </div>
+            </form>
+
+            <div class="mt-8">
+                <x-social-links :platforms="['instagram', 'linkedin', 'facebook', 'twitter', 'behance']" />
             </div>
         </div>
     </div>
+
+    <div class="border-t border-white/10">
+        <div class="container-site flex flex-col gap-2 py-6 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
+            <p>&copy; {{ date('Y') }} AI Digital Agency. All rights reserved.</p>
+            <p>Lagos, Nigeria &middot; Mon to Fri, 9am to 6pm</p>
+        </div>
+    </div>
 </footer>
-{{-- ==== / footer end ==== --}}

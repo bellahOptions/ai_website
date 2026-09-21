@@ -55,12 +55,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('login.submit');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Two-factor authentication (TOTP via Fortify's underlying provider)
+    // Second factor: email OTP (primary), with optional authenticator app (TOTP) / recovery codes
     Route::middleware('auth')->group(function () {
         Route::get('2fa', [TwoFactorController::class, 'showForm'])->name('2fa.form');
-        Route::post('2fa/verify', [TwoFactorController::class, 'verify'])->middleware('throttle:5,1')->name('2fa.verify');
-        Route::get('2fa/setup', [TwoFactorController::class, 'showSetup'])->name('2fa.setup');
-        Route::post('2fa/setup/complete', [TwoFactorController::class, 'completeSetup'])->name('2fa.setup.complete');
+        Route::post('2fa/verify', [TwoFactorController::class, 'verify'])->middleware('throttle:10,1')->name('2fa.verify');
+        Route::post('2fa/resend', [TwoFactorController::class, 'resend'])->middleware('throttle:3,1')->name('2fa.resend');
     });
 
     // Password reset
@@ -73,6 +72,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['admin'])->group(function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Authenticator app enrollment (requires a session that already passed the email OTP)
+        Route::get('2fa/setup', [TwoFactorController::class, 'showSetup'])->name('2fa.setup');
+        Route::post('2fa/setup/complete', [TwoFactorController::class, 'completeSetup'])->name('2fa.setup.complete');
 
         // Clients — read access for both roles, write access for Super Admin only
         Route::resource('clients', ClientController::class)->only(['index', 'show']);

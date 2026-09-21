@@ -108,6 +108,10 @@ class InvoiceController extends Controller
 
     public function edit(Invoice $invoice)
     {
+        if ($locked = $this->lockedResponse($invoice)) {
+            return $locked;
+        }
+
         $invoice->load('items');
         $clients = Client::where('status', 'active')->orderBy('name')->get();
         return view('admin.invoices.edit', compact('invoice', 'clients'));
@@ -115,6 +119,10 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
+        if ($locked = $this->lockedResponse($invoice)) {
+            return $locked;
+        }
+
         $data = $request->validate([
             'client_id'   => ['required', 'exists:clients,id'],
             'status'      => ['required', 'in:draft,sent,paid,overdue,cancelled'],
@@ -171,6 +179,17 @@ class InvoiceController extends Controller
         $invoice->delete();
         return redirect()->route('admin.invoices.index')
                          ->with('success', 'Invoice deleted.');
+    }
+
+    /** Paid invoices are final records and can't be changed. */
+    private function lockedResponse(Invoice $invoice)
+    {
+        if ($invoice->status !== 'paid') {
+            return null;
+        }
+
+        return redirect()->route('admin.invoices.show', $invoice)
+                         ->with('error', $invoice->invoice_number . ' has been paid and can no longer be edited.');
     }
 
     public function downloadPdf(Invoice $invoice)

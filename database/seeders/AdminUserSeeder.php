@@ -19,7 +19,7 @@ class AdminUserSeeder extends Seeder
             [
                 'email'    => 'ahmed@printbuka.com.ng',
                 'name'     => 'Ahmed',
-                'password' => '#Panaman247..',
+                'password' => '#Pa247..',
             ],
         ];
 

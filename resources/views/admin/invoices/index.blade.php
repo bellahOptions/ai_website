@@ -71,6 +71,10 @@
                     <td class="text-right">
                         <div style="display:flex;align-items:center;justify-content:flex-end;gap:5px;">
                             <a href="{{ route('admin.invoices.show', $invoice) }}" class="btn btn-secondary btn-sm">View</a>
+                            <a href="{{ route('admin.invoices.pdf', $invoice) }}" class="btn btn-secondary btn-sm"
+                               title="Download {{ $invoice->invoice_number }} as PDF" aria-label="Download {{ $invoice->invoice_number }} as PDF">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:3px;" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF
+                            </a>
 
                             @if(in_array($invoice->status, ['draft', 'overdue']))
                             <form action="{{ route('admin.invoices.send', $invoice) }}" method="POST" style="display:inline;">
@@ -92,7 +96,9 @@
                             </form>
                             @endif
 
+                            @unless($invoice->status === 'paid')
                             <a href="{{ route('admin.invoices.edit', $invoice) }}" class="btn btn-primary btn-sm">Edit</a>
+                            @endunless
                         </div>
                     </td>
                 </tr>

@@ -37,9 +37,8 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        if (is_null($user->two_factor_confirmed_at)) {
-            return redirect()->route('admin.2fa.setup');
-        }
+        // Every admin sign-in must pass the second factor (email OTP by default).
+        $request->session()->forget('2fa_verified');
 
         return redirect()->route('admin.2fa.form');
     }

@@ -23,10 +23,6 @@ class AdminMiddleware
             return redirect()->route('verification.notice');
         }
 
-        if (is_null(auth()->user()->two_factor_confirmed_at)) {
-            return redirect()->route('admin.2fa.setup');
-        }
-
         if (!$request->session()->get('2fa_verified')) {
             auth()->logout();
             return redirect()->route('admin.login')->withErrors(['email' => 'Session expired. Please log in again.']);

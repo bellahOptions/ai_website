@@ -1,254 +1,101 @@
 @extends('layouts.theme')
-@section('title', 'Our Services — AI Digital Agency')
-@section('meta_description', 'Comprehensive social media management services: content strategy, creation, community management, brand positioning, and growth reporting.')
+@section('title', 'Our services | AI Digital Agency')
+@section('meta_description', 'Social media management services: content strategy, creation, community management, brand positioning, and growth reporting.')
+
+@php
+    use App\Support\Photos;
+
+    $services = [
+        [
+            'id' => 'content-strategy', 'title' => 'Content strategy & planning', 'photo' => 'workshop', 'icon' => 'compass',
+            'text' => 'We build data-informed content strategies aligned to your brand voice, audience, and goals. Before a single post goes live, we map out the roadmap that will guide your growth.',
+            'points' => ['Audience research', 'Content calendar planning', 'Platform and format selection'],
+        ],
+        [
+            'id' => 'content-creation', 'title' => 'Content creation & scheduling', 'photo' => 'planning', 'icon' => 'pen',
+            'text' => 'From compelling captions to eye-catching visuals, we create and schedule content that resonates with your audience and keeps your brand consistently visible.',
+            'points' => ['Captions and copywriting', 'Graphics and short-form video', 'Scheduling and publishing'],
+        ],
+        [
+            'id' => 'community', 'title' => 'Community management', 'photo' => 'community', 'icon' => 'users',
+            'text' => 'We manage your community by responding to comments and DMs and building authentic relationships with the people who follow you.',
+            'points' => ['Comment and DM replies', 'Audience engagement', 'Reputation care'],
+        ],
+        [
+            'id' => 'brand-positioning', 'title' => 'Brand positioning & messaging', 'photo' => 'brand', 'icon' => 'sparkles',
+            'text' => 'We define how your brand sounds and looks across every touchpoint, from bio copy to visual identity guardrails, so your audience recognises you instantly.',
+            'points' => ['Brand voice and tone', 'Bio and profile copy', 'Visual guidelines'],
+        ],
+        [
+            'id' => 'reporting', 'title' => 'Growth-focused reporting', 'photo' => 'analytics', 'icon' => 'chart',
+            'text' => "You'll always know what's working. We share clear, jargon-free performance reports so you can see the direct link between our work and your growth.",
+            'points' => ['Monthly performance reports', 'Insights and recommendations', 'Goal tracking'],
+        ],
+    ];
+
+    $audiences = [
+        ['store', 'SMEs & startups', 'Small and medium enterprises building their digital presence from the ground up.'],
+        ['heart-handshake', 'NGOs & social enterprises', 'Mission-driven organisations amplifying their impact through strategic digital storytelling.'],
+        ['briefcase', 'Service-based businesses', 'Professionals who need their expertise to be seen by the right audience.'],
+        ['sparkles', 'Creators & personal brands', 'Educators, coaches, and individuals building influence and monetising their expertise.'],
+    ];
+@endphp
 
 @section('content')
 
-<x-page-banner title="Our Services" breadcrumb="Services" />
+<x-page-banner title="Strategic social media management built for growth" breadcrumb="Services"
+    intro="We don't just post. We manage your presence with intention, patience, and long-term growth in mind." image="planning" />
 
-{{-- ==== services list start ==== --}}
-<section class="section offer fade-wrapper light">
-    <div class="container">
-        <div class="row gaper">
-            <div class="col-12 col-lg-5">
-                <div class="offer__content section__content">
-                    <span class="sub-title">WHAT WE DO <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Strategic Social Media Management Built for Growth</h2>
-                    <div class="paragraph">
-                        <p>We don't just post — we manage your presence with intention, patience, and long-term growth in mind. Every strategy is built around one goal: helping your brand thrive online.</p>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Get a Custom Plan</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-7 col-xl-6 offset-xl-1">
-                <div class="offer__cta">
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">01 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2><a href="#content-strategy">Content Strategy & Planning <i class="fa-sharp fa-solid fa-arrow-up-right"></i></a></h2>
-                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/blog-thumb.png') }}"></div>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">02 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2><a href="#content-creation">Content Creation & Scheduling <i class="fa-sharp fa-solid fa-arrow-up-right"></i></a></h2>
-                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/two.png') }}"></div>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">03 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2><a href="#community">Community Management <i class="fa-sharp fa-solid fa-arrow-up-right"></i></a></h2>
-                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/three.png') }}"></div>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">04 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2><a href="#brand-positioning">Brand Positioning & Messaging <i class="fa-sharp fa-solid fa-arrow-up-right"></i></a></h2>
-                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/blog-thumb.png') }}"></div>
-                    </div>
-                    <div class="offer__cta-single fade-top">
-                        <span class="sub-title">05 <i class="fa-solid fa-arrow-right"></i></span>
-                        <h2><a href="#reporting">Growth-Focused Reporting <i class="fa-sharp fa-solid fa-arrow-up-right"></i></a></h2>
-                        <div class="offer-thumb-hover d-none d-md-block" data-background="{{ asset('assets/images/offer/blog-thumb.png') }}"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <img src="{{ asset('assets/images/offer/star.png') }}" alt="" class="star">
-    <div class="lines d-none d-lg-flex">
-        <div class="line"></div><div class="line"></div><div class="line"></div>
-        <div class="line"></div><div class="line"></div>
-    </div>
-</section>
-{{-- ==== / services list end ==== --}}
-
-{{-- ==== service detail #1 start ==== --}}
-<section class="section agency" id="content-strategy">
-    <div class="container">
-        <div class="row gaper align-items-center">
-            <div class="col-12 col-lg-6">
-                <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-one.png') }}" alt="Content Strategy" class="thumb-one fade-left">
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="agency__content section__content">
-                    <span class="sub-title">SERVICE 01 <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Content Strategy & Planning</h2>
-                    <div class="paragraph">
-                        <p>We build data-informed content strategies aligned to your brand voice, audience, and goals. Before a single post goes live, we map out the roadmap that will guide your growth.</p>
-                    </div>
-                    <div class="skill-wrap">
-                        <div class="skill-bar-single">
-                            <div class="skill-bar-title"><p class="primary-text">Audience Research</p></div>
-                            <div class="skill-bar-wrapper" data-percent="95%">
-                                <div class="skill-bar"><div class="skill-bar-percent"><span class="percent-value"></span></div></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar-single">
-                            <div class="skill-bar-title"><p class="primary-text">Content Calendar Planning</p></div>
-                            <div class="skill-bar-wrapper" data-percent="92%">
-                                <div class="skill-bar"><div class="skill-bar-percent"><span class="percent-value"></span></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Get Started</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="py-8 lg:py-12">
+    <div class="container-site">
+        <nav aria-label="Services" class="-mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0">
+            <ul class="flex gap-2 py-4 sm:flex-wrap">
+                @foreach($services as $s)
+                    <li class="shrink-0"><a href="#{{ $s['id'] }}" class="inline-flex min-h-11 items-center rounded-full border border-line bg-white px-5 text-[15px] font-medium transition-colors hover:border-brand hover:text-brand">{{ $s['title'] }}</a></li>
+                @endforeach
+            </ul>
+        </nav>
     </div>
 </section>
 
-{{-- ==== service detail #2 start ==== --}}
-<section class="section agency" id="content-creation" style="background:#fafafa;">
-    <div class="container">
-        <div class="row gaper align-items-center">
-            <div class="col-12 col-lg-6 order-lg-2">
-                <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-two.png') }}" alt="Content Creation" class="thumb-one fade-right">
-                </div>
+@foreach($services as $i => $s)
+<section id="{{ $s['id'] }}" class="py-16 lg:py-24 {{ $i % 2 ? 'bg-white' : '' }}">
+    <div class="container-site grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-6 {{ $i % 2 ? 'lg:order-2' : '' }}">
+            <div class="overflow-hidden rounded-[2rem] bg-orchid">
+                <img src="{{ Photos::url($s['photo'], 1100, 800) }}" alt="{{ $s['title'] }}" loading="lazy" class="aspect-[11/8] w-full object-cover">
             </div>
-            <div class="col-12 col-lg-6 order-lg-1">
-                <div class="agency__content section__content">
-                    <span class="sub-title">SERVICE 02 <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Content Creation & Scheduling</h2>
-                    <div class="paragraph">
-                        <p>From compelling captions to eye-catching visuals, we create and schedule content that resonates.</p>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Get Started</a>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="lg:col-span-6 {{ $i % 2 ? 'lg:order-1' : '' }}">
+            <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-orchid text-brand"><x-icon :name="$s['icon']" :size="24" /></span>
+            <h2 class="mt-5 text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl">{{ $s['title'] }}</h2>
+            <p class="mt-4 max-w-xl text-lg leading-8 text-ink-soft">{{ $s['text'] }}</p>
+            <ul class="mt-6 space-y-3">
+                @foreach($s['points'] as $point)
+                    <li class="flex items-center gap-3 text-[16px]"><x-icon name="check-circle" class="text-brand" :size="20" /> {{ $point }}</li>
+                @endforeach
+            </ul>
+            <a href="{{ route('contact.page') }}" class="btn-site btn-site-primary mt-8">Get started <x-icon name="arrow-right" :size="18" /></a>
         </div>
     </div>
 </section>
-{{-- ==== / service detail #2 end ==== --}}
+@endforeach
 
-{{-- ==== service detail #3 start ==== --}}
-<section class="section agency" id="community">
-    <div class="container">
-        <div class="row gaper align-items-center">
-            <div class="col-12 col-lg-6">
-                <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-one.png') }}" alt="Community Management" class="thumb-one fade-left">
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="agency__content section__content">
-                    <span class="sub-title">SERVICE 03 <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Community Management</h2>
-                    <div class="paragraph">
-                        <p>We manage your community — responding to comments, DMs, and building authentic relationships with your audience.</p>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Get Started</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="py-20 lg:py-28">
+    <div class="container-site">
+        <h2 class="max-w-2xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">The right fit for growing brands</h2>
+        <ul class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            @foreach($audiences as [$icon, $title, $text])
+                <li class="border-t-2 border-brand pt-5">
+                    <x-icon :name="$icon" class="text-brand" :size="28" />
+                    <h3 class="mt-4 text-xl font-semibold">{{ $title }}</h3>
+                    <p class="mt-2 text-[15px] leading-7 text-ink-soft">{{ $text }}</p>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </section>
-{{-- ==== / service detail #3 end ==== --}}
 
-{{-- ==== service detail #4 start ==== --}}
-<section class="section agency" id="brand-positioning" style="background:#fafafa;">
-    <div class="container">
-        <div class="row gaper align-items-center">
-            <div class="col-12 col-lg-6 order-lg-2">
-                <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-two.png') }}" alt="Brand Positioning" class="thumb-one fade-right">
-                </div>
-            </div>
-            <div class="col-12 col-lg-6 order-lg-1">
-                <div class="agency__content section__content">
-                    <span class="sub-title">SERVICE 04 <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Brand Positioning & Messaging</h2>
-                    <div class="paragraph">
-                        <p>We help you define how your brand sounds and looks across every touchpoint — from bio copy to visual identity guardrails — so your audience recognizes you instantly.</p>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Get Started</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{{-- ==== / service detail #4 end ==== --}}
-
-{{-- ==== service detail #5 start ==== --}}
-<section class="section agency" id="reporting">
-    <div class="container">
-        <div class="row gaper align-items-center">
-            <div class="col-12 col-lg-6">
-                <div class="agency__thumb">
-                    <img src="{{ asset('assets/images/agency/thumb-one.png') }}" alt="Growth-Focused Reporting" class="thumb-one fade-left">
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="agency__content section__content">
-                    <span class="sub-title">SERVICE 05 <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">Growth-Focused Reporting</h2>
-                    <div class="paragraph">
-                        <p>You'll always know what's working. We share clear, jargon-free performance reports so you can see the direct link between our work and your growth.</p>
-                    </div>
-                    <div class="section__content-cta">
-                        <a href="{{ route('contact.page') }}" class="btn btn--primary">Get Started</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{{-- ==== / service detail #5 end ==== --}}
-
-{{-- ==== who we serve start ==== --}}
-<section class="section fade-wrapper light" id="who-we-serve">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-                <div class="section__header text-center">
-                    <span class="sub-title">WHO WE SERVE <i class="fa-solid fa-arrow-right"></i></span>
-                    <h2 class="title title-anim">The Right Fit for Growing Brands</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row gaper">
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-store"></i></div>
-                    <div class="content"><h4>SMEs & Startups</h4><p>Small and medium enterprises building their digital presence from the ground up.</p></div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                    <div class="content"><h4>NGOs & Social Enterprises</h4><p>Mission-driven organisations amplifying their impact through strategic digital storytelling.</p></div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-briefcase"></i></div>
-                    <div class="content"><h4>Service-Based Businesses</h4><p>Professionals who need their expertise to be seen by the right audience.</p></div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="value-card topy-tilt fade-top">
-                    <div class="thumb"><i class="fa-solid fa-user-tie"></i></div>
-                    <div class="content"><h4>Creators & Personal Brands</h4><p>Educators, coaches, and individuals building influence and monetising their expertise.</p></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="lines d-none d-lg-flex">
-        <div class="line"></div><div class="line"></div><div class="line"></div>
-        <div class="line"></div><div class="line"></div>
-    </div>
-</section>
-{{-- ==== / who we serve end ==== --}}
-
-<x-cta-marquee heading="Ready for a Custom Social Media Plan?" linkText="Contact Us Today" />
+<x-cta-marquee heading="Ready for a custom social media plan?" linkText="Contact us today" />
 
 @endsection

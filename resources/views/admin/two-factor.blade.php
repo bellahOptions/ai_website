@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Two-Factor Authentication — AI Digital Agency</title>
+    <title>Verify it's you — AI Digital Agency</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
             margin: 0 auto 14px; box-shadow: 0 6px 24px rgba(97,7,139,.35);
         }
         .brand h1 { font-size: 22px; font-weight: 700; color: #111827; margin: 0 0 4px; }
-        .brand p  { font-size: 13.5px; color: #9ca3af; margin: 0; }
+        .brand p  { font-size: 13.5px; color: #6b7280; margin: 0; }
         .card {
             background: #fff; border: 1px solid #e5e7eb;
             border-radius: 16px; padding: 32px;
@@ -36,10 +36,11 @@
         .lock-icon {
             width: 56px; height: 56px; border-radius: 50%;
             background: #f5f0ff; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 18px;
+            margin: 0 auto 18px; color: #61078B;
         }
         .card-title { font-size: 17px; font-weight: 700; color: #111827; margin: 0 0 8px; }
         .card-desc  { font-size: 13.5px; color: #6b7280; line-height: 1.6; margin: 0 0 24px; }
+        .card-desc strong { color: #111827; font-weight: 600; }
         .otp-input {
             width: 100%; padding: 14px; text-align: center;
             font-size: 28px; font-weight: 700; letter-spacing: 12px;
@@ -65,19 +66,28 @@
         .alert-success {
             background: #f0fdf4; border: 1px solid #bbf7d0;
             color: #15803d; padding: 10px 14px; border-radius: 9px;
-            font-size: 13px; margin-bottom: 16px;
+            font-size: 13px; margin-bottom: 16px; text-align: left;
         }
         .divider { border: none; border-top: 1px solid #f3f4f6; margin: 20px 0; }
         .link-btn {
-            background: none; border: none; cursor: pointer; font-family: inherit;
+            background: none; border: none; cursor: pointer; font-family: inherit; padding: 4px 0;
             font-size: 13px; color: #61078B; font-weight: 600; text-decoration: none;
         }
-        .link-btn:hover { text-decoration: underline; }
-        .grey-link { color: #9ca3af; font-size: 13px; text-decoration: none; }
+        .link-btn:hover:not(:disabled) { text-decoration: underline; }
+        .link-btn:disabled { color: #9ca3af; cursor: default; font-weight: 500; }
+        .grey-link { color: #6b7280; font-size: 13px; text-decoration: none; }
         .grey-link:hover { color: #61078B; }
+        .options { display: flex; flex-direction: column; gap: 6px; align-items: center; }
     </style>
 </head>
 <body>
+    @php
+        $titles = [
+            'email' => 'Check your email',
+            'totp' => 'Enter authenticator code',
+            'recovery' => 'Enter recovery code',
+        ];
+    @endphp
     <div class="wrap">
         <div class="brand">
             <div class="brand-icon">
@@ -88,64 +98,97 @@
         </div>
 
         <div class="card">
-            <div class="lock-icon">
-                <img src="{{ asset('ms-icon-144x144.png') }}" width="26" height="26" alt="">
+            <div class="lock-icon" aria-hidden="true">
+                @if($method === 'email')
+                    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                @else
+                    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                @endif
             </div>
 
-            <h2 class="card-title" id="code-title">Enter authenticator code</h2>
-            <p class="card-desc" id="code-desc">Open your authenticator app and enter the 6-digit code.</p>
+            <h2 class="card-title">{{ $titles[$method] }}</h2>
+            <p class="card-desc">
+                @if($method === 'email')
+                    We sent a 6-digit code to <strong>{{ $maskedEmail }}</strong>. It expires in 10 minutes.
+                @elseif($method === 'totp')
+                    Open your authenticator app and enter the 6-digit code.
+                @else
+                    Enter one of the recovery codes you saved when you set up your authenticator app.
+                @endif
+            </p>
 
             @if(session('status'))
-            <div class="alert-success">{{ session('status') }}</div>
+                <div class="alert-success" role="status">{{ session('status') }}</div>
+            @endif
+
+            @if($sendFailed)
+                <div class="alert-error" role="alert">
+                    We couldn't send the email right now.
+                    @if($hasTotp) Use your authenticator app instead, or try again shortly. @else Please try again shortly. @endif
+                </div>
             @endif
 
             @if($errors->any())
-            <div class="alert-error">
-                @foreach($errors->all() as $e)<p style="margin:0 0 2px;">{{ $e }}</p>@endforeach
-            </div>
+                <div class="alert-error" role="alert">
+                    @foreach($errors->all() as $e)<p style="margin:0 0 2px;">{{ $e }}</p>@endforeach
+                </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.2fa.verify') }}" id="code-form">
+            <form method="POST" action="{{ route('admin.2fa.verify') }}">
                 @csrf
-                <input type="text" name="code" inputmode="numeric" pattern="\d{6}" maxlength="6"
-                       autocomplete="one-time-code" autofocus placeholder="000000"
-                       class="otp-input" value="{{ old('code') }}">
-                <button type="submit" class="btn-verify">Verify & Sign In</button>
-            </form>
-
-            <form method="POST" action="{{ route('admin.2fa.verify') }}" id="recovery-form" style="display:none;">
-                @csrf
-                <input type="text" name="recovery_code" placeholder="xxxxx-xxxxx" autocomplete="off"
-                       class="otp-input" style="letter-spacing:2px;font-size:18px;" value="{{ old('recovery_code') }}">
+                <input type="hidden" name="method" value="{{ $method }}">
+                @if($method === 'recovery')
+                    <label for="recovery_code" class="sr-only">Recovery code</label>
+                    <input id="recovery_code" type="text" name="recovery_code" placeholder="xxxxx-xxxxx" autocomplete="off" autofocus
+                           class="otp-input" style="letter-spacing:2px;font-size:18px;">
+                @else
+                    <label for="code" class="sr-only">6-digit code</label>
+                    <input id="code" type="text" name="code" inputmode="numeric" pattern="\d{6}" maxlength="6"
+                           autocomplete="one-time-code" autofocus placeholder="000000" class="otp-input">
+                @endif
                 <button type="submit" class="btn-verify">Verify & Sign In</button>
             </form>
 
             <hr class="divider">
 
-            <button type="button" class="link-btn" id="toggle-recovery">Use a recovery code instead</button>
-            &nbsp;·&nbsp;
-            <a href="{{ route('admin.login') }}" class="grey-link">Back to login</a>
+            <div class="options">
+                @if($method === 'email')
+                    <form method="POST" action="{{ route('admin.2fa.resend') }}" id="resend-form">
+                        @csrf
+                        <button type="submit" class="link-btn" id="resend-btn" data-wait="{{ $resendIn }}" @disabled($resendIn > 0)>Resend code</button>
+                    </form>
+                    @if($hasTotp)
+                        <a href="{{ route('admin.2fa.form', ['method' => 'totp']) }}" class="link-btn" style="text-decoration:none;">Use authenticator app instead</a>
+                    @endif
+                @else
+                    <a href="{{ route('admin.2fa.form') }}" class="link-btn" style="text-decoration:none;">Email me a code instead</a>
+                    @if($method === 'totp')
+                        <a href="{{ route('admin.2fa.form', ['method' => 'recovery']) }}" class="link-btn" style="text-decoration:none;">Use a recovery code</a>
+                    @else
+                        <a href="{{ route('admin.2fa.form', ['method' => 'totp']) }}" class="link-btn" style="text-decoration:none;">Use authenticator app instead</a>
+                    @endif
+                @endif
+                <a href="{{ route('admin.login') }}" class="grey-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Back to login</a>
+            </div>
         </div>
     </div>
 
-    <script>
-        var toggle = document.getElementById('toggle-recovery');
-        var codeForm = document.getElementById('code-form');
-        var recoveryForm = document.getElementById('recovery-form');
-        var title = document.getElementById('code-title');
-        var desc = document.getElementById('code-desc');
-        var usingRecovery = false;
+    <form id="logout-form" method="POST" action="{{ route('admin.logout') }}" style="display:none;">@csrf</form>
 
-        toggle.addEventListener('click', function () {
-            usingRecovery = !usingRecovery;
-            codeForm.style.display = usingRecovery ? 'none' : 'block';
-            recoveryForm.style.display = usingRecovery ? 'block' : 'none';
-            title.textContent = usingRecovery ? 'Enter recovery code' : 'Enter authenticator code';
-            desc.textContent = usingRecovery
-                ? 'Enter one of the recovery codes you saved when you set up two-factor authentication.'
-                : 'Open your authenticator app and enter the 6-digit code.';
-            toggle.textContent = usingRecovery ? 'Use authenticator code instead' : 'Use a recovery code instead';
-        });
+    <script>
+        (function () {
+            var btn = document.getElementById('resend-btn');
+            if (!btn) return;
+            var wait = parseInt(btn.dataset.wait, 10) || 0;
+            if (wait <= 0) return;
+            var label = 'Resend code';
+            function tick() {
+                if (wait <= 0) { btn.disabled = false; btn.textContent = label; return; }
+                btn.textContent = label + ' (' + wait + 's)';
+                wait--; setTimeout(tick, 1000);
+            }
+            tick();
+        })();
     </script>
 </body>
 </html>
