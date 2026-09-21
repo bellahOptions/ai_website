@@ -24,12 +24,12 @@
                     <input type="text" name="name" value="{{ old('name') }}" required class="form-input" placeholder="e.g. John Doe">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email <span class="req">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" required class="form-input" placeholder="client@example.com">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-input" placeholder="client@example.com">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Phone</label>
-                    <input type="tel" name="phone" value="{{ old('phone') }}" class="form-input" placeholder="+234 700 000 0000">
+                    <label class="form-label">Phone <span class="req">*</span></label>
+                    <input type="tel" name="phone" value="{{ old('phone') }}" required class="form-input" placeholder="+234 700 000 0000">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Company</label>

@@ -38,8 +38,8 @@ class ClientController extends Controller
     {
         $data = $request->validate([
             'name'    => ['required', 'string', 'max:255'],
-            'email'   => ['required', 'email', 'unique:clients'],
-            'phone'   => ['nullable', 'string', 'max:30'],
+            'email'   => ['nullable', 'email', 'unique:clients'],
+            'phone'   => ['required', 'string', 'max:30'],
             'company' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'city'    => ['nullable', 'string', 'max:100'],
@@ -63,8 +63,8 @@ class ClientController extends Controller
     {
         $data = $request->validate([
             'name'    => ['required', 'string', 'max:255'],
-            'email'   => ['required', 'email', 'unique:clients,email,' . $client->id],
-            'phone'   => ['nullable', 'string', 'max:30'],
+            'email'   => ['nullable', 'email', 'unique:clients,email,' . $client->id],
+            'phone'   => ['required', 'string', 'max:30'],
             'company' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'city'    => ['nullable', 'string', 'max:100'],

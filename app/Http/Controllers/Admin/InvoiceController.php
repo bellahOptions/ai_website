@@ -207,6 +207,10 @@ class InvoiceController extends Controller
             return back()->with('error', 'Only draft invoices can be sent.');
         }
 
+        if (!$invoice->client->email) {
+            return back()->with('error', 'This client has no email address. Add one to the client before sending.');
+        }
+
         try {
             Mail::to($invoice->client->email)->send(new InvoiceIssued($invoice));
             $invoice->update(['status' => 'sent', 'sent_at' => now()]);
@@ -226,6 +230,9 @@ class InvoiceController extends Controller
 
         try {
             $invoice->update(['status' => 'paid', 'paid_at' => now()]);
+            if (!$invoice->client->email) {
+                return back()->with('success', 'Invoice marked as paid. Client has no email, so no notification was sent.');
+            }
             Mail::to($invoice->client->email)->send(new InvoicePaymentConfirmed($invoice));
             return back()->with('success', 'Invoice marked as paid and client notified.');
         } catch (\Exception $e) {

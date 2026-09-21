@@ -36,15 +36,15 @@ class CreateClientModal extends Component
 
         $data = $this->validate([
             'name'    => ['required', 'string', 'max:255'],
-            'email'   => ['required', 'email', 'max:255', 'unique:clients,email'],
-            'phone'   => ['nullable', 'string', 'max:50'],
+            'email'   => ['nullable', 'email', 'max:255', 'unique:clients,email'],
+            'phone'   => ['required', 'string', 'max:50'],
             'company' => ['nullable', 'string', 'max:255'],
         ]);
 
         $client = Client::create([
             'name'    => $data['name'],
-            'email'   => $data['email'],
-            'phone'   => $data['phone'] ?? null,
+            'email'   => $data['email'] ?: null,
+            'phone'   => $data['phone'],
             'company' => $data['company'] ?? null,
             'status'  => 'active',
         ]);

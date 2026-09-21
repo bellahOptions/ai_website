@@ -37,7 +37,7 @@
 
                 <div>
                     <label style="display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:6px;">
-                        Email Address <span style="color:#ef4444;">*</span>
+                        Email Address
                     </label>
                     <input wire:model="email" type="email" placeholder="jane@company.com"
                            style="width:100%;padding:9px 12px;border:1.5px solid {{ $errors->has('email') ? '#fca5a5' : '#d1d5db' }};border-radius:8px;font-size:13.5px;color:#111827;font-family:inherit;outline:none;box-sizing:border-box;background:{{ $errors->has('email') ? '#fef2f2' : '#fff' }};">
@@ -46,9 +46,10 @@
 
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <div>
-                        <label style="display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:6px;">Phone</label>
+                        <label style="display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:6px;">Phone <span style="color:#ef4444;">*</span></label>
                         <input wire:model="phone" type="text" placeholder="+234 800 000 0000"
-                               style="width:100%;padding:9px 12px;border:1.5px solid #d1d5db;border-radius:8px;font-size:13.5px;color:#111827;font-family:inherit;outline:none;box-sizing:border-box;">
+                               style="width:100%;padding:9px 12px;border:1.5px solid {{ $errors->has('phone') ? '#fca5a5' : '#d1d5db' }};border-radius:8px;font-size:13.5px;color:#111827;font-family:inherit;outline:none;box-sizing:border-box;background:{{ $errors->has('phone') ? '#fef2f2' : '#fff' }};">
+                        @error('phone')<p style="font-size:12px;color:#b91c1c;margin:4px 0 0;">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label style="display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:6px;">Company</label>

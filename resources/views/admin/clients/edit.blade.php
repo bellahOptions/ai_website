@@ -24,12 +24,12 @@
                     <input type="text" name="name" value="{{ old('name', $client->name) }}" required class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email <span class="req">*</span></label>
-                    <input type="email" name="email" value="{{ old('email', $client->email) }}" required class="form-input">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" value="{{ old('email', $client->email) }}" class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Phone</label>
-                    <input type="tel" name="phone" value="{{ old('phone', $client->phone) }}" class="form-input">
+                    <label class="form-label">Phone <span class="req">*</span></label>
+                    <input type="tel" name="phone" value="{{ old('phone', $client->phone) }}" required class="form-input">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Company</label>
