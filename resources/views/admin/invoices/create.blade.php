@@ -29,12 +29,10 @@
                 <div class="form-group">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
                         <label class="form-label" style="margin-bottom:0;">Client <span class="req">*</span></label>
-                        @if(auth()->user()->isSuperAdmin())
                         <button type="button" onclick="Livewire.dispatch('open-create-client')"
                                 style="background:none;border:none;cursor:pointer;font-size:12.5px;color:#61078B;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:4px;padding:0;">
                             <span style="font-size:16px;line-height:1;">+</span> New Client
                         </button>
-                        @endif
                     </div>
                     <select name="client_id" id="client_id_select" required class="form-input">
                         <option value="">Select a client…</option>
@@ -46,9 +44,7 @@
                     </select>
                 </div>
 
-                @if(auth()->user()->isSuperAdmin())
                 <livewire:create-client-modal />
-                @endif
                 <div class="form-group">
                     <label class="form-label">Currency</label>
                     <select name="currency" id="currency-select" class="form-input">
